@@ -1,24 +1,33 @@
 import React from "react";
-import { Grid } from "@mui/material";
-import Navbar from "./components/Navbar";
-import FlyerEditor from "./components/FlyerEditor";
-import AIAssistant from "./components/AIAssistant";
+import FlyerGenerator from "./pages/FlyerGeneration"
+import Home from "./pages/Home"
+import Insights from "./pages/Insights"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 const App = () => {
-    return (
-        <div>
-            <Navbar />
-            <Grid container spacing={2} sx={{ height: "90vh", p: 2 }}>
-                <Grid item xs={8}>
-                  <FlyerEditor />
-                </Grid>
-
-                <Grid item xs={4}>
-                  <AIAssistant />
-                </Grid>
-            </Grid>
-        </div>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="/flyer-generator"
+          element={<FlyerGenerator />}
+        />
+        <Route
+          path="/insights"
+          element={<Insights />}
+        />
+      </Routes>
+    </Router>
+);
 };
 
 export default App;
