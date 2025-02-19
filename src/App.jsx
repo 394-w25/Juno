@@ -1,7 +1,8 @@
 import React from "react";
-import FlyerGenerator from "./pages/FlyerGeneration"
+import Creator from "./pages/Creator"
 import Home from "./pages/Home"
 import Insights from "./pages/Insights"
+import Operator from "./pages/Operator";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,12 +19,16 @@ const App = () => {
           element={<Home />}
         />
         <Route
-          path="/flyer-generator"
-          element={<FlyerGenerator />}
+          path="/creator"
+          element={<Creator />}
         />
         <Route
           path="/insights"
           element={<Insights />}
+        />
+        <Route
+          path="/operator"
+          element={<Operator />}
         />
       </Routes>
     </Router>
