@@ -20,7 +20,17 @@ const AIAssistant = () => {
             setChat([...chat, { sender: "User", text: message }]);
             setMessage("");
         }
-    };
+      );
+      console.log("");
+      const data = await response.json();
+      if (data.data && data.data.length > 0) {
+        setImageUrl(data.data[0].url);
+      }
+    } catch (error) {
+      console.error("Error generating image:", error);
+    }
+  };
+
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
