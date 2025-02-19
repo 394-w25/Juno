@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const AIAssistant = () => {
+const AIAssistant = ({ setShowFlyer }) => {
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([
         { sender: "AI", text: "How can I help you today?" }
@@ -19,16 +19,17 @@ const AIAssistant = () => {
         if (message.trim()) {
             setChat([...chat, { sender: "User", text: message }]);
             setMessage("");
+            setShowFlyer("loading")
+            setTimeout(() => {
+                setShowFlyer("true")
+            }, 2000)
         }
-      );
-      console.log("");
-      const data = await response.json();
-      if (data.data && data.data.length > 0) {
-        setImageUrl(data.data[0].url);
-      }
-    } catch (error) {
-      console.error("Error generating image:", error);
-    }
+      
+    //   console.log("");
+    //   const data = await response.json();
+    //   if (data.data && data.data.length > 0) {
+    //     setImageUrl(data.data[0].url);
+    //   }
   };
 
 
@@ -37,19 +38,19 @@ const AIAssistant = () => {
             e.preventDefault();
             handleSend();
         }
-      );
-      console.log("");
-      const data = await response.json();
-      if (data.data && data.data.length > 0) {
-        setImageUrl(data.data[0].url);
-      }
-    } catch (error) {
-      console.error("Error generating image:", error);
-    }
+      
+//       console.log("");
+//       const data = await response.json();
+//       if (data.data && data.data.length > 0) {
+//         setImageUrl(data.data[0].url);
+//       }
+//     } catch (error) {
+//       console.error("Error generating image:", error);
+//     }
   };
 
     return (
-        <div className="p-4 bg-blue-500/40 h-[90vh] flex flex-col relative">
+        <div className="p-4 bg-blue-500/40 h-full flex flex-col relative">
             {/* Chat Container with Messages Stacking from Bottom */}
             <div ref={chatContainerRef} className="flex-grow overflow-y-auto p-2 flex flex-col-reverse">
                 {chat
