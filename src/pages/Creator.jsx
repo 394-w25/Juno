@@ -9,11 +9,11 @@ const FlyerGenerator = () => {
         <div>
             <Navbar />
             <Grid container spacing={2} sx={{ height: "90vh", p: 2 }}>
-                <Grid item xs={8}>
+                <Grid item xs={9}>
                   <FlyerEditor />
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <AIAssistant />
                 </Grid>
             </Grid>

@@ -12,13 +12,13 @@ const Insights = () => {
       <Navbar />
       <Grid container spacing={2} sx={{ height: "90vh", p: 2 }}>
         {/* Left Section */}
-        <Grid item xs={8} sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <Grid item xs={9} sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           <Map />
           <TopInsights />
         </Grid>
 
         {/* Right Section (AI Assistant Full Height) */}
-        <Grid item xs={4} sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <Grid item xs={3} sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <Box sx={{ flex: 1 }}>
             <AIAssistant />
           </Box>
