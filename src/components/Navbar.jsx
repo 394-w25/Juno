@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import DrawOutlinedIcon from '@mui/icons-material/DrawOutlined';
-import logo from '../assets/logo.png';
+import logo from '../assets/Logo.png';
 
 // Custom Dashboard Icon Component
 const DashboardIcon = ({ className }) => (
