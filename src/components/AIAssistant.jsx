@@ -27,7 +27,16 @@ const AIAssistant = () => {
             e.preventDefault();
             handleSend();
         }
-    };
+      );
+      console.log("");
+      const data = await response.json();
+      if (data.data && data.data.length > 0) {
+        setImageUrl(data.data[0].url);
+      }
+    } catch (error) {
+      console.error("Error generating image:", error);
+    }
+  };
 
     return (
         <div className="p-4 bg-blue-500/40 h-[90vh] flex flex-col relative">
@@ -88,6 +97,7 @@ const AIAssistant = () => {
             </div>
         </div>
     );
+
 };
 
 export default AIAssistant;
