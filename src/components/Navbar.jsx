@@ -45,7 +45,7 @@ const DrawIcon = ({ className }) => (
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation(); // Get current route
-    const isMobile = useMediaQuery("(max-width: 1260px)")
+    const isMobile = useMediaQuery("(max-width: 1420px)")
     const [anchorEl, setAnchorEl] = useState(null) // sets the anchor element for the popup menu
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget) // sets the anchor element to whatever element was clicked
