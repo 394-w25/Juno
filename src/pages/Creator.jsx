@@ -8,28 +8,29 @@ import AIAssistant from "../components/AIAssistant";
 const FlyerGenerator = () => {
 
     const [showFlyer, setShowFlyer] = useState("false")
-    const isMobile = useMediaQuery("(max-width: 1300px)") 
+    const switchToVertical = useMediaQuery("(max-width: 1100px)") 
+	const isMobile = useMediaQuery("(max-width: 600px)")
     
     return (
         <div className="h-dvh">
             <Navbar />
 
-			{isMobile ? 
+			{switchToVertical ? 
 				<div
-					className="flex flex-col h-[calc(100vh-70px)]"	
+					className="flex flex-col h-[calc(100vh-70px)] gap-10"	
 				>
-					<FlyerEditor showFlyer={showFlyer} isMobile={isMobile} />
+					<FlyerEditor showFlyer={showFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 
-					<AIAssistant setShowFlyer={setShowFlyer} isMobile={isMobile} />
+					<AIAssistant setShowFlyer={setShowFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 				</div>
 			:
 			<Grid spacing={2} container sx={{ height: "calc(100% - 70px)", p: 2 }}>
 				<Grid size={8}>
-					<FlyerEditor showFlyer={showFlyer} isMobile={isMobile} />
+					<FlyerEditor showFlyer={showFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 				</Grid>
 
 				<Grid size={4}>
-					<AIAssistant className="h-full" setShowFlyer={setShowFlyer} isMobile={isMobile} />
+					<AIAssistant className="h-full" setShowFlyer={setShowFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 				</Grid>
 			</Grid>
 			}

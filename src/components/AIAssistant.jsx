@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
 
-const AIAssistant = ({ isMobile, setShowFlyer }) => {
+const AIAssistant = ({ switchToVertical, isMobile, setShowFlyer }) => {
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([
         // { sender: "AI", text: "How can I help you today?" }
@@ -54,9 +54,9 @@ const AIAssistant = ({ isMobile, setShowFlyer }) => {
 
     return (
         <div 
-            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative ${isMobile === false ? "h-full rounded-lg" : "h-1/4"}`}
+            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative ${switchToVertical === false ? "h-full rounded-lg" : "h-1/4"}`}
             style={{
-                boxShadow: `${isMobile ? `0 4px 8px rgba(0, 0, 0, 1)` : `0 0px 5px rgba(0, 0, 0, 0.5)`}` // shadows aren't working in tailwind for some reason
+                boxShadow: `${switchToVertical ? `0 4px 8px rgba(0, 0, 0, 1)` : `0 0px 5px rgba(0, 0, 0, 0.5)`}` // shadows aren't working in tailwind for some reason
             }}
         >
             {/* Chat Container with Messages Stacking from Bottom */}
