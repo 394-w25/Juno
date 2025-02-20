@@ -3,10 +3,10 @@ import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
 
-const AIAssistant = ({ setShowFlyer }) => {
+const AIAssistant = ({ isMobile, setShowFlyer }) => {
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([
-        { sender: "AI", text: "How can I help you today?" }
+        // { sender: "AI", text: "How can I help you today?" }
     ]);
 
     const chatContainerRef = useRef(null);
@@ -53,7 +53,12 @@ const AIAssistant = ({ setShowFlyer }) => {
   };
 
     return (
-        <div className="p-4 bg-blue-500/40 h-full flex flex-col gap-4 relative">
+        <div 
+            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative ${isMobile === false ? "h-full rounded-lg" : "h-1/4"}`}
+            style={{
+                boxShadow: `${isMobile ? `0 4px 8px rgba(0, 0, 0, 1)` : `0 0px 5px rgba(0, 0, 0, 0.5)`}` // shadows aren't working in tailwind for some reason
+            }}
+        >
             {/* Chat Container with Messages Stacking from Bottom */}
             <div ref={chatContainerRef} className="gap-2 flex-grow overflow-y-auto flex flex-col-reverse">
                 {chat
@@ -75,7 +80,12 @@ const AIAssistant = ({ setShowFlyer }) => {
                     ))}
             </div>
 
-            <div className="p-3 bg-white rounded-xl border border-black/30 flex items-center gap-3">
+            <div 
+                className="p-3 bg-white rounded-lg flex items-center gap-3"
+                style={{
+                    boxShadow: "0 0 4px rgba(0, 0, 0, 0.5)" // shadows aren't working in tailwind for some reason
+                }}
+            >                
                 <input
                     type="text"
                     placeholder="What can Juno do for you?"

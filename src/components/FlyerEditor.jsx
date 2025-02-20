@@ -6,12 +6,11 @@ import logoImg from "../assets/template_logo.png"
 import productImg from "../assets/ProductImageTest.png"
 import {CircularProgress} from "@mui/material";
 
-const FlyerEditor = ({ showFlyer }) => {
-
-
+const FlyerEditor = ({ showFlyer, isMobile }) => {
 
     return (
-        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+        <div className={`relative w-full ${isMobile === false ? "h-full" : "flex-grow-5"} flex items-center justify-center overflow-hidden`}>
+            
             {/* div below creates the grid of circles using a background image */}
             <div className={`absolute ${showFlyer === "loading" ? `opacity-30` : "opacity-75"} z-0 inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}></div>
 

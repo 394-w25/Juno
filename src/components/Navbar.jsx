@@ -58,7 +58,7 @@ const Navbar = () => {
     const menuOpen = Boolean(anchorEl) // true when anchorEl refers to an element; false if null
 
     return (
-        <div className="w-full h-[70px] bg-gray-100 shadow-md flex items-center px-10 justify-between md:gap-52 lg:gap-52 2xl:gap-80">
+        <div className="w-full h-[70px] bg-gray-100 shadow-md flex items-center px-5 justify-between md:gap-52 lg:gap-52 2xl:gap-80">
             {/* Logo (Left-Aligned) */}
             <a href="/" className="flex items-center">
                 <img src={logo} alt="Logo" className="h-9" />
