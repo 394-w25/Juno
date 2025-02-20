@@ -14,7 +14,6 @@ const FlyerGenerator = () => {
     return (
         <div className="h-dvh">
             <Navbar />
-
 			{switchToVertical ? 
 				<div
 					className="flex flex-col h-[calc(100vh-70px)] gap-10"	
@@ -34,7 +33,7 @@ const FlyerGenerator = () => {
 				</Grid>
 			</Grid>
 			}
-            
+           
         </div>
     );
 };
