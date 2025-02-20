@@ -17,7 +17,7 @@ const FlyerGenerator = () => {
                 </Grid>
 
                 <Grid item xs={3}>
-                  <AIAssistant setShowFlyer={setShowFlyer} />
+                  <AIAssistant setShowFlyer={setShowFlyer}/>
                 </Grid>
             </Grid>
         </div>
