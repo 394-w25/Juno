@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import Navbar from "../components/Navbar";
 import FlyerEditor from "../components/FlyerEditor";
 import AIAssistant from "../components/AIAssistant";
@@ -7,19 +8,26 @@ import AIAssistant from "../components/AIAssistant";
 const FlyerGenerator = () => {
 
     const [showFlyer, setShowFlyer] = useState("false")
-
+    const isMobile = useMediaQuery("(max-width: 1300px)")
+    
     return (
-        <div>
+        <div className="h-dvh">
             <Navbar />
-            <Grid container spacing={2} sx={{ height: "90vh", p: 2 }}>
-                <Grid item xs={9}>
-                  <FlyerEditor showFlyer={showFlyer} />
-                </Grid>
 
-                <Grid item xs={3}>
-                  <AIAssistant setShowFlyer={setShowFlyer} />
-                </Grid>
-            </Grid>
+			{isMobile ? 
+				<></>
+			:
+			<Grid spacing={2} container sx={{ height: "calc(100% - 70px)", p: 2 }}>
+				<Grid size={8}>
+					<FlyerEditor showFlyer={showFlyer} />
+				</Grid>
+
+				<Grid size={4}>
+				<AIAssistant setShowFlyer={setShowFlyer} />
+				</Grid>
+			</Grid>
+			}
+            
         </div>
     );
 };
