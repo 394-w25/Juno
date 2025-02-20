@@ -54,9 +54,9 @@ const AIAssistant = ({ switchToVertical, isMobile, setShowFlyer }) => {
 
     return (
         <div 
-            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative ${switchToVertical === false ? "h-full rounded-lg" : "h-1/4"}`}
+            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative rounded-lg ${switchToVertical === false ? "h-full" : "h-1/4"}`}
             style={{
-                boxShadow: `${switchToVertical ? `0 4px 8px rgba(0, 0, 0, 1)` : `0 0px 5px rgba(0, 0, 0, 0.5)`}` // shadows aren't working in tailwind for some reason
+                boxShadow: `0 0px 5px rgba(0, 0, 0, 0.5)` // shadows aren't working in tailwind for some reason
             }}
         >
             {/* Chat Container with Messages Stacking from Bottom */}

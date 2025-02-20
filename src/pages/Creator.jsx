@@ -16,14 +16,14 @@ const FlyerGenerator = () => {
             <Navbar />
 			{switchToVertical ? 
 				<div
-					className="flex flex-col h-[calc(100vh-70px)] gap-10"	
+					className="flex flex-col h-[calc(100vh-70px)] gap-10 p-[14px]"	
 				>
 					<FlyerEditor showFlyer={showFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 
 					<AIAssistant setShowFlyer={setShowFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 				</div>
 			:
-			<Grid spacing={2} container sx={{ height: "calc(100% - 70px)", p: 2 }}>
+			<Grid spacing={2} container sx={{ height: "calc(100% - 70px)", p: "14px" }}>
 				<Grid size={8}>
 					<FlyerEditor showFlyer={showFlyer} switchToVertical={switchToVertical} isMobile={isMobile} />
 				</Grid>
