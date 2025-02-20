@@ -1,10 +1,14 @@
 import brownRibbon from "../../assets/brown-ribbon.png"
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
-export default function Template1({campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp}) {
+
+export default function Template1({isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp}) {
     const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     return (
-        <div className="relative w-[816px] h-[1056px]">
+        <div 
+            className="absolute w-[816px] h-[1056px]"
+            style={isMobile ? { transform: "scale(0.55)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.75)", transformOrigin: "top left"} : {}}
+        >
             
             <img src={background} className="absolute object-cover w-full h-full"></img>
 

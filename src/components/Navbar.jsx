@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from '../assets/Logo.png';
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import { IconButton, useMediaQuery, Menu, MenuItem } from "@mui/material";
 
 // Custom Dashboard Icon Component
 const DashboardIcon = ({ className }) => (
@@ -42,59 +45,152 @@ const DrawIcon = ({ className }) => (
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation(); // Get current route
+    const isMobile = useMediaQuery("(max-width: 1260px)")
+    const [anchorEl, setAnchorEl] = useState(null) // sets the anchor element for the popup menu
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget) // sets the anchor element to whatever element was clicked
+    }
+
+    const handleMenuClose = () => {
+        setAnchorEl(null) 
+    }
+
+    const menuOpen = Boolean(anchorEl) // true when anchorEl refers to an element; false if null
 
     return (
-        <div className="w-full h-[70px] bg-gray-100 shadow-md flex items-center px-10 justify-between">
+        <div className="w-full h-[70px] bg-gray-100 shadow-md flex items-center px-5 justify-between md:gap-52 lg:gap-52 2xl:gap-80">
             {/* Logo (Left-Aligned) */}
             <a href="/" className="flex items-center">
-                <img src={logo} alt="Logo" className="h-12" />
+                <img src={logo} alt="Logo" className="h-9" />
             </a>
 
-            {/* Navigation Items (More Spread Out) */}
-            <div className="flex flex-1 justify-between px-48">
-                <button 
-                    onClick={() => navigate("/")} 
-                    className={`group flex items-center text-lg transition ${
-                        location.pathname === "/" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
-                    }`}
-                >
-                    <DashboardIcon className={`w-8 h-8 ${location.pathname === "/" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
-                    <span className="ml-3">DASHBOARD</span>
-                </button>
+            {isMobile ? // uses a menu icon for mobile
+                <div>
+                    <IconButton
+                        aria-haspopup="true"
+                        onClick={handleMenuClick}
+                    >
+                        {!menuOpen ? <MenuIcon /> : <MenuOpenIcon />}
+                    </IconButton>
 
-                <button 
-                    onClick={() => navigate("/insights")} 
-                    className={`group flex items-center text-lg transition ${
-                        location.pathname === "/insights" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
-                    }`}
-                >
-                    <InsightsIcon className={`w-8 h-8 ${location.pathname === "/insights" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
-                    <span className="ml-3">INSIGHTS</span>
-                </button>
+                    <Menu 
+                        anchorEl={anchorEl}
+                        open={menuOpen}
+                        onClose={handleMenuClose}
+                    >
+                        <MenuItem
+                            key="dashboard"
+                            onClick={handleMenuClose}
+                        >
+                            <button 
+                                onClick={() => navigate("/")} 
+                                className={`group flex items-center text-md transition ${
+                                    location.pathname === "/" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                                }`}
+                            >
+                                <DashboardIcon className={`w-7 h-7 ${location.pathname === "/" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                                <span className="ml-3">DASHBOARD</span>
+                            </button>
+                        </MenuItem>
+                        
+                        <MenuItem
+                            key="insights"
+                            onClick={handleMenuClose}
+                        >
+                            <button 
+                                onClick={() => navigate("/insights")} 
+                                className={`group flex items-center text-md transition ${
+                                    location.pathname === "/insights" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                                }`}
+                            >
+                                <InsightsIcon className={`w-7 h-7 ${location.pathname === "/insights" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                                <span className="ml-3">INSIGHTS</span>
+                            </button>
+                        </MenuItem>
+                        
+                        <MenuItem
+                            key="creator"
+                            onClick={handleMenuClose}
+                        >
+                            <button 
+                                onClick={() => navigate("/creator")} 
+                                className={`group flex items-center text-md transition ${
+                                    location.pathname === "/creator" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                                }`}
+                            >
+                                <DrawIcon className={`w-7 h-7 ${location.pathname === "/creator" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                                <span className="ml-3">CREATOR</span>
+                            </button>
+                        </MenuItem>
 
-                <button 
-                    onClick={() => navigate("/creator")} 
-                    className={`group flex items-center text-lg transition ${
-                        location.pathname === "/creator" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
-                    }`}
-                >
-                    <DrawIcon className={`w-8 h-8 ${location.pathname === "/creator" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
-                    <span className="ml-3">CREATOR</span>
-                </button>
+                        <MenuItem
+                            key="creator"
+                            onClick={handleMenuClose}
+                        >
+                            <button 
+                                onClick={() => navigate("/operator")} 
+                                className={`group flex items-center text-md transition ${
+                                    location.pathname === "/operator" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                                }`}
+                            >
+                                <OperatorIcon className={`w-7 h-7 ${location.pathname === "/operator" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                                <span className="ml-3">OPERATOR</span>
+                            </button>
+                        </MenuItem>
+                        
+                    </Menu>
+                </div>
+            :   // normal navbar for desktop
+                <>
+                    {/* Navigation Items (More Spread Out) */}
+                    <div className="flex flex-1 justify-between">
+                        <button 
+                            onClick={() => navigate("/")} 
+                            className={`group flex items-center text-md transition ${
+                                location.pathname === "/" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                            }`}
+                        >
+                            <DashboardIcon className={`w-7 h-7 ${location.pathname === "/" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                            <span className="ml-3">DASHBOARD</span>
+                        </button>
 
-                <button 
-                    onClick={() => navigate("/operator")} 
-                    className={`group flex items-center text-lg transition ${
-                        location.pathname === "/operator" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
-                    }`}
-                >
-                    <OperatorIcon className={`w-8 h-8 ${location.pathname === "/operator" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
-                    <span className="ml-3">OPERATOR</span>
-                </button>
-            </div>
+                        <button 
+                            onClick={() => navigate("/insights")} 
+                            className={`group flex items-center text-md transition ${
+                                location.pathname === "/insights" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                            }`}
+                        >
+                            <InsightsIcon className={`w-7 h-7 ${location.pathname === "/insights" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                            <span className="ml-3">INSIGHTS</span>
+                        </button>
+
+                        <button 
+                            onClick={() => navigate("/creator")} 
+                            className={`group flex items-center text-md transition ${
+                                location.pathname === "/creator" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                            }`}
+                        >
+                            <DrawIcon className={`w-7 h-7 ${location.pathname === "/creator" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                            <span className="ml-3">CREATOR</span>
+                        </button>
+
+                        <button 
+                            onClick={() => navigate("/operator")} 
+                            className={`group flex items-center text-md transition ${
+                                location.pathname === "/operator" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
+                            }`}
+                        >
+                            <OperatorIcon className={`w-7 h-7 ${location.pathname === "/operator" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
+                            <span className="ml-3">OPERATOR</span>
+                        </button>
+                    </div>
+                </>
+            }
 
             {/* Invisible Spacer to Keep Layout Balanced */}
-            <div className="w-12"></div>
+            {!isMobile && // this div is not needed for mobile
+                <div className="w-12"></div>
+            }
         </div>
     );
 };
