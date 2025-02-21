@@ -16,10 +16,10 @@ export function createNewChat(business_config) {
     {
         "your_conversation_response": conversational text you would respond to the prompt
         "campaign_details": {
-            "campaign_title": "Winter Sale Extravaganza!",
+            "campaign_title": 3-5 word title for the campaign,
             "slogan": "Biggest Discounts of the Season!",
             "discount": "50% off",
-            "campaign_detail": "On this special day for mothers, we would like to help you celebrate her with a unique bouquet to show your appreciation",
+            "campaign_detail": medium length text describing the campaign,
             "campaign_period": {
             "start_date": Date object,
             "end_date": Date object
@@ -32,7 +32,7 @@ export function createNewChat(business_config) {
 
     Try to incorporate details from the business config when you can. 
     If you need additional info for the campaign, set the campaign_details field to null and in the conversation_response field, ask the owner for more details about the campaign (such as dates, what the discount is, etc.). 
-    If you don't need addition info for the campaign, include the contents of campaign_details in a user-friendly format and do NOT end the your_conversation_response field with a question.
+    If you don't need addition info for the campaign, include the contents of campaign_details in a user-friendly format.
     Always give a conversational response in the your_conversation_response field even if the campaign_details are complete.
     `
 
