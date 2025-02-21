@@ -5,36 +5,39 @@ import backgroundImg from "../assets/template_bg_img.png"
 import logoImg from "../assets/template_logo.png"
 import productImg from "../assets/ProductImageTest.png"
 import {CircularProgress} from "@mui/material";
+import { businessConfig } from "../pages/Creator";
 
-const FlyerEditor = ({ showFlyer, isMobile, switchToVertical }) => {
+const FlyerEditor = ({ status, campaignDetails, isMobile, switchToVertical }) => {
 
     return (
-        <div className={`relative w-full ${switchToVertical === false && isMobile === false ? "h-full" : "flex-grow-5 p-10"} flex ${switchToVertical === false ? "py-10 justify-center" : ""} overflow-auto bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}>
+        <div className={`relative ${switchToVertical === false && isMobile === false ? "h-full w-3/4" : "flex-grow-5 p-10"} flex ${switchToVertical === false ? "py-10 justify-center" : ""} overflow-auto bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}>
             
             {/* div below creates the grid of circles using a background image */}
             {/* <div className={`absolute ${showFlyer === "loading" ? `opacity-30` : "opacity-75"} z-0 inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}></div> */}
 
-            {showFlyer === "loading" && 
+            {status === "LOADING" && 
                 <CircularProgress 
                     className="self-center mx-auto" 
                     size={25} 
                     thickness={5}
                 />
             }
-            {showFlyer === "true" &&  
+
+            {status === "DEFAULT" && campaignDetails !== null &&  // show flyer if not loading and campaignDetails are ready
                 <Template1 
                     isMobile={isMobile}
+                    callToAction={campaignDetails.call_to_action}
                     switchToVertical={switchToVertical}
-                    campaignTitle="SAY IT WITH FLOWERS!" 
+                    campaignTitle={campaignDetails.campaign_title} 
                     background={backgroundImg} 
                     logo={logoImg} 
-                    discount="30% OFF" 
-                    campaignDetail="On this special day for mothers, we would like to help you celebrate her with a unique bouquet to show your appreciation" 
-                    campaignPeriod="May 05-12 2025" 
+                    discount={campaignDetails.discount}
+                    campaignDetail={campaignDetails.campaign_detail}
+                    campaignPeriod={campaignDetails.campaign_period} 
                     productImage={productImg} 
-                    website="https://furniture-flow.web.app" 
-                    phoneNumber="(872)3149631" 
-                    address="1720 Sherman Ave Evanston, IL 60201" 
+                    website={businessConfig.flyer_config.contact_info.website} 
+                    phoneNumber={businessConfig.flyer_config.contact_info.phone_number} 
+                    address={businessConfig.flyer_config.contact_info.address}
                     fontStyleProp=""
                 />
             }

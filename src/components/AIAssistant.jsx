@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
+import { createNewChat, sendChat } from "../gemini/GeminiFunctions";
+import { businessConfig } from "../pages/Creator";
 
-const AIAssistant = ({ switchToVertical, isMobile, setShowFlyer }) => {
+const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
     const [message, setMessage] = useState("");
-    const [chat, setChat] = useState([
-        // { sender: "AI", text: "How can I help you today?" }
-    ]);
+    const [chatLog, setChatLog] = useState([]); // chat log
+    const [chat, setChat] = useState(null); // ongoing chat with gemini
 
     const chatContainerRef = useRef(null);
 
@@ -16,16 +17,33 @@ const AIAssistant = ({ switchToVertical, isMobile, setShowFlyer }) => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
-    }, [chat]);
+    }, [chatLog]);
 
-    const handleSend = () => {
-        if (message.trim()) {
-            setChat([...chat, { sender: "User", text: message }]);
+    const handleSend = async () => {
+        const trimmedMsg = message.trim()
+        if (trimmedMsg) {
             setMessage("");
-            setShowFlyer("loading")
-            setTimeout(() => {
-                setShowFlyer("true")
-            }, 2000)
+            setChatLog([...chatLog, { sender: "User", text: trimmedMsg }])
+            setStatus("LOADING")
+
+            let tmpChat = chat // local copy that we can make changes to
+
+            if (tmpChat === null) {
+                tmpChat = createNewChat(businessConfig);
+            }
+
+            const response = await sendChat(tmpChat, trimmedMsg) // sends prompt to Gemini
+
+            // updates chat log with Gemini's response
+            setChatLog([...chatLog, { sender: "User", text: trimmedMsg },{ sender: "AI", text: response.your_conversation_response }])
+
+            setStatus("DEFAULT")
+
+            if (response.campaign_details) { // Gemini gave us details for the flyer
+                setCampaignDetails(response.campaign_details)
+            }
+
+            setChat(tmpChat) // update the actual chat with tmpChat
         }
       
     //   console.log("");
@@ -54,14 +72,14 @@ const AIAssistant = ({ switchToVertical, isMobile, setShowFlyer }) => {
 
     return (
         <div 
-            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative rounded-lg ${switchToVertical === false ? "h-full" : "h-1/4"}`}
+            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative rounded-lg ${switchToVertical === false ? "h-full w-1/4" : "h-1/4"}`}
             style={{
                 boxShadow: `0 0px 5px rgba(0, 0, 0, 0.5)` // shadows aren't working in tailwind for some reason
             }}
         >
             {/* Chat Container with Messages Stacking from Bottom */}
             <div ref={chatContainerRef} className="gap-2 flex-grow overflow-y-auto flex flex-col-reverse">
-                {chat
+                {chatLog
                     .slice()
                     .reverse()
                     .map((msg, index) => (
