@@ -4,6 +4,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
 import { createNewChat, sendChat } from "../gemini/GeminiFunctions";
 import { businessConfig } from "../pages/Creator";
+import ReactMarkdown from "react-markdown"
 
 const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
     const [message, setMessage] = useState("");
@@ -92,7 +93,7 @@ const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
                                 ${msg.sender === "User" ? "bg-blue-500 text-white" : "bg-white text-black"}`}
                                 style={{ wordWrap: "break-word", whiteSpace: "pre-wrap", overflow: "hidden" }}
                             >
-                                <p className="text-base font-medium">{msg.text}</p>
+                                <ReactMarkdown>{msg.text}</ReactMarkdown>
                             </div>
                         </div>
                     ))}

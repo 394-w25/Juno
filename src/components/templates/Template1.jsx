@@ -19,9 +19,6 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
             return ""
         }
 
-        console.log("start", timePeriod.start_date)
-        console.log("end", timePeriod.end_date)
-
         const start_date = new Date(timePeriod.start_date);
         const end_date = new Date(timePeriod.end_date);
 
