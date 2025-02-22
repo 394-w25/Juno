@@ -42,7 +42,7 @@ const FlyerEditor = ({
       {/* div below creates the grid of circles using a background image */}
       {/* <div className={`absolute ${showFlyer === "loading" ? `opacity-30` : "opacity-75"} z-0 inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}></div> */}
 
-      <div className="absolute inset-x-0 flex items-center justify-center z-50 pointer-events-none bg-white">
+      <div className="absolute w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white">
         <ToggleButtonGroup
           color="primary"
           value={mediaMode}
@@ -62,11 +62,12 @@ const FlyerEditor = ({
       <div className="flex-grow mt-4 relative">
         {status === "LOADING" && (
           <CircularProgress
-            className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white" // added positioning
-            size={40}
+            className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white" 
+            size={32}
             thickness={5}
           />
         )}
+      </div>
 
         {status === "DEFAULT" &&
           campaignDetails !== null && ( // show flyer if not loading and campaignDetails are ready
@@ -110,7 +111,7 @@ const FlyerEditor = ({
           )}
        
       </div>
-    </div>
+
   );
 };
 
