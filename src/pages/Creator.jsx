@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { useMediaQuery } from "@mui/material";
+import { Chip, ToggleButton, ToggleButtonGroup, useMediaQuery } from "@mui/material";
 import Navbar from "../components/Navbar";
 import FlyerEditor from "../components/FlyerEditor";
 import AIAssistant from "../components/AIAssistant";
 
 export const businessConfig = {
+	"business_details": {
+		"name": "Liceria Florist",
+		"address": "2145 Sheridan Rd, Evanston, IL 60208",
+		"business_type": "retail",
+		"phone":"+1 234 567 890",
+		"industry": "florist",
+		"web_url":"https://liceriaflorist.com"
+	},
+
 	"flyer_config": {
 		"page_size": "A4",
 		"orientation": "portrait",
@@ -41,28 +50,28 @@ export const businessConfig = {
 		}
 	}
 }
+
   
 
 const FlyerGenerator = () => {
 
-    const [showFlyer, setShowFlyer] = useState("false")
-	const [status, setStatus] = useState("DEFAULT")
+	const [status, setStatus] = useState("DEFAULT") // switch between "DEFAULT" and "LOADING"
 	const [campaignDetails, setCampaignDetails] = useState(null)
     const switchToVertical = useMediaQuery("(max-width: 1100px)") 
 	const isMobile = useMediaQuery("(max-width: 600px)")
-    
+	const [mediaMode, setMediaMode] = useState("FLYER") // switch between "FLYER" and "SOCIAL MEDIA"
+	const mediaModes = ["FLYER", "SOCIAL POSTS"]
+
     return (
         <div className="h-dvh">
             <Navbar />
 
 			<div
-				className={`flex ${switchToVertical === true ? "flex-col gap-10" : "flex-row gap-5"} h-[calc(100vh-70px)] p-[14px]`}
+				className={`flex ${switchToVertical === true ? "flex-col gap-10" : "flex-row gap-5"} flex-auto h-[calc(100vh-70px)] p-[14px]`}
 			>
-				<FlyerEditor status={status} campaignDetails={campaignDetails} switchToVertical={switchToVertical} isMobile={isMobile} />
-
-				<AIAssistant setStatus={setStatus} setCampaignDetails={setCampaignDetails} switchToVertical={switchToVertical} />
+				<FlyerEditor setMediaMode={setMediaMode} mediaModes={mediaModes} mediaMode={mediaMode} status={status} campaignDetails={campaignDetails} switchToVertical={switchToVertical} isMobile={isMobile}  />
+				<AIAssistant mediaMode={mediaMode} setStatus={setStatus} setCampaignDetails={setCampaignDetails} switchToVertical={switchToVertical} />
 			</div>
-           
         </div>
     );
 };

@@ -6,7 +6,7 @@ import { createNewChat, sendChat } from "../gemini/GeminiFunctions";
 import { businessConfig } from "../pages/Creator";
 import ReactMarkdown from "react-markdown"
 
-const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
+const AIAssistant = ({ mediaMode, setStatus, setCampaignDetails, switchToVertical }) => {
     const [message, setMessage] = useState("");
     const [chatLog, setChatLog] = useState([]); // chat log
     const [chat, setChat] = useState(null); // ongoing chat with gemini
@@ -33,10 +33,10 @@ const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
                 tmpChat = createNewChat(businessConfig);
             }
 
-            const response = await sendChat(tmpChat, trimmedMsg) // sends prompt to Gemini
+            const response = await sendChat(tmpChat, trimmedMsg, mediaMode) // sends prompt to Gemini
 
             // updates chat log with Gemini's response
-            setChatLog([...chatLog, { sender: "User", text: trimmedMsg },{ sender: "AI", text: response.your_conversation_response }])
+            setChatLog([...chatLog, { sender: "User", text: trimmedMsg }, { sender: "AI", text: response.your_conversation_response } ])
 
             setStatus("DEFAULT")
 
@@ -73,7 +73,7 @@ const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
 
     return (
         <div 
-            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative rounded-lg ${switchToVertical === false ? "h-full w-1/4" : "h-1/4"}`}
+            className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative rounded-lg ${switchToVertical === false ? "h-full w-1/3" : "h-1/4"}`}
             style={{
                 boxShadow: `0 0px 5px rgba(0, 0, 0, 0.5)` // shadows aren't working in tailwind for some reason
             }}
@@ -104,7 +104,8 @@ const AIAssistant = ({ setStatus, setCampaignDetails, switchToVertical }) => {
                 style={{
                     boxShadow: "0 0 4px rgba(0, 0, 0, 0.5)" // shadows aren't working in tailwind for some reason
                 }}
-            >                
+            >         
+             
                 <input
                     type="text"
                     placeholder="What can Juno do for you?"
