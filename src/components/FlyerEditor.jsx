@@ -42,11 +42,28 @@ const FlyerEditor = ({
       {/* div below creates the grid of circles using a background image */}
       {/* <div className={`absolute ${showFlyer === "loading" ? `opacity-30` : "opacity-75"} z-0 inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}></div> */}
 
+      <div className="absolute inset-x-0 flex items-center justify-center z-50 pointer-events-none bg-white">
+        <ToggleButtonGroup
+          color="primary"
+          value={mediaMode}
+          exclusive
+          onChange={handleMediaChange}
+          fullWidth
+          className="pointer-events-auto"
+        >
+          {mediaModes.map((mode) => (
+            <ToggleButton key={mode} value={mode}>
+              {mode}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      </div>
+
       <div className="flex-grow mt-4 relative">
         {status === "LOADING" && (
           <CircularProgress
-            className="self-center mx-auto"
-            size={25}
+            className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white" // added positioning
+            size={40}
             thickness={5}
           />
         )}
@@ -91,22 +108,7 @@ const FlyerEditor = ({
               )}
             </>
           )}
-        <div className="absolute inset-x-0 flex items-center justify-center z-50 pointer-events-none bg-white">
-          <ToggleButtonGroup
-            color="primary"
-            value={mediaMode}
-            exclusive
-            onChange={handleMediaChange}
-            fullWidth
-            className="pointer-events-auto"
-          >
-            {mediaModes.map((mode) => (
-              <ToggleButton key={mode} value={mode}>
-                {mode}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </div>
+       
       </div>
     </div>
   );
