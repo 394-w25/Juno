@@ -79,3 +79,83 @@ export async function sendChat(chat, prompt, mediaMode) {
 
   return responseObj;
 }
+
+/**
+ * Creates a new chat for generating marketing campaign recommendations based on upcoming events in the next month.
+ * @param {object} business_config
+ * @returns {ChatSession}
+ */
+export function createDateBasedCampaignChat(business_config) {
+  const today = new Date();
+  const year = today.getFullYear();
+  const monthNumber = today.getMonth() + 1;
+  const nextMonthNumber = monthNumber === 12 ? 1 : monthNumber + 1;
+
+  const system_instructions = `
+  You are an AI marketing agent for small business owners. Your job is to create marketing campaigns based on upcoming holidays or seasonal trends in the next month (${nextMonthNumber}/${year}).
+  Identify major shopping events, holidays, or seasonal trends relevant to the user's business. If no major event is found, suggest a seasonal promotion.
+  
+  This business config represents the user's business details: ${JSON.stringify(business_config.business_details)}. Use it to tailor the campaign recommendations.
+
+  You will return JSON data in this format:
+  {
+      "your_conversation_response": "Introduction to campaign options",
+      "campaign_options": [
+          {
+              "campaign_title": "First campaign title",
+              "slogan": "First catchy slogan",
+              "discount": "First discount offer",
+              "campaign_detail": "First campaign description",
+              "campaign_period": {
+                  "start_date": "YYYY-MM-DD",
+                  "end_date": "YYYY-MM-DD"
+              },
+              "call_to_action": "First call to action!",
+              "theme": "First campaign theme",
+              "caption": "First social media caption",
+              "hashtags": ["#firstHashtag1", "#firstHashtag2"],
+              "colorTheme": ["#firstHex1", "#firstHex2"]
+          },
+          {
+              "campaign_title": "Second campaign title",
+              "slogan": "Second catchy slogan",
+              "discount": "Second discount offer",
+              "campaign_detail": "Second campaign description",
+              "campaign_period": {
+                  "start_date": "YYYY-MM-DD",
+                  "end_date": "YYYY-MM-DD"
+              },
+              "call_to_action": "Second call to action!",
+              "theme": "Second campaign theme",
+              "caption": "Second social media caption",
+              "hashtags": ["#secondHashtag1", "#secondHashtag2"],
+              "colorTheme": ["#secondHex1", "#secondHex2"]
+          },
+          {
+              "campaign_title": "Third campaign title",
+              "slogan": "Third catchy slogan",
+              "discount": "Third discount offer",
+              "campaign_detail": "Third campaign description",
+              "campaign_period": {
+                  "start_date": "YYYY-MM-DD",
+                  "end_date": "YYYY-MM-DD"
+              },
+              "call_to_action": "Third call to action!",
+              "theme": "Third campaign theme",
+              "caption": "Third social media caption",
+              "hashtags": ["#thirdHashtag1", "#thirdHashtag2"],
+              "colorTheme": ["#thirdHex1", "#thirdHex2"]
+          }
+      ]
+  }
+
+  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount
+  `;
+
+  const textModel = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      systemInstruction: system_instructions,
+  });
+
+  return textModel.startChat();
+}
