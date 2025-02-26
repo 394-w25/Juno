@@ -2,6 +2,7 @@ import brownRibbon from "../../assets/brown-ribbon.png"
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
 
+// FLYER TEMPLATE
 export default function Template1({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
     const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     

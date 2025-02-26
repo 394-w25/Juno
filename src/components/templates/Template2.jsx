@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 
-function Template2({logo, title, subtitle, date, time}) {
+// SOCIAL MEDIA TEMPLATE
+
+function Template2({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
     return(
-        <div>
-            {logo && <img src={logo} alt="logo" className=""/>}
-            <h1 className="text-2xl"> {title} </h1>
-            <p> {subtitle} </p>
-            <p> {date} | {time} </p>
-            </div>
+        <div
+            className="absolute w-[864px] h-[1080px]"
+            style={isMobile ? { transform: "scale(0.55)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.75)", transformOrigin: "top left"} : {}}
+        >
+
+        </div>
     )
 }
 
