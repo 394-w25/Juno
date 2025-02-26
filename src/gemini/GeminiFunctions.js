@@ -15,9 +15,6 @@ export function createNewChat(business_config) {
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const monthName = monthNames[monthNumber];
 
-  console.log(monthName, dayOfMonth, year);
-
-
   const additional_social_media_instructions = `If the user asks for a social media post, incorportate text from the details to write a social media post caption.`;
 
   const system_instructions = `
