@@ -11,6 +11,13 @@ export function createNewChat(business_config) {
   const now = new Date();
   const year = now.getFullYear();
   const monthNumber = now.getMonth();
+  const dayOfMonth = now.getDate();
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const monthName = monthNames[monthNumber];
+
+  console.log(monthName, dayOfMonth, year);
+
+
   const additional_social_media_instructions = `If the user asks for a social media post, incorportate text from the details to write a social media post caption.`;
 
   const system_instructions = `
@@ -46,7 +53,7 @@ export function createNewChat(business_config) {
     If they don't like your recommendations, but don't specify which details to change, then generate all new details. If they specify that they don't like specific details, ONLY modify the specified details to the user's request.
     If you don't need additional info for the campaign and the user approves of your recommendations, set the campaign_details field to the recommendation you gave the user according schema.
     Keep campaign_details equal to null otherwise.
-    Make sure that the campaign_period is in the future, but within the same year unless told otherwise. The current year is ${year}. If they don't specify a time for the campaign, have it be during this month: ${monthNumber}.
+    Make sure that the campaign_period starts some time after today's date, but within the same year unless told otherwise. The current date is ${monthName} ${dayOfMonth} ${year}.If they don't specify a time for the campaign, use the current month and day for to guide your campaign creation. 
     Always give a conversational response in the your_conversation_response field even if the campaign_details are complete. Include one exclamation mark at the end of your call to action.
     If campaign_details is not null, always include it in a readable format in your_conversation_response.
     `;
