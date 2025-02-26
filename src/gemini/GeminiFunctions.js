@@ -66,18 +66,22 @@ export function createNewChat(business_config) {
  * @returns {obj} - JSON object version of Gemini's response
  */
 export async function sendChat(chat, prompt, mediaMode) {
-  const result = await chat.sendMessage(
-    prompt + " for " + mediaMode + " mode."
-  ); // prompts Gemini
-  const textResponse = result.response.text(); // get the response in string format
+    const result = await chat.sendMessage(
+      prompt + " for " + mediaMode + " mode."
+    ); // prompts Gemini
+    const textResponse = result.response.text(); // get the response in string format
 
-  // Remove ```json and ``` from the string
-  const cleanedString = textResponse.slice(7, -3);
+    if (textResponse.startsWith("```json")) {
+      // Remove ```json and ``` from the string
+      const cleanedString = textResponse.slice(7, -3);
 
-  // Turn JSON string into an object
-  const responseObj = JSON.parse(cleanedString);
+      // Turn JSON string into an object
+      const responseObj = JSON.parse(cleanedString);
 
-  return responseObj;
+      return responseObj;
+    }
+
+    return textResponse;
 }
 
 /**
