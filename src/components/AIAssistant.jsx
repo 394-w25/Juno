@@ -160,29 +160,13 @@ const AIAssistant = ({
             </div>
           ))}
       </div>
-      <div className="flex gap-3">
-        <Button
-          onClick={handleMakeMeAMarketingCampaign}
-          variant="contained"
-          className="min-w-[auto]"
-          sx={{
-            borderRadius: 45,
-            marginBottom: 1,
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-            "&:hover": {
-              boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.25)",
-              transform: "scale(1.01)", // Slight bounce effect
-            },
-          }}
+      <div className="flex justify-center items-center w-full mt-4">
+        <button 
+                className="px-4 py-0.5 border border-[#3F8CFF] rounded-full text-[#3F8CFF] font-medium text-sm flex justify-center items-center hover:bg-[#3F8CFF] hover:text-white transition"
+                onClick={handleMakeMeAMarketingCampaign}
         >
           Make Marketing Campaign
-        </Button>
-        <Button
-          onClick={handleMakeMeAMarketingCampaign}
-          variant="contained"
-          className=""
-          sx={{ borderRadius: 45, marginBottom: 1 }}
-        ></Button>
+        </button>
       </div>
       <div
         className="p-3 bg-white rounded-lg flex items-center gap-3"
