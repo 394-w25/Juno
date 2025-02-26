@@ -1,5 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
+import { createNewChat, sendChat, createDateBasedCampaignChat} from "../gemini/GeminiFunctions";
+import { businessConfig } from "../pages/Creator";
+import Template1 from "../components/templates/Template1";
+import backgroundImg from "../assets/template_bg_img.png";
+import logoImg from "../assets/template_logo.png";
+import productImg from "../assets/ProductImageTest.png";
 
 const Operator = () => {
     const [message, setMessage] = useState("");
@@ -7,6 +13,8 @@ const Operator = () => {
     const [showPrompt, setShowPrompt] = useState(true);
     const [fadeOut, setFadeOut] = useState(false);
     const [firstMessageSent, setFirstMessageSent] = useState(false);
+    const [businessChat, setBusinessChat] = useState(null);
+    const [campaignOptions, setCampaignOptions] = useState([]);
 
     const chatContainerRef = useRef(null);
 
@@ -38,6 +46,60 @@ const Operator = () => {
             e.preventDefault();
             handleSend();
         }
+    };
+
+    const handleGetDateBasedCampaign = async () => {
+        if (!firstMessageSent) {
+            setFadeOut(true);
+            setTimeout(() => {
+                setShowPrompt(false);
+                setFirstMessageSent(true);
+            }, 500);
+        }
+
+        setChat(prevChat => [
+            ...prevChat,
+            { sender: "User", text: "Get three campaign recommendations for an event in the next month." }
+        ]);
+
+        let tmpChat = businessChat;
+        if (tmpChat === null) {
+            tmpChat = createDateBasedCampaignChat(businessConfig);
+        }
+
+        const response = await sendChat(tmpChat, "Generate three marketing campaign options for an event in the next month.");
+
+        if (response && response.campaign_options) {
+            setCampaignOptions(response.campaign_options.map(option => ({
+                campaign_title: option.campaign_title,
+                call_to_action: option.call_to_action,
+                discount: option.discount,
+                campaign_detail: option.campaign_detail,
+                campaign_period: option.campaign_period,
+            })));
+            setChat(prevChat => [
+                ...prevChat,
+                { sender: "AI", text: "Here are three campaign options for you to choose from:" }
+            ]);
+        } else {
+            setChat(prevChat => [
+                ...prevChat,
+                { sender: "AI", text: "Sorry, I couldn't generate campaign options at this time." }
+            ]);
+        }
+
+        setBusinessChat(tmpChat);
+    };
+
+    const handleSelectCampaign = (selectedCampaign) => {
+        setChat(prevChat => [
+            ...prevChat,
+            { sender: "User", text: `I choose: ${selectedCampaign.campaign_title}` },
+            { sender: "AI", text: `Great choice! Your selected campaign:\n\n${selectedCampaign.campaign_detail}` }
+        ]);
+    
+        // Clear other options after selection
+        setTimeout(() => setCampaignOptions([]), 500);
     };
 
     return (
@@ -88,6 +150,44 @@ const Operator = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {campaignOptions.length > 0 && (
+                    <div className="flex space-x-6 justify-center mb-54">
+                        {campaignOptions.map((option, index) => (
+                            <button
+                                key={index}
+                                className="flex-shrink-0 border border-gray-300 shadow-md rounded-lg transition hover:scale-[1.05] hover:shadow-lg focus:outline-none"
+                                onClick={() => handleSelectCampaign(option)}
+                            >
+                                <div className="w-[150px] scale-[0.2] origin-top-left transform ">
+                                    <Template1
+                                        callToAction={option.call_to_action}
+                                        campaignTitle={option.campaign_title}
+                                        background={backgroundImg}
+                                        logo={logoImg}
+                                        discount={option.discount}
+                                        campaignDetail={option.campaign_detail}
+                                        campaignPeriod={option.campaign_period}
+                                        productImage={productImg}
+                                        website={businessConfig.business_details.web_url}
+                                        phoneNumber={businessConfig.business_details.phone}
+                                        address={businessConfig.business_details.address}
+                                    />
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+
+            )}
+
+            <div className="flex justify-center items-center w-full mt-4 mb-4">
+            <button 
+                className="w-[311px] h-[27px] border border-[#3F8CFF] rounded-full text-[#3F8CFF] font-medium text-sm flex justify-center items-center hover:bg-[#3F8CFF] hover:text-white transition"
+                onClick={handleGetDateBasedCampaign}
+            >
+                Get Business Campaign Recommendations
+            </button>
             </div>
 
             <div className="relative flex flex-col items-center mb-36 z-10">
