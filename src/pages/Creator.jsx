@@ -53,10 +53,9 @@ export const businessConfig = {
 
   
 
-const FlyerGenerator = () => {
+const FlyerGenerator = ({campaignDetails, setCampaignDetails, chatSession}) => {
 
 	const [status, setStatus] = useState("DEFAULT") // switch between "DEFAULT" and "LOADING"
-	const [campaignDetails, setCampaignDetails] = useState(null)
     const switchToVertical = useMediaQuery("(max-width: 1100px)") 
 	const isMobile = useMediaQuery("(max-width: 600px)")
 	const [mediaMode, setMediaMode] = useState("FLYER") // switch between "FLYER" and "SOCIAL MEDIA"
@@ -70,7 +69,7 @@ const FlyerGenerator = () => {
 				className={`flex ${switchToVertical === true ? "flex-col gap-10" : "flex-row gap-5"} flex-auto h-[calc(100vh-70px)] p-[14px]`}
 			>
 				<FlyerEditor setMediaMode={setMediaMode} mediaModes={mediaModes} mediaMode={mediaMode} status={status} campaignDetails={campaignDetails} switchToVertical={switchToVertical} isMobile={isMobile}  />
-				<AIAssistant mediaMode={mediaMode} setStatus={setStatus} setCampaignDetails={setCampaignDetails} switchToVertical={switchToVertical} />
+				<AIAssistant mediaMode={mediaMode} setStatus={setStatus} setCampaignDetails={setCampaignDetails} campaignDetails={campaignDetails} switchToVertical={switchToVertical} chatSession={chatSession}/>
 			</div>
         </div>
     );

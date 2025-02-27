@@ -10,7 +10,9 @@ const AIAssistant = ({
   mediaMode,
   setStatus,
   setCampaignDetails,
+  campaignDetails,
   switchToVertical,
+  chatSession
 }) => {
   const [message, setMessage] = useState("");
   const [chatLog, setChatLog] = useState([]); // chat log
@@ -33,13 +35,13 @@ const AIAssistant = ({
       setChatLog([...chatLog, { sender: "User", text: trimmedMsg }]);
       setStatus("LOADING");
 
-      let tmpChat = chat; // local copy that we can make changes to
+      let tmpChat = chatSession || chat;
 
       if (tmpChat === null) {
         tmpChat = createNewChat(businessConfig);
       }
 
-      const response = await sendChat(tmpChat, trimmedMsg, mediaMode); // sends prompt to Gemini
+      const response = await sendChat(tmpChat, trimmedMsg, mediaMode, campaignDetails); // sends prompt to Gemini
 
       // updates chat log with Gemini's response
       setChatLog([

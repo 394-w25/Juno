@@ -7,14 +7,13 @@ import backgroundImg from "../assets/template_bg_img.png";
 import logoImg from "../assets/template_logo.png";
 import productImg from "../assets/ProductImageTest.png";
 
-const Operator = () => {
+const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState([]);
     const [showPrompt, setShowPrompt] = useState(true);
     const [fadeOut, setFadeOut] = useState(false);
     const [firstMessageSent, setFirstMessageSent] = useState(false);
     const [campaignOptions, setCampaignOptions] = useState([]);
-    const [chatSession, setChatSession] = useState(null);
 
     const chatContainerRef = useRef(null);
 
@@ -130,6 +129,8 @@ const Operator = () => {
             { sender: "User", text: `I choose: ${selectedCampaign.campaign_title}` },
             { sender: "AI", text: `Great choice! Your selected campaign:\n\n${selectedCampaign.campaign_detail}` }
         ]);
+
+        setCampaignDetails(selectedCampaign);
     
         setTimeout(() => setCampaignOptions([]), 500);
     };

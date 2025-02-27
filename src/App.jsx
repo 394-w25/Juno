@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import Creator from "./pages/Creator"
 import Home from "./pages/Home"
 import Insights from "./pages/Insights"
@@ -11,6 +11,9 @@ import {
 } from "react-router-dom";
 
 const App = () => {
+  const [campaignDetails, setCampaignDetails] = useState(null);
+  const [chatSession, setChatSession] = useState(null);
+
   return (
     <Router>
       <Routes>
@@ -20,7 +23,7 @@ const App = () => {
         />
         <Route
           path="/creator"
-          element={<Creator />}
+          element={<Creator setCampaignDetails={setCampaignDetails} campaignDetails={campaignDetails} chatSession={chatSession} />}
         />
         <Route
           path="/insights"
@@ -28,7 +31,7 @@ const App = () => {
         />
         <Route
           path="/operator"
-          element={<Operator />}
+          element={<Operator setCampaignDetails={setCampaignDetails} setChatSession={setChatSession} chatSession={chatSession} />}
         />
       </Routes>
     </Router>

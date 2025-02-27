@@ -69,10 +69,40 @@ export function createNewChat(business_config) {
  * @param {string} mediaMode
  * @returns {obj} - JSON object version of Gemini's response
  */
-export async function sendChat(chat, prompt, mediaMode) {
-    const result = await chat.sendMessage(
-      prompt + " for " + mediaMode + " mode."
-    ); // prompts Gemini
+export async function sendChat(chat, prompt, mediaMode, campaignDetails = null) {
+    let finalPrompt = prompt + ` for ${mediaMode} mode.`;
+
+    if (campaignDetails) {
+        finalPrompt = `
+        Modify the existing campaign based on this update:
+        - Current campaign: ${JSON.stringify(campaignDetails)}
+        - User request: ${prompt}
+
+            You will **ONLY** return JSON data with this schema:
+        {
+            "your_conversation_response": "Chat-friendly response",
+            "campaign_details": {
+                "campaign_title": "Updated campaign title",
+                "slogan": "Updated slogan",
+                "discount": "Updated discount",
+                "campaign_detail": "Updated campaign description",
+                "campaign_period": {
+                    "start_date": "YYYY-MM-DD",
+                    "end_date": "YYYY-MM-DD"
+                },
+                "call_to_action": "Updated CTA",
+                "theme": "Updated theme",
+                "caption": "Updated social media caption",
+                "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
+                "colorTheme": ["#updatedHex1", "#updatedHex2"]
+            }
+        }
+
+        Do NOT generate new campaigns. Only return ONE modified version of the existing campaign in JSON format.
+        `;
+    }
+
+    const result = await chat.sendMessage(finalPrompt); // prompts Gemini
     const textResponse = result.response.text(); // get the response in string format
 
     if (textResponse.startsWith("```json")) {
@@ -81,6 +111,8 @@ export async function sendChat(chat, prompt, mediaMode) {
 
       // Turn JSON string into an object
       const responseObj = JSON.parse(cleanedString);
+
+      console.log(responseObj)
 
       return responseObj;
     }

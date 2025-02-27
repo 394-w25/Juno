@@ -1,4 +1,4 @@
-import React from "react";
+import {useEffect} from "react";
 import {
   Box,
   Card,
@@ -25,6 +25,10 @@ const FlyerEditor = ({
   isMobile,
   switchToVertical,
 }) => {
+  useEffect(() => {
+    console.log("Updated campaign details in FlyerEditor:", campaignDetails);
+  }, [campaignDetails]);
+
   const handleMediaChange = (event, newAlignment) => {
     setMediaMode(newAlignment);
   };
