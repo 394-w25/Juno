@@ -11,6 +11,7 @@ import {
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
 import backgroundImg from "../assets/template_bg_img.png";
+import backgroundImg2 from "../assets/temp.png";
 import logoImg from "../assets/template_logo.png";
 import productImg from "../assets/ProductImageTest.png";
 import { CircularProgress } from "@mui/material";
@@ -99,7 +100,7 @@ const FlyerEditor = ({
                   callToAction={campaignDetails.call_to_action}
                   switchToVertical={switchToVertical}
                   campaignTitle={campaignDetails.campaign_title}
-                  background={backgroundImg}
+                  background={backgroundImg2}
                   logo={logoImg}
                   discount={campaignDetails.discount}
                   campaignDetail={campaignDetails.campaign_detail}
