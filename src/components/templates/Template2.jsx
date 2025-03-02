@@ -42,10 +42,10 @@ function Template2({ callToAction, isMobile, switchToVertical, campaignTitle, ba
                     <p className="text-2xl font-black font-serif text-[#42311C]">{formatPeriod(campaignPeriod)}</p>
                 </div>
             
-                <div className="flex gap-8 flex-col justify-center items-center mb-4">
-                    <div className="relative bg-white/87 rounded-[3rem] p-16 flex flex-col items-center">
+                <div className="flex gap-4 flex-col justify-center items-center mb-4">
+                    <div className="relative gap-5 bg-white/83 rounded-[3rem] p-10 flex flex-col items-center">
                         {/* COMPONENT: discount */}
-                        <p className="relative max-w-[700px] p-8 text-[#A6937C] font-serif font-semibold text-9xl text-center">
+                        <p className="relative max-w-[700px] text-[#A6937C] font-serif font-semibold text-9xl text-center">
                         {discount ? discount.toUpperCase() : ""}
                         </p>
                         {/* COMPONENT: campaign details */}
