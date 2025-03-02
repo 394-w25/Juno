@@ -27,7 +27,7 @@ const formatPeriod = (timePeriod) => {
 function Template2({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
     return (
         <div
-          className="absolute left-1/2 top-1/2"style={{ width: "1080px", height: "1080px", transform: `translate(-50%, -50%) scale(0.64)`, transformOrigin: "center center"}}
+          className="absolute left-1/2 top-1/2 overflow-hidden"style={{ width: "1080px", height: "1080px", transform: `translate(-50%, -50%) scale(0.64)`, transformOrigin: "center center"}}
         >
           <img src={background} className="absolute w-full h-full object-contain object-center"/>
           <div className="relative h-full inset-0 flex flex-col justify-between py-10 items-center text-center">
