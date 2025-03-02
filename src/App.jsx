@@ -9,6 +9,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Onboarding from "./pages/Onboarding";
 
 const App = () => {
   const [campaignDetails, setCampaignDetails] = useState(null);
@@ -32,6 +33,10 @@ const App = () => {
         <Route
           path="/operator"
           element={<Operator setCampaignDetails={setCampaignDetails} setChatSession={setChatSession} chatSession={chatSession} />}
+        />
+        <Route
+          path="/onboarding"
+          element={<Onboarding />}
         />
       </Routes>
     </Router>
