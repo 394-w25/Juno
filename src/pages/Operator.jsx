@@ -127,7 +127,7 @@ const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
         setChat(prevChat => [
             ...prevChat,
             { sender: "User", text: `I choose: ${selectedCampaign.campaign_title}` },
-            { sender: "AI", text: `Great choice! Your selected campaign:\n\n${selectedCampaign.campaign_detail}` }
+            { sender: "AI", text: `Great choice! You can now go to the Creator page to make changes to your selected campaign recommendation` }
         ]);
 
         setCampaignDetails(selectedCampaign);
