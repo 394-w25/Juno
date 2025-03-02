@@ -3,7 +3,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
 
 // FLYER TEMPLATE
-export default function Template1({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
+export default function Template1({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp, templateRef }) {
     const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     
     /**
@@ -35,6 +35,7 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
 
     return (
         <div 
+            ref={templateRef}
             className="absolute w-[816px] h-[1056px]"
             style={isMobile ? { transform: "scale(0.55)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.75)", transformOrigin: "top left"} : {}}
         >
