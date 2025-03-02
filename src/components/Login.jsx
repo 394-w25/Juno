@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo1 from "../assets/Logo1.png";
 import { getAuth, signInWithRedirect } from "firebase/auth";
-import { googleProvider } from "../firebase/FirebaseConfig";
+import { app, googleProvider } from "../firebase/FirebaseConfig";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const auth = getAuth();
+      const auth = getAuth(app);
       await signInWithRedirect(auth, googleProvider);
     } catch (error) {
       console.error("Error during sign-in:", error.message);
