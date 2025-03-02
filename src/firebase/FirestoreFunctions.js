@@ -60,4 +60,4 @@ async function getBusinessConfig(uid) {
     return null
 }
 
-export {getBusinessConfig, saveBusinessConfig}
+export {getBusinessConfig, saveBusinessConfig, BusinessConfig}
