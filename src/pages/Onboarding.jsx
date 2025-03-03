@@ -1,4 +1,4 @@
-import { MenuItem, TextField, CircularProgress } from "@mui/material";
+import { MenuItem, TextField, CircularProgress, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import logo from '../assets/Logo.png';
 import { BusinessConfig, saveBusinessConfig } from "../firebase/FirestoreFunctions";
@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import OnboardingTextField from "../components/OnboardingTextField";
 
 export default function Onboarding() {
+
+    const isMobile = useMediaQuery("(max-width: 600px)")
 
     const [businessName, setBusinessName] = useState("")
     const [address, setAddress] = useState("")
@@ -97,7 +99,7 @@ export default function Onboarding() {
 
                 <OnboardingTextField placeholder={"123 Main St., Los Angeles, CA, 90210, USA"} errorMsg={errorMsgs.address} label="Address Line" setValue={setAddress} />
 
-                <div className="flex gap-5">
+                <div className={`flex ${isMobile ? "flex-col" : ""} gap-5`}>
                     <div className="w-full">
                         <TextField
                             fullWidth
