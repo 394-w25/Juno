@@ -4,7 +4,10 @@ import { getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { app, googleProvider } from "../firebase/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { getBusinessConfig } from "../firebase/FirestoreFunctions";
+import {
+  getBusinessConfig,
+  getUserProfile,
+} from "../firebase/FirestoreFunctions";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,14 +22,14 @@ const Login = () => {
       const user = result.user;
       console.log(user);
       if (user) {
-        const userProfile = await getBusinessConfig(user.uid);
+        const userProfile = await getUserProfile(user.uid);
         console.log("user profile: " + JSON.stringify(userProfile));
         if (userProfile) {
-          console.log("User profile exists");
+          console.log("user profile exists");
           navigate(userProfile.name ? "/dashboard" : "/onboarding");
         } else {
-          console.log("No user profile found");
-          navigate("/");
+          console.log("No business config found");
+          navigate("/signup");
         }
       }
     } catch (error) {
