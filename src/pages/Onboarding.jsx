@@ -3,6 +3,7 @@ import { useState } from "react";
 import logo from '../assets/Logo.png';
 import { BusinessConfig, saveBusinessConfig } from "../firebase/FirestoreFunctions";
 import { useNavigate } from "react-router-dom";
+import OnboardingTextField from "../components/OnboardingTextField";
 
 export default function Onboarding() {
 
@@ -12,12 +13,18 @@ export default function Onboarding() {
     const [industry, setIndustry] = useState("")
     const [webUrl, setWebUrl] = useState("")
     const [businessType, setBusinessType] = useState("")
+    const [errorMsgs, setErrorMsgs] = useState({ // error messages for each TextField
+        "businessName": null,
+        "address": null,
+        "phone": null,
+        "industry": null,
+        "webUrl": null,
+    })
 
     const [status, setStatus] = useState("DEFAULT")
     const navigate = useNavigate()
 
     const testUid = "dfkjaaeutwiouakjvsanvalktoiw"
-
 
     const businessTypes = [
         "Restaurant",
@@ -35,28 +42,25 @@ export default function Onboarding() {
         "Nonprofit",
     ]
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target
+    const phoneRegex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    const addressRegex = /^\d+\s[A-Za-z0-9\s.,#-]+(?:\s(Apt|Apartment|Unit|Suite|#)\s?\w*)?,\s[A-Za-z\s]+,\s(?:[A-Za-z]{2}|[A-Za-z\s]+),\s\d{5}(-\d{4})?,\s[A-Za-z\s]+$/;
 
-        switch (name) {
-            case "businessName":
-                setBusinessName(value)
-                break
-            case "address":
-                setAddress(value)
-                break
-            case "phone":
-                setPhone(value)
-                break
-            case "industry":
-                setIndustry(value)
-                break
-            case "webUrl":
-                setWebUrl(value)
-                break
-            default:
-                break
+    const validateFields = () => {
+        let valid = true
+        const newErrorMsgs = {...errorMsgs}
+
+        if (!phoneRegex.test(phone)) { // checks if valid phone number
+            newErrorMsgs.phone = "Invalid phone number"
+            valid = false
         }
+
+        if (!addressRegex.test(address)) { // checks if valid address
+            newErrorMsgs.address = "Invalid address"
+            valid = false
+        }
+
+        setErrorMsgs(newErrorMsgs)
+        return valid
     }
 
     const handleBusinessTypeChange = (event) => {
@@ -66,6 +70,12 @@ export default function Onboarding() {
     const handleFormSubmit = async (event) => {
         event.preventDefault()
         setStatus("LOADING")
+
+        if (!validateFields()) {
+            setStatus("DEFAULT")
+            return
+        }
+
         const businessConfig = new BusinessConfig(businessName, address, businessType, phone, industry, webUrl)
         await saveBusinessConfig(testUid, businessConfig)
         setStatus("DEFAULT")
@@ -82,14 +92,10 @@ export default function Onboarding() {
                 BASIC BUSINESS INFO
             </h1>
 
-            <form onSubmit={handleFormSubmit} className="p-10 flex flex-col gap-5 w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
-                <div> {/*text fields have to be surrounded by div otherwise there is a UI bug */}
-                    <TextField onChange={handleInputChange} name="businessName" required size="small" fullWidth label="Business name" variant="outlined" />
-                </div>
+            <form onSubmit={handleFormSubmit} className="p-10 flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
+                <OnboardingTextField errorMsg={errorMsgs.businessName} label="Business Name" setValue={setBusinessName} />
 
-                <div>
-                    <TextField onChange={handleInputChange} name="address" required size="small" fullWidth label="Address line" variant="outlined" />
-                </div>
+                <OnboardingTextField placeholder={"123 Main St., Los Angeles, CA, 90210, USA"} errorMsg={errorMsgs.address} label="Address Line" setValue={setAddress} />
 
                 <div className="flex gap-5">
                     <div className="w-full">
@@ -107,19 +113,14 @@ export default function Onboarding() {
                             ))}
                         </TextField>
                     </div>
-
                     <div className="w-full">
-                        <TextField onChange={handleInputChange} name="phone" required size="small" fullWidth label="Phone number" variant="outlined" />
+                        <OnboardingTextField errorMsg={errorMsgs.phone} label="Phone" setValue={setPhone} />
                     </div>
                 </div>
 
-                <div>
-                    <TextField onChange={handleInputChange} name="industry" required size="small" fullWidth label="Industry" variant="outlined" />
-                </div>
+                <OnboardingTextField errorMsg={errorMsgs.industry} label="Industry" setValue={setIndustry} />
 
-                <div>
-                    <TextField onChange={handleInputChange} name="webUrl" required size="small" fullWidth label="Web url" variant="outlined" />
-                </div>
+                <OnboardingTextField errorMsg={errorMsgs.webUrl} label="Web URL" setValue={setWebUrl} />
 
                 <button disabled={status === "LOADING"} type="submit" className={`py-3 text-sm font-bold bg-[#3F8CFF] text-white rounded-md ${status === "DEFAULT" ? "hover:opacity-50" : ""}`}>
                     {status === "LOADING" ? 
