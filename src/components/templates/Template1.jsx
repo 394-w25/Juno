@@ -3,7 +3,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PlaceIcon from '@mui/icons-material/Place';
 
 // FLYER TEMPLATE
-export default function Template1({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
+export default function Template1({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp, uploadedImage }) {
     const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     
     /**
@@ -48,8 +48,15 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
             <div className="relative h-full inset-0 flex flex-col justify-between py-10 items-center text-center">
                 <div className="flex flex-col items-center gap-3 ">
                     {/* COMPONENT: companyLogo */}
-                    <img src={logo}></img>
-
+                    <img src={logo} alt="Company logo" />
+                    {/* Uploaded Image (if available) */}
+                    {uploadedImage && (
+                        <img 
+                        src={uploadedImage} 
+                        alt="Uploaded by user" 
+                        className="my-4 max-w-[300px] rounded shadow-md"
+                        />
+                    )}
                     {/* COMPONENT: campaignTitle */}
                     <h1 className="text-7xl font-serif font-light uppercase text-[#42311C] w-4/5">{campaignTitle}</h1>
 

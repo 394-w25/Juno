@@ -40,6 +40,7 @@ export function createNewChat(business_config) {
             "caption": caption for a social media post (only for social media mode),
             "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
             "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
+            "image": "URL of the uploaded image, if available"
         }
     }
 
@@ -67,9 +68,10 @@ export function createNewChat(business_config) {
  * @param {ChatSession} chat
  * @param {string} prompt
  * @param {string} mediaMode
+ * @param {string|null} uploadedImageURL
  * @returns {obj} - JSON object version of Gemini's response
  */
-export async function sendChat(chat, prompt, mediaMode, campaignDetails = null) {
+export async function sendChat(chat, prompt, mediaMode, campaignDetails = null, uploadedImageURL = null) {
     let finalPrompt = prompt + ` for ${mediaMode} mode.`;
 
     if (campaignDetails) {
@@ -95,6 +97,7 @@ export async function sendChat(chat, prompt, mediaMode, campaignDetails = null) 
                 "caption": "Updated social media caption",
                 "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
                 "colorTheme": ["#updatedHex1", "#updatedHex2"]
+                "image": "URL of the uploaded image, if available"
             }
         }
 
@@ -170,6 +173,7 @@ export function createDateBasedCampaignChat(business_config) {
               "caption": "Second social media caption",
               "hashtags": ["#secondHashtag1", "#secondHashtag2"],
               "colorTheme": ["#secondHex1", "#secondHex2"]
+              "image": "URL of the uploaded image, if available"
           },
           {
               "campaign_title": "Third campaign title",
@@ -185,6 +189,7 @@ export function createDateBasedCampaignChat(business_config) {
               "caption": "Third social media caption",
               "hashtags": ["#thirdHashtag1", "#thirdHashtag2"],
               "colorTheme": ["#thirdHex1", "#thirdHex2"]
+              "image": "URL of the uploaded image, if available"
           }
       ]
   }
