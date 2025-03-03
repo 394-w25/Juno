@@ -4,16 +4,19 @@ import App from './App';
 
 describe('counter tests', () => {
     
-  test("Counter should be 0 at the start", () => {
+  test("Login button", () => {
     render(<App />);
-    expect(screen.getByText('count is: 0')).toBeDefined();
+    expect(screen.getByText('Login')).toBeDefined();
   });
 
-  test("Counter should increment by one when clicked", async () => {
+  test("Sign up button", async () => {
+    // render(<App />);
+    // const counter = screen.getByRole('button');
+    // fireEvent.click(counter);
+    // expect(await screen.getByText('count is: 1')).toBeDefined();
+    // console.log(counter)
     render(<App />);
-    const counter = screen.getByRole('button');
-    fireEvent.click(counter);
-    expect(await screen.getByText('count is: 1')).toBeDefined();
+    expect(screen.getByText('Sign Up')).toBeDefined();
   });
 
 });
