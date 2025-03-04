@@ -8,11 +8,13 @@ import {
   getBusinessConfig,
   getUserProfile,
 } from "../firebase/FirestoreFunctions";
+import { useAuth } from "../services/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const auth = getAuth();
+  const { setUser } = useAuth()
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -20,16 +22,18 @@ const Login = () => {
       console.log("logging in");
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log(user);
-      if (user) {
-        const userProfile = await getUserProfile(user.uid);
-        console.log("user profile: " + JSON.stringify(userProfile));
-        if (userProfile) {
-          console.log("user profile exists");
-          navigate(userProfile.name ? "/dashboard" : "/onboarding");
+      console.log("User:", user);
+
+      if (user !== null) {
+        setUser(user)
+        const businessConfig = await getBusinessConfig(user.uid)
+
+        if (businessConfig !== null) {
+          console.log("go to home")
+          navigate("/"); // business config exists for this user so go to dashboard (home)
         } else {
-          console.log("No business config found");
-          navigate("/signup");
+          console.log("go to onboarding")
+          navigate("/onboarding"); // go to onboarding
         }
       }
     } catch (error) {
@@ -48,7 +52,10 @@ const Login = () => {
 
       <div className="relative w-1/2 backdrop-blur-[4px] flex items-center justify-center shadow-xl bg-rgba(255, 255, 255, 1)">
         <div className="flex flex-col">
-          <button className="text-black font-[\'Plus Jakarta Sans\'] font-semibold text-xl h-12 w-60 tracking-widest border-logo-blue border-1 m-3 rounded-xl !opacity-100">
+          <button
+            onClick={handleGoogleSignIn}
+            className="text-black font-[\'Plus Jakarta Sans\'] font-semibold text-xl h-12 w-60 tracking-widest border-logo-blue border-1 m-3 rounded-xl !opacity-100"
+          >
             Sign Up
           </button>
           <button

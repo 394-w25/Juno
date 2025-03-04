@@ -48,7 +48,11 @@ const App = () => {
         <Routes>
           <Route
                 path="/onboarding"
-                element={<Onboarding />}
+                element={
+                  <PrivateRoute>
+                    <Onboarding />
+                  </PrivateRoute>
+              }
           />
           <Route
             path="/login"
@@ -61,41 +65,41 @@ const App = () => {
           <Route
             path="/"
             element={
-              <PublicRoute>
+              <PrivateRoute>
                 <Home />
-              </PublicRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/creator"
             element={
-              <PublicRoute>
+              <PrivateRoute>
                 <Creator
                   setCampaignDetails={setCampaignDetails}
                   campaignDetails={campaignDetails}
                   chatSession={chatSession}
                 />
-              </PublicRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/insights"
             element={
-              <PublicRoute>
+              <PrivateRoute>
                 <Insights />
-              </PublicRoute>
+              </PrivateRoute>
             }
           />
           <Route
             path="/operator"
             element={
-              <PublicRoute>
+              <PrivateRoute>
                 <Operator
                   setCampaignDetails={setCampaignDetails}
                   setChatSession={setChatSession}
                   chatSession={chatSession}
                 />
-              </PublicRoute>
+              </PrivateRoute>
             }
           />
         </Routes>

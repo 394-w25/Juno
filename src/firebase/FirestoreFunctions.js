@@ -4,7 +4,7 @@ import { db } from "./FirebaseConfig";
 const USERS_COLLECTION = "users"
 const BUSINESS_CONFIGS_COLLECTION = "businessConfigs"
 
-class BusinessConfig {
+export class BusinessConfig {
     constructor (name, address, business_type, phone, industry, web_url) {
         this.name = name // business name
         this.address = address // business address
@@ -31,9 +31,6 @@ const businessConverter = {
         return new BusinessConfig(data.name, data.address, data.business_type, data.phone, data.industry, data.web_url)
     }
 }
-
-
-
 
 // user
 class UserProfile {
@@ -102,7 +99,7 @@ export async function getUserProfile(uid) {
 export async function saveBusinessConfig(uid, business_config) {
     const docRef = doc(db, BUSINESS_CONFIGS_COLLECTION, uid).withConverter(businessConverter) // creates reference to the document
     await setDoc(docRef, business_config, {
-        merge: true,okay
+        merge: true,
     })
 }
 
@@ -114,7 +111,7 @@ export async function saveBusinessConfig(uid, business_config) {
 export async function getBusinessConfig(uid) {
     const docRef = doc(db, BUSINESS_CONFIGS_COLLECTION, uid).withConverter(businessConverter) // creates reference to document
     const docSnap = await getDoc(docRef)
-    console.log(docSnap);
+
     if (docSnap.exists()) {
         const business_config = docSnap.data()
         console.log(business_config)
@@ -123,5 +120,3 @@ export async function getBusinessConfig(uid) {
     
     return null
 }
-
-export {getBusinessConfig, saveBusinessConfig, BusinessConfig}

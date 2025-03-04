@@ -4,8 +4,8 @@ import Login from "../components/Login";
 const Home = () => {
   return (
     <>
-      <Navbar />
-      {/* <Login /> */}
+      <Navbar /> 
+      home
     </>
   );
 };
