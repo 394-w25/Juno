@@ -56,41 +56,41 @@ const App = () => {
           <Route
             path="/"
             element={
-              <PrivateRoute>
+              <PublicRoute>
                 <Home />
-              </PrivateRoute>
+              </PublicRoute>
             }
           />
           <Route
             path="/creator"
             element={
-              <PrivateRoute>
+              <PublicRoute>
                 <Creator
                   setCampaignDetails={setCampaignDetails}
                   campaignDetails={campaignDetails}
                   chatSession={chatSession}
                 />
-              </PrivateRoute>
+              </PublicRoute>
             }
           />
           <Route
             path="/insights"
             element={
-              <PrivateRoute>
+              <PublicRoute>
                 <Insights />
-              </PrivateRoute>
+              </PublicRoute>
             }
           />
           <Route
             path="/operator"
             element={
-              <PrivateRoute>
+              <PublicRoute>
                 <Operator
                   setCampaignDetails={setCampaignDetails}
                   setChatSession={setChatSession}
                   chatSession={chatSession}
                 />
-              </PrivateRoute>
+              </PublicRoute>
             }
           />
         </Routes>
