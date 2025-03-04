@@ -9,6 +9,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Onboarding from "./pages/Onboarding";
 import Login from "./components/Login";
 import LoadingScreen from "./components/Loading";
 import AuthProvider, { useAuth } from "./services/auth";
@@ -45,6 +46,10 @@ const App = () => {
     <Router>
       <AuthProvider>
         <Routes>
+          <Route
+                path="/onboarding"
+                element={<Onboarding />}
+          />
           <Route
             path="/login"
             element={
