@@ -1,22 +1,43 @@
 import React, { useState } from "react";
 import logo1 from "../assets/Logo1.png";
-import { getAuth, signInWithRedirect } from "firebase/auth";
-import { googleProvider } from "../firebase/FirebaseConfig";
+import { getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { app, googleProvider } from "../firebase/FirebaseConfig";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  getBusinessConfig,
+  getUserProfile,
+} from "../firebase/FirestoreFunctions";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const auth = getAuth();
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const auth = getAuth();
-      await signInWithRedirect(auth, googleProvider);
+      console.log("logging in");
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log(user);
+      if (user) {
+        const userProfile = await getUserProfile(user.uid);
+        console.log("user profile: " + JSON.stringify(userProfile));
+        if (userProfile) {
+          console.log("user profile exists");
+          navigate(userProfile.name ? "/dashboard" : "/onboarding");
+        } else {
+          console.log("No business config found");
+          navigate("/signup");
+        }
+      }
     } catch (error) {
       console.error("Error during sign-in:", error.message);
+    } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="relative flex h-screen w-full">
       <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
