@@ -1,6 +1,7 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./FirebaseConfig";
 
+const USERS_COLLECTION = "users"
 const BUSINESS_CONFIGS_COLLECTION = "businessConfigs"
 
 class BusinessConfig {
@@ -31,15 +32,77 @@ const businessConverter = {
     }
 }
 
+
+
+
+// user
+class UserProfile {
+    constructor(uid, name, email, photoURL) {
+        this.uid = uid;
+        this.name = name;
+        this.email = email;
+        this.photoURL = photoURL;
+    }
+}
+
+// Firestore converter for UserProfile
+const userConverter = {
+    toFirestore: (userProfile) => {
+        return {
+            uid: userProfile.uid,
+            name: userProfile.name,
+            email: userProfile.email,
+            photoURL: userProfile.photoURL
+        };
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options);
+        return new UserProfile(data.uid, data.name, data.email, data.photoURL);
+    }
+};
+
+/**
+ * Saves user profile to Firestore when they sign up
+ * @param {object} user (Firebase Auth user object)
+ */
+export async function saveUserProfile(user) {
+    if (!user || !user.uid) return;
+
+    const userRef = doc(db, USERS_COLLECTION, user.uid).withConverter(userConverter);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+        // Only create entry if the user is new ****
+        await setDoc(userRef, new UserProfile(user.uid, user.displayName || "Unknown", user.email, user.photoURL || null), { merge: true });
+
+        // create empty businessconfig entry
+        await saveBusinessConfig(user.uid, new BusinessConfig("", "", "", "", "", ""));
+    }
+}
+
+/**
+ * Gets user profile from Firestore
+ * @param {string} uid (user's Firebase UID)
+ * @returns {UserProfile?}
+ */
+export async function getUserProfile(uid) {
+    if (!uid) return null;
+
+    const userRef = doc(db, USERS_COLLECTION, uid).withConverter(userConverter);
+    const userSnap = await getDoc(userRef);
+
+    return userSnap.exists() ? userSnap.data() : null;
+}
+
 /**
  * saves onboarding info to Firestore
  * @param {string} uid (uid of the user)
  * @param {BusinessConfig} business_config
  */
-async function saveBusinessConfig(uid, business_config) {
+export async function saveBusinessConfig(uid, business_config) {
     const docRef = doc(db, BUSINESS_CONFIGS_COLLECTION, uid).withConverter(businessConverter) // creates reference to the document
     await setDoc(docRef, business_config, {
-        merge: true,
+        merge: true,okay
     })
 }
 
@@ -48,12 +111,13 @@ async function saveBusinessConfig(uid, business_config) {
  * @param {string} uid (uid of the user)
  * @returns {BusinessConfig?}
  */
-async function getBusinessConfig(uid) {
+export async function getBusinessConfig(uid) {
     const docRef = doc(db, BUSINESS_CONFIGS_COLLECTION, uid).withConverter(businessConverter) // creates reference to document
     const docSnap = await getDoc(docRef)
-
+    console.log(docSnap);
     if (docSnap.exists()) {
         const business_config = docSnap.data()
+        console.log(business_config)
         return business_config
     }
     

@@ -15,7 +15,7 @@ export function createNewChat(business_config) {
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const monthName = monthNames[monthNumber];
 
-  const additional_social_media_instructions = `If the user asks for a social media post, incorportate text from the details to write a social media post caption.`;
+  const additional_social_media_instructions = `If the user asks for a social media post, incorportate text from the details to write a social media post caption, and keep the campaign details concise and the discount to just a number.`;
 
   const system_instructions = `
     You are an AI marketing agent for small business owners. Your job is to help create recommendations for marketing campaigns tailored to the details of their business. This config JSON represents the data for the business you're working with: 
@@ -29,7 +29,7 @@ export function createNewChat(business_config) {
         "campaign_details": {
             "campaign_title": 3-5 word title for the campaign,
             "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-            "discount": "50% off",
+            "discount": "50% off" (if in social media mode, make this only a percentage),
             "campaign_detail": small length text describing the campaign,
             "campaign_period": {
             "start_date": Date object,
@@ -189,7 +189,7 @@ export function createDateBasedCampaignChat(business_config) {
       ]
   }
 
-  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount
+  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. if it is a 
   `;
 
   const textModel = genAI.getGenerativeModel({
