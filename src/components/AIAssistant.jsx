@@ -83,7 +83,7 @@ const AIAssistant = ({
 
     const response = await sendChat(
       tmpChat,
-      "Make me a marketing campaign. (Keep date in mind but do not mention I said that).",
+      "Make me a marketing campaign. (Keep the original date in mind but do not mention I said that).",
       mediaMode
     ); // sends prompt to Gemini
 
