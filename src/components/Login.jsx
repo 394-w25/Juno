@@ -54,13 +54,13 @@ const Login = () => {
         <div className="flex flex-col">
           <button
             onClick={handleGoogleSignIn}
-            className="text-black font-[\'Plus Jakarta Sans\'] font-semibold text-xl h-12 w-60 tracking-widest border-logo-blue border-1 m-3 rounded-xl !opacity-100"
+            className="text-black hover:opacity-50 font-[\'Plus Jakarta Sans\'] font-semibold text-xl h-12 w-60 tracking-widest border-logo-blue border-1 m-3 rounded-xl opacity-100"
           >
             Sign Up
           </button>
           <button
             onClick={handleGoogleSignIn}
-            className=" bg-logo-blue text-white font-semibold text-xl font-[\'Plus Jakarta Sans\'] tracking-widest font-xl h-12 w-60 m-3 rounded-xl !opacity-100"
+            className=" bg-logo-blue hover:opacity-50 text-white font-semibold text-xl font-[\'Plus Jakarta Sans\'] tracking-widest font-xl h-12 w-60 m-3 rounded-xl opacity-100"
           >
             Login
           </button>
