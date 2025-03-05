@@ -1,5 +1,4 @@
 import {useEffect, useRef} from "react";
-import html2canvas from "html2canvas";
 import {
   Box,
   Card,
@@ -18,6 +17,7 @@ import productImg from "../assets/ProductImageTest.png";
 import { CircularProgress } from "@mui/material";
 import { businessConfig } from "../pages/Creator";
 import DownloadIcon from "@mui/icons-material/Download";
+import { toPng } from "html-to-image";
 
 const FlyerEditor = ({
   setMediaMode,
@@ -39,20 +39,20 @@ const FlyerEditor = ({
   const templateRef = useRef(null);
 
   const downloadImage = async () => {
-    console.log(templateRef)
-      if (!templateRef.current) return;
-
-      try {
-          await document.fonts.ready;
-          const canvas = await html2canvas(templateRef.current, { scale: 3, useCORS: true });
-          const image = canvas.toDataURL("image/png");
-          const link = document.createElement("a");
-          link.href = image;
-          link.download = "flyer.png";
-          link.click();
-      } catch (error) {
-          console.error("Failed to generate image:", error);
-      }
+      if (!templateRef.current) { // flyer hasn't been created so return
+        return
+      } 
+      
+      toPng(templateRef.current, { height: 1150 })
+        .then((dataUrl) => {
+          const link = document.createElement("a")
+          link.download = "flyer.png"
+          link.href = dataUrl
+          link.click()
+        })
+        .catch((err) => {
+          console.error("Failed to generate image:", err)
+        })
   };
 
   return (
