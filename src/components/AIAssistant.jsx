@@ -43,6 +43,7 @@ const AIAssistant = ({
 
       const response = await sendChat(tmpChat, trimmedMsg, mediaMode, campaignDetails); // sends prompt to Gemini
 
+      console.log("response", response)
       // updates chat log with Gemini's response
       setChatLog([
         ...chatLog,

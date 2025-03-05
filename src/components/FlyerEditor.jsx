@@ -46,7 +46,7 @@ const FlyerEditor = ({
       toPng(templateRef.current, { height: 1150 })
         .then((dataUrl) => {
           const link = document.createElement("a")
-          link.download = "flyer.png"
+          link.download = mediaMode == "FLYER" ? "flyer.png" : "social-post.png"
           link.href = dataUrl
           link.click()
         })
@@ -57,24 +57,25 @@ const FlyerEditor = ({
 
   return (
     <div
-      className={`relative  flex-grow ${
+      className={`relative flex-grow ${
         switchToVertical === false && isMobile === false
           ? "h-full w-2/3"
           : "flex-grow-5 p-10"
       } flex ${
-        switchToVertical === false ? "py-10 justify-center" : ""
-      } overflow-auto bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] pt-16`}
+        switchToVertical === false ? "py-10" : ""
+      } overflow-scroll bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] pt-16`} // DO NOT USE justify-center SINCE IT WILL CLIP THE IMAGE ON THE LEFT SIDE
     >
       <button
         onClick={downloadImage}
-        className="absolute top-4 right-4 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
+        className="absolute top-1 right-0 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
       >
         <DownloadIcon /> {/* ✅ Small download icon */}
       </button>
 
-      {/* div below creates the grid of circles using a background image */}
-      {/* <div className={`absolute ${showFlyer === "loading" ? `opacity-30` : "opacity-75"} z-0 inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]`}></div> */}
-      <div className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white">
+      <div 
+        className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white"
+        style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle 
+      >
         <ToggleButtonGroup
           color="primary"
           value={mediaMode}
@@ -123,6 +124,7 @@ const FlyerEditor = ({
                 />
               ) : (
                 <Template2
+                  templateRef={templateRef}
                   isMobile={isMobile}
                   callToAction={campaignDetails.call_to_action}
                   switchToVertical={switchToVertical}
