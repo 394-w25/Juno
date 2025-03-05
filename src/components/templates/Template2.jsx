@@ -24,16 +24,19 @@ const formatPeriod = (timePeriod) => {
 
     return `${formatDate(start_date)} - ${formatDate(end_date)}`;
 }
-function Template2({ callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
+function Template2({ templateRef, callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
     return (
         <div
-          className="absolute left-1/2 top-1/2 overflow-hidden"style={{ width: "1080px", height: "1080px", transform: `translate(-50%, -50%) scale(0.64)`, transformOrigin: "center center"}}
+          ref={templateRef}
+          className="absolute w-[1080px] h-[1080px]"
+          style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.6)", transformOrigin: "top left"} : {transform: "scale(0.75)", transformOrigin: "top left"}}
         >
-          <img src={background} className="absolute w-full h-full object-contain object-center"/>
+          <img src={background} className="absolute w-full h-full object-cover"/>
+          
           <div className="relative h-full inset-0 flex flex-col justify-between py-10 items-center text-center">
                 <div className="flex flex-col items-center gap-8 ">
                     {/* COMPONENT: companyLogo */}
-                    <img src={logo} className="w-[180px] h-auto" />
+                    <img src={logo}/>
 
                     {/* COMPONENT: campaignTitle */}
                     <h1 className="text-7xl font-serif font-light uppercase text-[#42311C] w-4/5">{campaignTitle}</h1>
@@ -62,16 +65,14 @@ function Template2({ callToAction, isMobile, switchToVertical, campaignTitle, ba
                 </div>
 
                 {/* CONTACT INFO */}
-                <div className="flex flex-col items-center text-[#42311C]">
+                <div className="flex flex-col font-semibold items-center text-[#42311C]">
                     <div className="flex gap-3 items-center">
                         <LocalPhoneIcon className="!text-3xl"/> 
-                        <p className="text-3xl">{phoneNumber}</p>
+                        <p className="text-2xl">{phoneNumber}</p>
                     </div>
                     <div className="flex gap-3 items-center">
                         <PlaceIcon className="!text-4xl"/>
-                        <div className="text-xl font-extrabold">
-                            {address}
-                        </div>
+                        <p className="text-2xl">{address}</p>
                     </div>
                 </div>
             </div>

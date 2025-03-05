@@ -80,9 +80,7 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
                 
 
                 {/* COMPONENT: call to actiion */}
-                <div className="rounded-lg p-4 bg-[#8C5C35] text-white text-2xl font-serif px-10 tracking-wider">
-                    <a href={website} target="_blank" rel="noopener noreferrer">{callToAction}</a>
-                </div>
+                <p className="rounded-lg p-4 bg-[#8C5C35] text-white text-2xl font-serif px-10 tracking-wider">{callToAction}</p>
 
                 {/* CONTACT INFO */}
                 <div className="flex flex-col items-center text-[#42311C]">
