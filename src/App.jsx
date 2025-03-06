@@ -32,20 +32,6 @@ const App = () => {
     return children;
   };
 
-  const PublicRoute = ({ children }) => {
-    const { user, authLoading } = useAuthContext();
-
-    if (authLoading) {
-      return <LoadingScreen text={"Loading..."} />;
-    }
-
-    if (!user) {
-      return children
-    }
-
-    return <Navigate to="/" replace />
-  };
-
   return (
     <Router>
       <AuthProvider>
@@ -61,9 +47,7 @@ const App = () => {
           <Route
             path="/login"
             element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
+              <Login />
             }
           />
           <Route

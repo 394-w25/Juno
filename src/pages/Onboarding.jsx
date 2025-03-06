@@ -96,9 +96,9 @@ export default function Onboarding() {
             </h1>
 
             <form onSubmit={handleFormSubmit} className="p-10 flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
-                <OnboardingTextField errorMsg={errorMsgs.businessName} label="Business Name" setValue={setBusinessName} />
+                <OnboardingTextField required={true} errorMsg={errorMsgs.businessName} label="Business Name" setValue={setBusinessName} />
 
-                <OnboardingTextField placeholder={"123 Main St., Los Angeles, CA, 90210, USA"} errorMsg={errorMsgs.address} label="Address Line" setValue={setAddress} />
+                <OnboardingTextField required={false} placeholder={"123 Main St., Los Angeles, CA, 90210, USA"} errorMsg={errorMsgs.address} label="Address Line" setValue={setAddress} />
 
                 <div className={`flex ${isMobile ? "flex-col" : ""} gap-5`}>
                     <div className="w-full">
@@ -117,13 +117,13 @@ export default function Onboarding() {
                         </TextField>
                     </div>
                     <div className="w-full">
-                        <OnboardingTextField errorMsg={errorMsgs.phone} label="Phone" setValue={setPhone} />
+                        <OnboardingTextField required={false} errorMsg={errorMsgs.phone} label="Phone" setValue={setPhone} />
                     </div>
                 </div>
 
-                <OnboardingTextField errorMsg={errorMsgs.industry} label="Industry" setValue={setIndustry} />
+                <OnboardingTextField required={false} errorMsg={errorMsgs.industry} label="Industry" setValue={setIndustry} />
 
-                <OnboardingTextField errorMsg={errorMsgs.webUrl} label="Web URL" setValue={setWebUrl} />
+                <OnboardingTextField required={false} errorMsg={errorMsgs.webUrl} label="Web URL" setValue={setWebUrl} />
 
                 <button disabled={status === "LOADING"} type="submit" className={`py-3 text-sm font-bold bg-[#3F8CFF] text-white rounded-md ${status === "DEFAULT" ? "hover:opacity-50" : ""}`}>
                     {status === "LOADING" ? 
