@@ -15,7 +15,7 @@ export default function Onboarding() {
 
     const isMobile = useMediaQuery("(max-width: 600px)")
 
-    const { user } = useAuthContext()
+    const { user, setBusinessConfig } = useAuthContext()
 
     const autocompleteRef = useRef(null)
 
@@ -117,6 +117,7 @@ export default function Onboarding() {
 
         const businessConfig = new BusinessConfig(businessName, address, businessType, phone, industry, webUrl)
         await saveBusinessConfig(user.uid, businessConfig)
+        setBusinessConfig(businessConfig)
         setStatus("DEFAULT")
         navigate("/operator")
     }
