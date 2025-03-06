@@ -1,11 +1,16 @@
-import { onAuthStateChanged, signOut } from "firebase/auth"
-import { useEffect, useState } from "react"
+import { onAuthStateChanged, signOut, User } from "firebase/auth"
+import { useEffect, useState,  } from "react"
 import { auth } from "./FirebaseConfig"
-import { getBusinessConfig } from "./FirestoreFunctions"
+import { BusinessConfig, getBusinessConfig } from "./FirestoreFunctions"
 
 export const useAuth = () => {
+    /** @type {[User | null, React.Dispatch<React.SetStateAction<User | null>>]} */
     const [user, setUser] = useState(null)
+
+    /** @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]} */
     const [authLoading, setAuthLoading] = useState(true)
+
+    /** @type {[BusinessConfig | null, React.Dispatch<React.SetStateAction<BusinessConfig | null>>]} */
     const [businessConfig, setBusinessConfig] = useState(null)
 
     useEffect(() => {
