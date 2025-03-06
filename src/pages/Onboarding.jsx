@@ -1,16 +1,19 @@
 import { MenuItem, TextField, CircularProgress, useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import logo from '../assets/Logo.png';
 import { BusinessConfig, saveBusinessConfig } from "../firebase/FirestoreFunctions";
 import { useNavigate } from "react-router-dom";
 import OnboardingTextField from "../components/OnboardingTextField";
 import { useAuthContext } from "../components/AuthContext";
+import { Autocomplete } from "@react-google-maps/api";
 
 export default function Onboarding() {
 
     const isMobile = useMediaQuery("(max-width: 600px)")
 
     const { user } = useAuthContext()
+
+    const autocompleteRef = useRef()
 
     const [businessName, setBusinessName] = useState("")
     const [address, setAddress] = useState("")
@@ -52,12 +55,12 @@ export default function Onboarding() {
         let valid = true
         const newErrorMsgs = {...errorMsgs}
 
-        if (!phoneRegex.test(phone)) { // checks if valid phone number
+        if (phone.trim().length > 0 && !phoneRegex.test(phone)) { // checks if valid phone number
             newErrorMsgs.phone = "Invalid phone number"
             valid = false
         }
 
-        if (!addressRegex.test(address)) { // checks if valid address
+        if (address.trim().length > 0 && !addressRegex.test(address)) { // checks if valid address
             newErrorMsgs.address = "Invalid address"
             valid = false
         }
@@ -82,7 +85,7 @@ export default function Onboarding() {
         const businessConfig = new BusinessConfig(businessName, address, businessType, phone, industry, webUrl)
         await saveBusinessConfig(user.uid, businessConfig)
         setStatus("DEFAULT")
-        navigate("/")
+        navigate("/operator")
     }
 
     return (

@@ -16,6 +16,7 @@
     "@google/generative-ai": "^0.21.0",
     "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
+    "@react-google-maps/api": "^2.20.5",
     "@tailwindcss/vite": "^4.0.7",
     "axios": "^1.8.1",
     "firebase": "^11.3.1",
