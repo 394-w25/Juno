@@ -1,10 +1,8 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import Login from "../components/Login";
-import { useAuth } from "../services/auth";
-const Home = () => {
+import { logOut } from "../firebase/AuthFunctions";
 
-  const { logOut } = useAuth()
+const Home = () => {
 
   return (
     <div className="h-dvh">

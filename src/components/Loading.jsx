@@ -3,16 +3,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 export default function LoadingScreen({ text }) {
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: "50px",
-      }}
+      className="flex flex-col gap-5 justify-center items-center h-dvh"
     >
-      <CircularProgress style={{ color: "#e6dff1" }} size={60} />
-      <p style={{ marginTop: "20px", fontSize: "1.5rem", color: "grey" }}>
+      <CircularProgress style={{ color: "#3C82F6" }} size={60} />
+      <p style={{ fontSize: "1.5rem", color: "grey" }}>
         {text}
       </p>
     </div>
