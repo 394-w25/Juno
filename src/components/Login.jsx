@@ -1,40 +1,34 @@
 import React, { useState } from "react";
 import logo1 from "../assets/Logo1.png";
-import { getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { app, googleProvider } from "../firebase/FirebaseConfig";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../firebase/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import {
   getBusinessConfig,
-  getUserProfile,
 } from "../firebase/FirestoreFunctions";
-import { useAuth } from "../services/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const auth = getAuth();
-  const { setUser } = useAuth()
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
+
     try {
-      console.log("logging in");
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log("User:", user);
 
       if (user !== null) {
-        setUser(user)
         const businessConfig = await getBusinessConfig(user.uid)
 
         if (businessConfig !== null) {
-          console.log("go to home")
           navigate("/"); // business config exists for this user so go to dashboard (home)
         } else {
-          console.log("go to onboarding")
           navigate("/onboarding"); // go to onboarding
         }
+      }
+      else {
+        console.error("Error during sign-in: user is null for some reason")
       }
     } catch (error) {
       console.error("Error during sign-in:", error.message);

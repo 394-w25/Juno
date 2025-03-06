@@ -12,14 +12,14 @@ import {
 import Onboarding from "./pages/Onboarding";
 import Login from "./components/Login";
 import LoadingScreen from "./components/Loading";
-import AuthProvider, { useAuth } from "./services/auth";
+import AuthProvider, { useAuthContext } from "./components/AuthContext";
 
 const App = () => {
   const [campaignDetails, setCampaignDetails] = useState(null);
   const [chatSession, setChatSession] = useState(null);
 
   const PrivateRoute = ({ children }) => {
-    const { user, authLoading } = useAuth();
+    const { user, authLoading } = useAuthContext();
 
     if (authLoading) {
       return <LoadingScreen text={"Loading..."} />;
@@ -33,13 +33,17 @@ const App = () => {
   };
 
   const PublicRoute = ({ children }) => {
-    const { user, authLoading } = useAuth();
+    const { user, authLoading } = useAuthContext();
 
     if (authLoading) {
       return <LoadingScreen text={"Loading..."} />;
     }
 
-    return !user ? children : <Navigate to="/" replace />;
+    if (!user) {
+      return children
+    }
+
+    return <Navigate to="/" replace />
   };
 
   return (

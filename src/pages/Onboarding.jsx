@@ -4,10 +4,13 @@ import logo from '../assets/Logo.png';
 import { BusinessConfig, saveBusinessConfig } from "../firebase/FirestoreFunctions";
 import { useNavigate } from "react-router-dom";
 import OnboardingTextField from "../components/OnboardingTextField";
+import { useAuthContext } from "../components/AuthContext";
 
 export default function Onboarding() {
 
     const isMobile = useMediaQuery("(max-width: 600px)")
+
+    const { user } = useAuthContext()
 
     const [businessName, setBusinessName] = useState("")
     const [address, setAddress] = useState("")
@@ -25,8 +28,6 @@ export default function Onboarding() {
 
     const [status, setStatus] = useState("DEFAULT")
     const navigate = useNavigate()
-
-    const testUid = "dfkjaaeutwiouakjvsanvalktoiw"
 
     const businessTypes = [
         "Restaurant",
@@ -79,7 +80,7 @@ export default function Onboarding() {
         }
 
         const businessConfig = new BusinessConfig(businessName, address, businessType, phone, industry, webUrl)
-        await saveBusinessConfig(testUid, businessConfig)
+        await saveBusinessConfig(user.uid, businessConfig)
         setStatus("DEFAULT")
         navigate("/")
     }
