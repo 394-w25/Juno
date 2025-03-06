@@ -9,6 +9,7 @@ import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAPS_LIBRARIES = ["places"]
 
 export default function Onboarding() {
 
@@ -53,7 +54,6 @@ export default function Onboarding() {
     ]
 
     const phoneRegex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
-    const addressRegex = /^\d+\s[A-Za-z0-9\s.,#-]+(?:\s(Apt|Apartment|Unit|Suite|#)\s?\w*)?,\s[A-Za-z\s]+,\s(?:[A-Za-z]{2}|[A-Za-z\s]+),\s\d{5}(-\d{4})?,\s[A-Za-z\s]+$/;
 
     const getCurrentLocation = () => {
         if (navigator.geolocation) {
@@ -98,11 +98,6 @@ export default function Onboarding() {
             valid = false
         }
 
-        if (address.trim().length > 0 && !addressRegex.test(address)) { // checks if valid address
-            newErrorMsgs.address = "Invalid address"
-            valid = false
-        }
-
         setErrorMsgs(newErrorMsgs)
         return valid
     }
@@ -127,7 +122,7 @@ export default function Onboarding() {
     }
 
     return (
-        <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
+        <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={GOOGLE_MAPS_LIBRARIES}>
             <div className="relative flex flex-col justify-center items-center gap-10 h-svh">
                 <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
 
@@ -139,8 +134,6 @@ export default function Onboarding() {
 
                 <form onSubmit={handleFormSubmit} className="p-10 flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
                     <OnboardingTextField required={true} errorMsg={errorMsgs.businessName} label="Business Name" setValue={setBusinessName} />
-
-                    {/* <OnboardingTextField required={false} placeholder={"123 Main St., Los Angeles, CA, 90210, USA"} errorMsg={errorMsgs.address} label="Address Line" setValue={setAddress} /> */}
 
                     <Autocomplete
                         onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
@@ -161,7 +154,7 @@ export default function Onboarding() {
                             size="small"
                         />
                     </Autocomplete>
-
+                    
                     <Button
                         variant="outlined"
                         color="primary"
