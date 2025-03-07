@@ -84,16 +84,20 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
 
                 {/* CONTACT INFO */}
                 <div className="flex flex-col items-center text-[#42311C]">
-                    <div className="flex gap-3 items-center">
-                        <LocalPhoneIcon className="!text-3xl"/> 
-                        <p className="text-xl">{phoneNumber}</p>
-                    </div>
-                    <div className="flex gap-3 items-center">
-                        <PlaceIcon className="!text-4xl"/>
-                        <div className="text-xl">
-                            <a href={addressToGoogleMapsLink} target="_blank" rel="noopener noreferrer">{address}</a>
+                    {phoneNumber !== "" && 
+                        <div className="flex gap-3 items-center">
+                            <LocalPhoneIcon className="!text-3xl"/> 
+                            <p className="text-xl">{phoneNumber}</p>
                         </div>
-                    </div>
+                    } 
+                    {address !== "" &&
+                        <div className="flex gap-3 items-center">
+                            <PlaceIcon className="!text-4xl"/>
+                            <div className="text-xl">
+                                <a href={addressToGoogleMapsLink} target="_blank" rel="noopener noreferrer">{address}</a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
 
