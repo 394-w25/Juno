@@ -15,7 +15,7 @@ import OnboardingTextField from "../components/OnboardingTextField";
 import { useAuthContext } from "../components/AuthContext";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const GOOGLE_MAPS_LIBRARIES = ["places"];
@@ -43,22 +43,27 @@ export default function Onboarding() {
 
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [status, setStatus] = useState("DEFAULT");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const businessTypes = [
-    "Restaurant",
-    "Retail",
-    "E-commerce",
-    "Manufacturing",
-    "Healthcare",
-    "Technology",
-    "Real Estate",
-    "Hospitality",
-    "Consulting",
-    "Marketing",
-    "Legal Services",
-    "Agriculture",
-    "Nonprofit",
+    "Convenience/Grocery Store",
+    "Flower Store",
+    "Gift Shop",
+    "Jewelry Store",
+    "Book Store",
+    "Butcher Shop",
+    "Auto Parts Store",
+    "Bicycle Store",
+    "Clothing Store",
+    "Electronics Store",
+    "Food/Bakery Store",
+    "Furniture Store",
+    "Hardware Store",
+    "Home Goods Store",
+    "Liquor Store",
+    "Pet Store",
+    "Shoe Store",
+    "Sporting Goods Store"
   ];
 
   const phoneRegex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
@@ -137,7 +142,7 @@ export default function Onboarding() {
     await saveBusinessConfig(user.uid, businessConfig);
     setBusinessConfig(businessConfig);
     setStatus("DEFAULT");
-    // navigate("/operator");
+    navigate("/operator");
   };
 
   return (
