@@ -22,7 +22,7 @@ const Login = () => {
         const businessConfig = await getBusinessConfig(user.uid) // fetch business config from db
 
         if (businessConfig !== null) {
-          navigate("/"); // business config exists for this user so go to dashboard (home)
+          navigate("/operator"); // business config exists for this user so go to dashboard (home)
         } else {
           navigate("/onboarding"); // go to onboarding
         }

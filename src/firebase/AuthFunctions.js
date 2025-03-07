@@ -20,6 +20,9 @@ export const useAuth = () => {
         const config = await getBusinessConfig(currentUser.uid);
         setBusinessConfig(config);
         setUser(currentUser);
+        if (!config) {
+            navigate("/operator");
+          }
       } else {
         // user isn't logged in or has signed out
         setUser(null);
