@@ -11,18 +11,17 @@ import {
   BusinessConfig,
   saveBusinessConfig,
 } from "../firebase/FirestoreFunctions";
-import { useNavigate } from "react-router-dom";
 import OnboardingTextField from "../components/OnboardingTextField";
 import { useAuthContext } from "../components/AuthContext";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const GOOGLE_MAPS_LIBRARIES = ["places"];
 
 export default function Onboarding() {
   const isMobile = useMediaQuery("(max-width: 600px)");
-
   const { user, setBusinessConfig } = useAuthContext();
 
   const autocompleteRef = useRef(null);
@@ -44,7 +43,7 @@ export default function Onboarding() {
 
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [status, setStatus] = useState("DEFAULT");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const businessTypes = [
     "Restaurant",
@@ -138,7 +137,7 @@ export default function Onboarding() {
     await saveBusinessConfig(user.uid, businessConfig);
     setBusinessConfig(businessConfig);
     setStatus("DEFAULT");
-    navigate("/operator");
+    // navigate("/operator");
   };
 
   return (
