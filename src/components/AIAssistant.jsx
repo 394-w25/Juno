@@ -3,8 +3,8 @@ import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
 import { createNewChat, sendChat } from "../gemini/GeminiFunctions";
-import { businessConfig } from "../pages/Creator";
 import ReactMarkdown from "react-markdown";
+import { useAuthContext } from "./AuthContext"
 
 const AIAssistant = ({
   mediaMode,
@@ -17,6 +17,7 @@ const AIAssistant = ({
   const [message, setMessage] = useState("");
   const [chatLog, setChatLog] = useState([]); // chat log
   const [chat, setChat] = useState(null); // ongoing chat with gemini
+  const { businessConfig } = useAuthContext()
 
   const chatContainerRef = useRef(null);
 

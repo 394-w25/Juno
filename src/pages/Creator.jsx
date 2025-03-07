@@ -5,53 +5,6 @@ import FlyerEditor from "../components/FlyerEditor";
 import AIAssistant from "../components/AIAssistant";
 import { ChatSession } from "@google/generative-ai";
 
-export const businessConfig = {
-	"business_details": {
-		"name": "Liceria Florist",
-		"address": "2145 Sheridan Rd, Evanston, IL 60208",
-		"business_type": "retail",
-		"phone":"+1 234 567 890",
-		"industry": "florist",
-		"web_url":"https://liceriaflorist.com"
-	},
-
-	"flyer_config": {
-		"page_size": "A4",
-		"orientation": "portrait",
-		"media_dimensions": {
-			"width": "210mm",
-			"height": "297mm"
-		},
-		"margins": {
-			"top": "10mm",
-			"bottom": "10mm",
-			"left": "10mm",
-			"right": "10mm"
-		},
-		"background": {
-			"color": "#FFFFFF",
-			"pattern": "gradient-blue",
-		},
-		"logo": {
-			"url": "https://example.com/logo.png",
-			"position": "top-left",
-			"size": "auto"
-		},
-		"font_style": {
-			"primary": "Open Sans",
-			"secondary": "Arial",
-			"heading_size": "36px",
-			"body_size": "18px",
-			"color": "#333333"
-		},
-		"contact_info": {
-			"website": "https://example.com",
-			"phone_number": "+1 234 567 890",
-			"address": "123 Business Street, City, Country"
-		}
-	}
-}
-
 /**
  * @typedef {Object} CreatorProps
  * @property {ChatSession | null} chatSession
