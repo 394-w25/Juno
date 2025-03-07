@@ -1,6 +1,22 @@
 import { ChatSession, GenerativeModel } from "@google/generative-ai";
 import { genAI } from "./GeminiConfig";
 
+export class CampaignDetail {
+    constructor (campaign_title, slogan, discount, campaign_detail, start_date, end_date, call_to_action, theme, caption, hashtags, color_theme) {
+        this.campaign_title = campaign_title
+        this.slogan = slogan
+        this.discount = discount
+        this.campaign_detail = campaign_detail
+        this.start_date = start_date
+        this.end_date = end_date
+        this.call_to_action = call_to_action
+        this.theme = theme
+        this.caption = caption
+        this.hashtags = hashtags
+        this.color_theme = color_theme
+    }
+}
+
 /**
  * Creates a new chat with the campaign text model
  * @param {object} business_config
@@ -15,7 +31,7 @@ export function createNewChat(business_config) {
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const monthName = monthNames[monthNumber];
 
-  const additional_social_media_instructions = `If the user asks for a social media post, incorportate text from the details to write a social media post caption, and keep the campaign details concise and the discount to just a number.`;
+  console.log("config:", business_config)
 
   const system_instructions = `
     You are an AI marketing agent for small business owners. Your job is to help create recommendations for marketing campaigns tailored to the details of their business. This config JSON represents the data for the business you're working with: 
@@ -63,11 +79,17 @@ export function createNewChat(business_config) {
 }
 
 /**
+ * @typedef ChatResponse
+ * @property {string} conversation_response
+ * @property {CampaignDetail} campaign_details
+ */
+
+/**
  * sends a chat to Gemini and returns the response
  * @param {ChatSession} chat
  * @param {string} prompt
  * @param {string} mediaMode
- * @returns {obj} - JSON object version of Gemini's response
+ * @returns {ChatResponse} - JSON object version of Gemini's response
  */
 export async function sendChat(chat, prompt, mediaMode, campaignDetails = null) {
     let finalPrompt = prompt + ` for ${mediaMode} mode.`;
@@ -111,13 +133,30 @@ export async function sendChat(chat, prompt, mediaMode, campaignDetails = null) 
 
       // Turn JSON string into an object
       const responseObj = JSON.parse(cleanedString);
+      const campaign_details = new CampaignDetail(
+        responseObj.campaign_details.campaign_title,
+        responseObj.campaign_details.slogan,
+        responseObj.campaign_details.discount,
+        responseObj.campaign_details.campaign_detail,
+        responseObj.campaign_details.campaign_period.start_date,
+        responseObj.campaign_details.campaign_period.end_date,
+        responseObj.campaign_details.call_to_action,
+        responseObj.campaign_details.theme,
+        responseObj.campaign_details.caption,
+        responseObj.campaign_details.hashtags,
+        responseObj.campaign_details.color_theme,
+      )
 
-      console.log(responseObj)
+      const res = {
+        "conversation_response": responseObj.your_conversation_response,
+        "campaign_details": campaign_details
+      }
 
-      return responseObj;
+      console.log("res:", res)
+
+      return res;
     }
 
-    return textResponse;
 }
 
 /**

@@ -1,10 +1,5 @@
 import {useEffect, useRef} from "react";
 import {
-  Box,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
@@ -15,10 +10,23 @@ import backgroundImg2 from "../assets/temp.png";
 import logoImg from "../assets/template_logo.png";
 import productImg from "../assets/ProductImageTest.png";
 import { CircularProgress } from "@mui/material";
-import { businessConfig } from "../pages/Creator";
 import DownloadIcon from "@mui/icons-material/Download";
 import { toPng } from "html-to-image";
+import { CampaignDetail } from "../gemini/GeminiFunctions";
+import { useAuthContext } from "./AuthContext";
 
+/**
+ * @typedef {Object} FlyerEditorProps
+ * @property {React.Dispatch<React.SetStateAction<string>>} setMediaMode
+ * @property {[string]} mediaModes
+ * @property {string} mediaMode
+ * @property {string} status
+ * @property {CampaignDetail} campaignDetails
+ * @property {boolean} isMobile
+ * @property {boolean} switchToVertical
+ */
+
+/** @param {FlyerEditorProps} props */
 const FlyerEditor = ({
   setMediaMode,
   mediaModes,
@@ -37,6 +45,8 @@ const FlyerEditor = ({
   };
 
   const templateRef = useRef(null);
+
+  const { businessConfig } = useAuthContext()
 
   const downloadImage = async () => {
       if (!templateRef.current) { // flyer hasn't been created so return
@@ -115,11 +125,14 @@ const FlyerEditor = ({
                   logo={logoImg}
                   discount={campaignDetails.discount}
                   campaignDetail={campaignDetails.campaign_detail}
-                  campaignPeriod={campaignDetails.campaign_period}
+                  campaignPeriod={{
+                    start_date: campaignDetails.start_date,
+                    end_date: campaignDetails.end_date
+                  }}
                   productImage={productImg}
-                  website={businessConfig.business_details.web_url}
-                  phoneNumber={businessConfig.business_details.phone}
-                  address={businessConfig.business_details.address}
+                  website={businessConfig.web_url}
+                  phoneNumber={businessConfig.phone}
+                  address={businessConfig.address}
                   fontStyleProp=""
                 />
               ) : (
@@ -129,21 +142,23 @@ const FlyerEditor = ({
                   callToAction={campaignDetails.call_to_action}
                   switchToVertical={switchToVertical}
                   campaignTitle={campaignDetails.campaign_title}
-                  background={backgroundImg2}
+                  background={backgroundImg}
                   logo={logoImg}
                   discount={campaignDetails.discount}
                   campaignDetail={campaignDetails.campaign_detail}
-                  campaignPeriod={campaignDetails.campaign_period}
+                  campaignPeriod={{
+                    start_date: campaignDetails.start_date,
+                    end_date: campaignDetails.end_date
+                  }}
                   productImage={productImg}
-                  website={businessConfig.business_details.web_url}
-                  phoneNumber={businessConfig.business_details.phone}
-                  address={businessConfig.business_details.address}
+                  website={businessConfig.web_url}
+                  phoneNumber={businessConfig.phone}
+                  address={businessConfig.address}
                   fontStyleProp=""
                 />
               )}
             </>
-          )}
-       
+        )}
       </div>
 
   );

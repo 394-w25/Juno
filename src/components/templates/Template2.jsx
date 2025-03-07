@@ -66,14 +66,18 @@ function Template2({ templateRef, callToAction, isMobile, switchToVertical, camp
 
                 {/* CONTACT INFO */}
                 <div className="flex flex-col font-semibold items-center text-[#42311C]">
-                    <div className="flex gap-3 items-center">
-                        <LocalPhoneIcon className="!text-3xl"/> 
-                        <p className="text-2xl">{phoneNumber}</p>
-                    </div>
-                    <div className="flex gap-3 items-center">
-                        <PlaceIcon className="!text-4xl"/>
-                        <p className="text-2xl">{address}</p>
-                    </div>
+                    {phoneNumber !== "" && 
+                        <div className="flex gap-3 items-center">
+                            <LocalPhoneIcon className="!text-3xl"/> 
+                            <p className="text-2xl">{phoneNumber}</p>
+                        </div>
+                    }
+                    {address !== "" && 
+                        <div className="flex gap-3 items-center">
+                            <PlaceIcon className="!text-4xl"/>
+                            <p className="text-2xl">{address}</p>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

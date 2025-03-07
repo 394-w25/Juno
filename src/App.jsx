@@ -14,8 +14,11 @@ import Login from "./components/Login";
 import LoadingScreen from "./components/Loading";
 import AuthProvider, { useAuthContext } from "./components/AuthContext";
 import { ChatSession } from "@google/generative-ai";
+import { CampaignDetail } from "./gemini/GeminiFunctions";
 
 const App = () => {
+
+  /** @type {[CampaignDetail | null, React.Dispatch<React.SetStateAction<CampaignDetail | null>>]} */
   const [campaignDetails, setCampaignDetails] = useState(null);
 
   /** @type {[ChatSession | null, React.Dispatch<React.SetStateAction<ChatSession | null>>]} */
@@ -66,7 +69,6 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Creator
-                  setCampaignDetails={setCampaignDetails}
                   campaignDetails={campaignDetails}
                   chatSession={chatSession}
                 />
