@@ -26,6 +26,7 @@ const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
     const [fadeOut, setFadeOut] = useState(false);
     const [firstMessageSent, setFirstMessageSent] = useState(false);
     const [campaignOptions, setCampaignOptions] = useState([]);
+    const [isGeneratingCampaigns, setIsGeneratingCampaigns] = useState(false); //loading button
 
     const chatContainerRef = useRef(null);
 
@@ -105,7 +106,8 @@ const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
                 setFirstMessageSent(true);
             }, 500);
         }
-    
+        
+        setIsGeneratingCampaigns(true);
         setChat(prevChat => [...prevChat, { sender: "User", text: "Generate marketing campaigns for next month." }]);
     
         let session = chatSession || createDateBasedCampaignChat(businessConfig);
@@ -132,6 +134,8 @@ const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
                 ...prevChat,
                 { sender: "AI", text: "Oops! Something went wrong while generating campaigns." }
             ]);
+        } finally {
+            setIsGeneratingCampaigns(false);
         }
     };
 
