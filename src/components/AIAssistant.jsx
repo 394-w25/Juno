@@ -2,10 +2,24 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
-import { createNewChat, sendChat } from "../gemini/GeminiFunctions";
+import { CampaignDetail, createNewChat, sendChat } from "../gemini/GeminiFunctions";
 import ReactMarkdown from "react-markdown";
 import { useAuthContext } from "./AuthContext";
+import { ChatSession } from "@google/generative-ai";
 
+/**
+ * @typedef {Object} AIAssistantProps
+ * @property {string} mediaMode
+ * @property {React.Dispatch<React.SetStateAction<string>>} setStatus
+ * @property {React.Dispatch<React.SetStateAction<CampaignDetail | null>>} setCampaignDetails
+ * @property {CampaignDetail | null} campaignDetails
+ * @property {boolean} switchToVertical
+ * @property {ChatSession | null} chatSession
+ * @property {[ChatLogItem]} chatLog
+ * @property {React.Dispatch<React.SetStateAction<[ChatLogItem]>>} setChatLog
+ */
+
+/** @param {AIAssistantProps} props */
 const AIAssistant = ({
   mediaMode,
   setStatus,
