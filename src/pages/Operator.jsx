@@ -6,7 +6,16 @@ import backgroundImg from "../assets/template_bg_img.png";
 import logoImg from "../assets/template_logo.png";
 import productImg from "../assets/ProductImageTest.png";
 import { useAuthContext } from "../components/AuthContext";
+import { ChatSession } from "@google/generative-ai";
 
+/**
+ * @typedef {Object} OperatorProps
+ * @property {ChatSession | null} chatSession
+ * @property {React.Dispatch<React.SetStateAction<ChatSession | null>>} setChatSession
+ * @property {React.Dispatch<React.SetStateAction<any>>} setCampaignDetails
+ */
+
+/** @param {OperatorProps} props */
 const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
 
     const { businessConfig } = useAuthContext() // get business config from auth context
