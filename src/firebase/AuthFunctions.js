@@ -2,6 +2,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "./FirebaseConfig";
 import { BusinessConfig, getBusinessConfig } from "./FirestoreFunctions";
+import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
   /** @type {[User | null, React.Dispatch<React.SetStateAction<User | null>>]} */
@@ -13,6 +14,7 @@ export const useAuth = () => {
   /** @type {[BusinessConfig | null, React.Dispatch<React.SetStateAction<BusinessConfig | null>>]} */
   const [businessConfig, setBusinessConfig] = useState(null);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
@@ -21,8 +23,8 @@ export const useAuth = () => {
         setBusinessConfig(config);
         setUser(currentUser);
         if (!config) {
-            navigate("/operator");
-          }
+          navigate("/operator");
+        }
       } else {
         // user isn't logged in or has signed out
         setUser(null);
