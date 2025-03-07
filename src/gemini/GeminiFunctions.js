@@ -183,9 +183,39 @@ export function createDateBasedCampaignChat(business_config) {
               "call_to_action": "Third call to action!",
               "theme": "Third campaign theme",
               "caption": "Third social media caption",
-              "hashtags": ["#thirdHashtag1", "#thirdHashtag2"],
-              "colorTheme": ["#thirdHex1", "#thirdHex2"]
+              "hashtags": ["#fourthHashtag1", "#fourthHashtag2"],
+              "colorTheme": ["#fourthHex1", "#fourthHex2"]
           }
+          {
+            "campaign_title": "Fourth campaign title",
+            "slogan": "Fourth catchy slogan",
+            "discount": "Fourth discount offer",
+            "campaign_detail": "Fourth campaign description",
+            "campaign_period": {
+                "start_date": "YYYY-MM-DD",
+                "end_date": "YYYY-MM-DD"
+            },
+            "call_to_action": "Fourth call to action!",
+            "theme": "Fourth campaign theme",
+            "caption": "Fourth social media caption",
+            "hashtags": ["#fourthHashtag1", "#fourthHashtag2"],
+            "colorTheme": ["#fourthHex1", "#fourthHex2"]
+        }
+        {
+            "campaign_title": "Fifth campaign title",
+            "slogan": "Fifth catchy slogan",
+            "discount": "Fifth discount offer",
+            "campaign_detail": "Fifth campaign description",
+            "campaign_period": {
+                "start_date": "YYYY-MM-DD",
+                "end_date": "YYYY-MM-DD"
+            },
+            "call_to_action": "Fifth call to action!",
+            "theme": "Fifth campaign theme",
+            "caption": "Fifth social media caption",
+            "hashtags": ["#fifthHashtag1", "#fifthHashtag2"],
+            "colorTheme": ["#fifthHex1", "#fifthHex2"]
+        }
       ]
   }
 
