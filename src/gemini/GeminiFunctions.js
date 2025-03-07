@@ -160,6 +160,46 @@ export async function sendChat(chat, prompt, mediaMode, campaignDetails = null) 
 }
 
 /**
+ * Sends a chat message for campaign options handling.
+ * @param {ChatSession} chatSession - The current chat session.
+ * @param {string} prompt - The user input to send.
+ * @param {boolean} isCampaignRequest - Flag to indicate if the chat is related to campaign options.
+ * @param {CampaignDetail | null} campaignDetails - Current campaign details, if available.
+ * @returns {Promise<ChatResponse>} - Response containing conversation text and campaign options.
+ */
+export async function sendCampaignChat(chatSession, prompt) {
+    let finalPrompt = prompt;
+  
+    try {
+      const result = await chatSession.sendMessage(finalPrompt);
+      const textResponse = result.response.text();
+  
+      if (textResponse.startsWith("```json")) {
+        const cleanedString = textResponse.slice(7, -3);
+        const responseObj = JSON.parse(cleanedString);
+  
+        const campaignOptions = responseObj.campaign_options || [];
+  
+        return {
+          your_conversation_response: responseObj.your_conversation_response,
+          campaign_options: campaignOptions,
+        };
+      }
+
+      return {
+        your_conversation_response: "Oops! Something went wrong.",
+        campaign_options: [],
+      };
+    } catch (error) {
+      console.error("Error sending chat:", error);
+      return {
+        your_conversation_response: "Oops! Something went wrong while processing your request.",
+        campaign_options: [],
+      };
+    }
+  }
+
+/**
  * Creates a new chat for generating marketing campaign recommendations based on upcoming events in the next month.
  * @param {object} business_config
  * @returns {ChatSession}

@@ -4,6 +4,7 @@ import {
   createNewChat,
   sendChat,
   createDateBasedCampaignChat,
+  sendCampaignChat
 } from "../gemini/GeminiFunctions";
 import Template1 from "../components/templates/Template1";
 import backgroundImg from "../assets/template_bg_img.png";
@@ -63,7 +64,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
     setIsLoading(true);
 
     try {
-      const response = await sendChat(session, userMessage);
+      const response = await sendCampaignChat(session, userMessage);
       console.log("AI Response:", response);
 
       if (typeof response === "string") {
@@ -123,7 +124,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
     setIsLoading(true);
 
     try {
-      const response = await sendChat(
+      const response = await sendCampaignChat(
         session,
         "Generate five marketing campaign options for an event in the next month."
       );
