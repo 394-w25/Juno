@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Creator from "./pages/Creator";
 import Home from "./pages/Home";
-import Insights from "./pages/Insights";
 import Operator from "./pages/Operator";
 import {
   BrowserRouter as Router,
@@ -72,14 +71,6 @@ const App = () => {
                   campaignDetails={campaignDetails}
                   chatSession={chatSession}
                 />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/insights"
-            element={
-              <PrivateRoute>
-                <Insights />
               </PrivateRoute>
             }
           />
