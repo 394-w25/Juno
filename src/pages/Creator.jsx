@@ -3,6 +3,7 @@ import { Chip, ToggleButton, ToggleButtonGroup, useMediaQuery } from "@mui/mater
 import Navbar from "../components/Navbar";
 import FlyerEditor from "../components/FlyerEditor";
 import AIAssistant from "../components/AIAssistant";
+import { ChatSession } from "@google/generative-ai";
 
 export const businessConfig = {
 	"business_details": {
@@ -51,9 +52,15 @@ export const businessConfig = {
 	}
 }
 
-  
+/**
+ * @typedef {Object} CreatorProps
+ * @property {ChatSession | null} chatSession
+ * @property {Object | null} campaignDetails
+ * @property {React.Dispatch<React.SetStateAction<any>>} setCampaignDetails
+ */
 
-const FlyerGenerator = ({campaignDetails, setCampaignDetails, chatSession}) => {
+/** @param {CreatorProps} props */
+const Creator = ({campaignDetails, setCampaignDetails, chatSession}) => {
 
 	const [status, setStatus] = useState("DEFAULT") // switch between "DEFAULT" and "LOADING"
     const switchToVertical = useMediaQuery("(max-width: 1100px)") 
@@ -75,4 +82,4 @@ const FlyerGenerator = ({campaignDetails, setCampaignDetails, chatSession}) => {
     );
 };
 
-export default FlyerGenerator;
+export default Creator;

@@ -20,7 +20,7 @@ export function createNewChat(business_config) {
   const system_instructions = `
     You are an AI marketing agent for small business owners. Your job is to help create recommendations for marketing campaigns tailored to the details of their business. This config JSON represents the data for the business you're working with: 
         ${JSON.stringify(
-          business_config.business_details
+          business_config
         )}. Please use it to create your recommendations.
 
     You will only return JSON data with this schema:
@@ -135,7 +135,7 @@ export function createDateBasedCampaignChat(business_config) {
   You are an AI marketing agent for small business owners. Your job is to create marketing campaigns based on upcoming holidays or seasonal trends in the next month (${nextMonthNumber}/${year}).
   Identify major shopping events, holidays, or seasonal trends relevant to the user's business. If no major event is found, suggest a seasonal promotion.
   
-  This business config represents the user's business details: ${JSON.stringify(business_config.business_details)}. Use it to tailor the campaign recommendations.
+  This business config represents the user's business details: ${JSON.stringify(business_config)}. Use it to tailor the campaign recommendations.
 
   You will return JSON data in this format:
   {

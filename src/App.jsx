@@ -13,9 +13,12 @@ import Onboarding from "./pages/Onboarding";
 import Login from "./components/Login";
 import LoadingScreen from "./components/Loading";
 import AuthProvider, { useAuthContext } from "./components/AuthContext";
+import { ChatSession } from "@google/generative-ai";
 
 const App = () => {
   const [campaignDetails, setCampaignDetails] = useState(null);
+
+  /** @type {[ChatSession | null, React.Dispatch<React.SetStateAction<ChatSession | null>>]} */
   const [chatSession, setChatSession] = useState(null);
 
   const PrivateRoute = ({ children }) => {
@@ -30,20 +33,6 @@ const App = () => {
     }
 
     return children;
-  };
-
-  const PublicRoute = ({ children }) => {
-    const { user, authLoading } = useAuthContext();
-
-    if (authLoading) {
-      return <LoadingScreen text={"Loading..."} />;
-    }
-
-    if (!user) {
-      return children
-    }
-
-    return <Navigate to="/" replace />
   };
 
   return (
@@ -61,9 +50,7 @@ const App = () => {
           <Route
             path="/login"
             element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
+              <Login />
             }
           />
           <Route
