@@ -12,10 +12,12 @@ const AIAssistant = ({
   setCampaignDetails,
   campaignDetails,
   switchToVertical,
-  chatSession
+  chatSession,
+  chatLog,
+  setChatLog
 }) => {
+  
   const [message, setMessage] = useState("");
-  const [chatLog, setChatLog] = useState([]); // chat log
   const [chat, setChat] = useState(null); // ongoing chat with gemini
 
   const { businessConfig } = useAuthContext()
