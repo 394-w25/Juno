@@ -112,13 +112,13 @@ const Operator = ({setCampaignDetails, chatSession, setChatSession}) => {
         setChatSession(session);
     
         try {
-            const response = await sendChat(session, "Generate three marketing campaign options for an event in the next month.");
+            const response = await sendChat(session, "Generate five marketing campaign options for an event in the next month.");
     
             if (response && response.campaign_options) {
                 setCampaignOptions(response.campaign_options);
                 setChat(prevChat => [
                     ...prevChat,
-                    { sender: "AI", text: "Here are three campaign options for you to choose from." }
+                    { sender: "AI", text: "Here are five campaign options for you to choose from." }
                 ]);
             } else {
                 setChat(prevChat => [
