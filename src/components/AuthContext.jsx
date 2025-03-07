@@ -1,11 +1,10 @@
 import { createContext, useContext, } from "react";
 import { useAuth } from "../firebase/AuthFunctions";
-import { User } from "firebase/auth"
 import { BusinessConfig } from "../firebase/FirestoreFunctions";
 
 /**
  * @typedef {Object} AuthContextType
- * @property {User | null} user
+ * @property {import("firebase/auth").User | null} user
  * @property {boolean} authLoading
  * @property {BusinessConfig | null} businessConfig
  * @property {React.Dispatch<React.SetStateAction<BusinessConfig | null>>} setBusinessConfig
