@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
   createNewChat,
-  sendChat,
   createDateBasedCampaignChat,
+  sendChatOptions,
+  CampaignDetail,
 } from "../gemini/GeminiFunctions";
 import Template1 from "../components/templates/Template1";
 import backgroundImg from "../assets/template_bg_img.png";
@@ -26,12 +27,23 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
   const { businessConfig } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
   const [showPrompt, setShowPrompt] = useState(true);
-  const [fadeOut, setFadeOut] = useState(false);
+  // const [fadeOut, setFadeOut] = useState(false);
   const [firstMessageSent, setFirstMessageSent] = useState(false);
-  const [campaignOptions, setCampaignOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false); //loading button
+  
+  /** @type {[[CampaignDetail], React.Dispatch<React.SetStateAction<[CampaignDetail]>>]} */
+  const [campaignOptions, setCampaignOptions] = useState([]);
+
+  /**
+	 * @typedef {Object} ChatLogItem
+	 * @property {string} sender
+	 * @property {string} text
+	 */
+
+  /** @type {[[ChatLogItem], React.Dispatch<React.SetStateAction<[ChatLogItem]>>]} */
+  const [chatLog, setChatLog] = useState([]);
+
 
   const chatContainerRef = useRef(null);
 
@@ -40,58 +52,48 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [chat]);
+  }, [chatLog]);
 
-  const handleSend = async () => {
-    if (!message.trim()) return;
+  useEffect(() => {
+    console.log("showPrompt changed", showPrompt)
+  }, [showPrompt])
 
-    if (!firstMessageSent) {
-      setFadeOut(true);
-      setTimeout(() => {
-        setShowPrompt(false);
-        setFirstMessageSent(true);
-      }, 500);
+  const handleSend = async (prompt, isOptions = false) => {
+    let trimmedMsg = ""
+
+    if (prompt === undefined) {
+      trimmedMsg = message.trim();
     }
+    else {
+      trimmedMsg = prompt
+    }
+
+    if (trimmedMsg.length < 1) return;
+
+    setShowPrompt(false)
 
     const userMessage = message;
     setMessage("");
 
-    setChat((prevChat) => [...prevChat, { sender: "User", text: userMessage }]);
+    setChatLog((prevChat) => [...prevChat, { sender: "User", text: trimmedMsg }]);
 
-    let session = chatSession || createNewChat(businessConfig);
+    let session = chatSession === null ? isOptions ? createDateBasedCampaignChat(businessConfig) : createNewChat(businessConfig) : chatSession;
+
     setChatSession(session);
     setIsLoading(true);
 
     try {
-      const response = await sendChat(session, userMessage);
+      const response = await sendChatOptions(session, userMessage);
       console.log("AI Response:", response);
 
-      if (typeof response === "string") {
-        // If the response is a string (normal chat) we only display this
-        setChat((prevChat) => [...prevChat, { sender: "AI", text: response }]);
-      } else if (response && response.your_conversation_response) {
-        // If it's JSON, then behave normally
-        setChat((prevChat) => [
-          ...prevChat,
-          { sender: "AI", text: response.your_conversation_response },
-        ]);
-      } else {
-        // Otherwise say this
-        setChat((prevChat) => [
-          ...prevChat,
-          { sender: "AI", text: "I'm not sure how to respond." },
-        ]);
-      }
+      setChatLog((prevChat) => [...prevChat, { sender: "AI", text: response.conversation_response }]);
 
       if (response.campaign_options && response.campaign_options.length > 0) {
         setCampaignOptions(response.campaign_options);
       }
     } catch (error) {
       console.error("Error handling AI response:", error);
-      setChat((prevChat) => [
-        ...prevChat,
-        { sender: "AI", text: "Oops! Something went wrong." },
-      ]);
+      setChatLog((prevChat) => [...prevChat, { sender: "AI", text: "Oops! Something went wrong." }]);
     } finally {
       setIsLoading(false);
     }
@@ -105,63 +107,11 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
   };
 
   const handleGetDateBasedCampaign = async () => {
-    if (!firstMessageSent) {
-      setFadeOut(true);
-      setTimeout(() => {
-        setShowPrompt(false);
-        setFirstMessageSent(true);
-      }, 500);
-    }
-
-    setChat((prevChat) => [
-      ...prevChat,
-      { sender: "User", text: "Generate marketing campaigns for next month." },
-    ]);
-
-    let session = chatSession || createDateBasedCampaignChat(businessConfig);
-    setChatSession(session);
-    setIsLoading(true);
-
-    try {
-      const response = await sendChat(
-        session,
-        "Generate five marketing campaign options for an event in the next month."
-      );
-
-      if (response && response.campaign_options) {
-        setCampaignOptions(response.campaign_options);
-        setChat((prevChat) => [
-          ...prevChat,
-          {
-            sender: "AI",
-            text: "Here are five campaign options for you to choose from.",
-          },
-        ]);
-      } else {
-        setChat((prevChat) => [
-          ...prevChat,
-          {
-            sender: "AI",
-            text: "Sorry, I couldn't generate campaign options at this time.",
-          },
-        ]);
-      }
-    } catch (error) {
-      console.error("Error fetching campaign options:", error);
-      setChat((prevChat) => [
-        ...prevChat,
-        {
-          sender: "AI",
-          text: "Oops! Something went wrong while generating campaigns.",
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
+    await handleSend("Generate five marketing campaign options for an event in the next month.", true)
   };
 
   const handleSelectCampaign = (selectedCampaign) => {
-    setChat((prevChat) => [
+    setChatLog((prevChat) => [
       ...prevChat,
       { sender: "User", text: `I choose: ${selectedCampaign.campaign_title}` },
       {
@@ -177,16 +127,14 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-b from-blue-500/10 to-blue-500/30 rounded-[20px] backdrop-blur-md flex flex-col overflow-hidden relative">
-      <div className="flex-none">
-        <Navbar />
-      </div>
+    <div>
+      <Navbar />
+    
+    <div className="h-[calc(100vh-70px)] bg-gradient-to-b from-blue-500/10 to-blue-500/30 rounded-[20px] backdrop-blur-md justify-center flex flex-col overflow-hidden relative py-10">
 
       {showPrompt && (
         <div
-          className={`absolute top-2/5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-4 transition-opacity duration-500 ${
-            fadeOut ? "opacity-0" : "opacity-100"
-          }`}
+          className={`absolute top-2/5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-4 transition-opacity duration-500`}
         >
           <div data-svg-wrapper className="flex items-center justify-center">
             <svg
@@ -245,7 +193,37 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
         ref={chatContainerRef}
         className="flex-grow overflow-y-auto px-4 pb-4 flex flex-col-reverse items-center w-full"
       >
-        {chat
+        {campaignOptions.length > 0 && (
+          <div className="flex space-x-6 justify-center mb-54">
+            {campaignOptions.map((option, index) => (
+              <button
+                key={index}
+                className="flex-shrink-0 border border-gray-300 shadow-md rounded-lg transition hover:scale-[1.05] hover:shadow-lg focus:outline-none"
+                onClick={() => handleSelectCampaign(option)}
+              >
+                <div className="w-[150px] scale-[0.2] origin-top-left transform ">
+                  <Template1
+                    callToAction={option.call_to_action}
+                    campaignTitle={option.campaign_title}
+                    background={backgroundImg}
+                    logo={logoImg}
+                    discount={option.discount}
+                    campaignDetail={option.campaign_detail}
+                    campaignPeriod={{
+                      start_date: option.start_date,
+                      end_date: option.end_date
+                    }}
+                    productImage={productImg}
+                    website={businessConfig.web_url}
+                    phoneNumber={businessConfig.phone}
+                    address={businessConfig.address}
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+        {chatLog
           .slice()
           .reverse()
           .map((msg, index) => (
@@ -269,33 +247,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
           ))}
       </div>
 
-      {campaignOptions.length > 0 && (
-        <div className="flex space-x-6 justify-center mb-54">
-          {campaignOptions.map((option, index) => (
-            <button
-              key={index}
-              className="flex-shrink-0 border border-gray-300 shadow-md rounded-lg transition hover:scale-[1.05] hover:shadow-lg focus:outline-none"
-              onClick={() => handleSelectCampaign(option)}
-            >
-              <div className="w-[150px] scale-[0.2] origin-top-left transform ">
-                <Template1
-                  callToAction={option.call_to_action}
-                  campaignTitle={option.campaign_title}
-                  background={backgroundImg}
-                  logo={logoImg}
-                  discount={option.discount}
-                  campaignDetail={option.campaign_detail}
-                  campaignPeriod={option.campaign_period}
-                  productImage={productImg}
-                  website={businessConfig.web_url}
-                  phoneNumber={businessConfig.phone}
-                  address={businessConfig.address}
-                />
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
+      
 
       <div className="flex justify-center items-center w-full mt-4 mb-4">
         <button
@@ -311,7 +263,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
         </button>
       </div>
 
-      <div className="relative flex flex-col items-center mb-36 z-10">
+      <div className="relative flex flex-col items-center z-10">
         <div className="w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 overflow-y-auto">
           <textarea
             placeholder="Type a message..."
@@ -322,6 +274,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
           />
         </div>
       </div>
+    </div>
     </div>
   );
 };
