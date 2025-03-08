@@ -33,10 +33,10 @@ function Template2({ templateRef, callToAction, isMobile, switchToVertical, camp
         >
           <img src={background} className="absolute w-full h-full object-cover"/>
           
-          <div className="relative h-full inset-0 flex flex-col justify-between py-10 items-center text-center">
+          <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center">
                 <div className="flex flex-col items-center gap-8 ">
                     {/* COMPONENT: companyLogo */}
-                    <img src={logo}/>
+                    {/* <img src={logo}/> */}
 
                     {/* COMPONENT: campaignTitle */}
                     <h1 className="text-7xl font-serif font-light uppercase text-[#42311C] w-4/5">{campaignTitle}</h1>
