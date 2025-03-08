@@ -46,10 +46,10 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
             {/*outline outline-left outline-4 outline-brown outline-offset-4*/}
             {/* <img src={productImage} className="absolute right-0 bottom-0 object-cover w-1/2 h-3/4 [clip-path:ellipse(90%_90%_at_50%_100%)]"></img> */}
 
-            <div className="relative h-full inset-0 flex flex-col justify-between py-10 items-center text-center">
+            <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center">
                 <div className="flex flex-col items-center gap-3 ">
                     {/* COMPONENT: companyLogo */}
-                    <img src={logo}></img>
+                    {/* <img src={logo}></img> */}
 
                     {/* COMPONENT: campaignTitle */}
                     <h1 className="text-7xl font-serif font-light uppercase text-[#42311C] w-4/5">{campaignTitle}</h1>

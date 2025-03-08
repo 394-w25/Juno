@@ -221,50 +221,81 @@ export function createDateBasedCampaignChat(business_config) {
       "your_conversation_response": "Introduction to campaign options",
       "campaign_options": [
           {
-              "campaign_title": "First campaign title",
-              "slogan": "First catchy slogan",
-              "discount": "First discount offer",
-              "campaign_detail": "First campaign description",
+              "campaign_title": 3-5 word title for the campaign,
+              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
+              "discount": "50% off" (if in social media mode, make this only a percentage),
+              "campaign_detail": small length text describing the campaign,
               "campaign_period": {
-                  "start_date": "YYYY-MM-DD",
-                  "end_date": "YYYY-MM-DD"
+              "start_date": Date object,
+              "end_date": Date object
               },
-              "call_to_action": "First call to action!",
-              "theme": "First campaign theme",
-              "caption": "First social media caption",
-              "hashtags": ["#firstHashtag1", "#firstHashtag2"],
-              "colorTheme": ["#firstHex1", "#firstHex2"]
+              "call_to_action": a great, creative, and catchy call to action,
+              "theme": "a theme for the campaign",
+              "caption": caption for a social media post (only for social media mode),
+              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
+              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
           },
           {
-              "campaign_title": "Second campaign title",
-              "slogan": "Second catchy slogan",
-              "discount": "Second discount offer",
-              "campaign_detail": "Second campaign description",
+              "campaign_title": 3-5 word title for the campaign,
+              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
+              "discount": "50% off" (if in social media mode, make this only a percentage),
+              "campaign_detail": small length text describing the campaign,
               "campaign_period": {
-                  "start_date": "YYYY-MM-DD",
-                  "end_date": "YYYY-MM-DD"
+              "start_date": Date object,
+              "end_date": Date object
               },
-              "call_to_action": "Second call to action!",
-              "theme": "Second campaign theme",
-              "caption": "Second social media caption",
-              "hashtags": ["#secondHashtag1", "#secondHashtag2"],
-              "colorTheme": ["#secondHex1", "#secondHex2"]
+              "call_to_action": a great, creative, and catchy call to action,
+              "theme": "a theme for the campaign",
+              "caption": caption for a social media post (only for social media mode),
+              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
+              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
           },
           {
-              "campaign_title": "Third campaign title",
-              "slogan": "Third catchy slogan",
-              "discount": "Third discount offer",
-              "campaign_detail": "Third campaign description",
+              "campaign_title": 3-5 word title for the campaign,
+              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
+              "discount": "50% off" (if in social media mode, make this only a percentage),
+              "campaign_detail": small length text describing the campaign,
               "campaign_period": {
-                  "start_date": "YYYY-MM-DD",
-                  "end_date": "YYYY-MM-DD"
+              "start_date": Date object,
+              "end_date": Date object
               },
-              "call_to_action": "Third call to action!",
-              "theme": "Third campaign theme",
-              "caption": "Third social media caption",
-              "hashtags": ["#thirdHashtag1", "#thirdHashtag2"],
-              "colorTheme": ["#thirdHex1", "#thirdHex2"]
+              "call_to_action": a great, creative, and catchy call to action,
+              "theme": "a theme for the campaign",
+              "caption": caption for a social media post (only for social media mode),
+              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
+              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
+          },
+          {
+              "campaign_title": 3-5 word title for the campaign,
+              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
+              "discount": "50% off" (if in social media mode, make this only a percentage),
+              "campaign_detail": small length text describing the campaign,
+              "campaign_period": {
+              "start_date": Date object,
+              "end_date": Date object
+              },
+              "call_to_action": a great, creative, and catchy call to action,
+              "theme": "a theme for the campaign",
+              "caption": caption for a social media post (only for social media mode),
+              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
+              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
+          },
+          {
+            "campaign_title": 3-5 word title for the campaign,
+              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
+              "discount": "50% off" (if in social media mode, make this only a percentage),
+              "campaign_detail": small length text describing the campaign,
+              "campaign_period": {
+              "start_date": Date object,
+              "end_date": Date object
+              },
+              "call_to_action": a great, creative, and catchy call to action,
+              "theme": "a theme for the campaign",
+              "caption": caption for a social media post (only for social media mode),
+              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
+              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
           }
+          
       ]
   }
 
@@ -277,4 +308,101 @@ export function createDateBasedCampaignChat(business_config) {
   });
 
   return textModel.startChat();
+}
+
+/**
+ * @typedef ChatResponseOptions
+ * @property {string} conversation_response
+ * @property {[CampaignDetail]} campaign_options
+ */
+
+/**
+ * sends a chat to Gemini and returns the response
+ * @param {ChatSession} chat
+ * @param {string} prompt
+ * @param {string} mediaMode
+ * @returns {ChatResponseOptions} - JSON object version of Gemini's response
+ */
+export async function sendChatOptions(chat, prompt, mediaMode, campaignDetails = null) {
+  let finalPrompt = prompt + ` for ${mediaMode} mode.`;
+
+  if (campaignDetails) {
+      finalPrompt = `
+      Modify the existing campaign based on this update:
+      - Current campaign: ${JSON.stringify(campaignDetails)}
+      - User request: ${prompt}
+
+          You will **ONLY** return JSON data with this schema:
+      {
+          "your_conversation_response": "Chat-friendly response",
+          "campaign_details": {
+              "campaign_title": "Updated campaign title",
+              "slogan": "Updated slogan",
+              "discount": "Updated discount",
+              "campaign_detail": "Updated campaign description",
+              "campaign_period": {
+                  "start_date": "YYYY-MM-DD",
+                  "end_date": "YYYY-MM-DD"
+              },
+              "call_to_action": "Updated CTA",
+              "theme": "Updated theme",
+              "caption": "Updated social media caption",
+              "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
+              "colorTheme": ["#updatedHex1", "#updatedHex2"]
+          }
+      }
+
+      Do NOT generate new campaigns. Only return ONE modified version of the existing campaign in JSON format.
+      `;
+  }
+
+  const result = await chat.sendMessage(finalPrompt); // prompts Gemini
+  const textResponse = result.response.text(); // get the response in string format
+
+  if (textResponse.startsWith("```json")) {
+    // Remove ```json and ``` from the string
+    const cleanedString = textResponse.slice(7, -3);
+
+    // Turn JSON string into an object
+    const responseObj = JSON.parse(cleanedString);
+
+    console.log("response options", responseObj)
+
+    if (responseObj.campaign_options === undefined) {
+      const res = {
+        "conversation_response": responseObj.your_conversation_response,
+        "campaign_options": []
+      }
+
+      return res
+    }
+
+    let options = []
+
+    for (let i = 0; i < responseObj.campaign_options.length; i++) {
+      const details = responseObj.campaign_options[i]
+      const campaign_details = new CampaignDetail(
+        details.campaign_title,
+        details.slogan,
+        details.discount,
+        details.campaign_detail,
+        details.campaign_period.start_date,
+        details.campaign_period.end_date,
+        details.call_to_action,
+        details.theme,
+        details.caption,
+        details.hashtags,
+        details.color_theme,
+      )
+      options.push(campaign_details)
+    }
+
+    const res = {
+      "conversation_response": responseObj.your_conversation_response,
+      "campaign_options": options
+    }
+
+    return res;
+  }
+
 }
