@@ -84,6 +84,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
 
     try {
       const response = await sendChatOptions(session, userMessage);
+
       console.log("AI Response:", response);
 
       setChatLog((prevChat) => [...prevChat, { sender: "AI", text: response.conversation_response }]);
