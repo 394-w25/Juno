@@ -4,8 +4,12 @@ import { auth } from "./FirebaseConfig";
 import { BusinessConfig, getBusinessConfig } from "./FirestoreFunctions";
 import { useNavigate } from "react-router-dom";
 
+export function updateIsGuest(isGuest) {
+  localStorage.setItem("isGuest", JSON.stringify(isGuest))
+}
+
 export const useAuth = () => {
-  /** @type {[User | null, React.Dispatch<React.SetStateAction<User | null>>]} */
+  /** @type {[import("firebase/auth").User | null, React.Dispatch<React.SetStateAction<import("firebase/auth").User | null>>]} */
   const [user, setUser] = useState(null);
 
   /** @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]} */
@@ -15,6 +19,7 @@ export const useAuth = () => {
   const [businessConfig, setBusinessConfig] = useState(null);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
