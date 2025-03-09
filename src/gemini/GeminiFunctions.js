@@ -157,6 +157,10 @@ export async function sendChat(
         `;
   }
 
+    const result = await chat.sendMessage(finalPrompt); // prompts Gemini
+    const textResponse = result.response.text(); // get the response in string format
+
+    console.log("textRes", textResponse);
 
     try{
       if (textResponse.startsWith("```json")) {
