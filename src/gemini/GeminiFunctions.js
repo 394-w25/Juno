@@ -29,6 +29,44 @@ export class CampaignDetail {
   }
 }
 
+const globalCampaignDetailsJSON = `{
+  "campaign_title": 3-5 word title for the campaign,
+  "slogan": a catchy slogan like "Biggest Discounts of the Season!,
+  "discount": "50% off" (if in social media mode, make this only a percentage),
+  "campaign_detail": small length text describing the campaign,
+  "campaign_period": {
+  "start_date": Date object,
+  "end_date": Date object
+  },
+  "call_to_action": a great, creative, and catchy call to action,
+  "theme": "a theme for the campaign",
+  "caption": caption for a social media post (only for social media mode),
+  "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
+  "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
+},`;
+
+const globalFinalPromptInstructions = `You will **ONLY** return JSON data with this schema:
+{
+    "your_conversation_response": "Chat-friendly response",
+    "campaign_details": {
+        "campaign_title": "Updated campaign title",
+        "slogan": "Updated slogan",
+        "discount": "Updated discount",
+        "campaign_detail": "Updated campaign description",
+        "campaign_period": {
+            "start_date": "YYYY-MM-DD",
+            "end_date": "YYYY-MM-DD"
+        },
+        "call_to_action": "Updated CTA",
+        "theme": "Updated theme",
+        "caption": "Updated social media caption",
+        "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
+        "colorTheme": ["#updatedHex1", "#updatedHex2"]
+    }
+}
+
+Do NOT generate new campaigns. Only return ONE modified version of the existing campaign in JSON format.`;
+
 /**
  * Creates a new chat with the campaign text model
  * @param {object} business_config
@@ -67,21 +105,7 @@ export function createNewChat(business_config) {
     You will only return JSON data with this schema:
     {
         "your_conversation_response": conversational text you would respond to the prompt
-        "campaign_details": {
-            "campaign_title": 3-5 word title for the campaign,
-            "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-            "discount": "50% off" (if in social media mode, make this only a percentage),
-            "campaign_detail": small length text describing the campaign,
-            "campaign_period": {
-            "start_date": Date object,
-            "end_date": Date object
-            },
-            "call_to_action": a great, creative, and catchy call to action,
-            "theme": "a theme for the campaign",
-            "caption": caption for a social media post (only for social media mode),
-            "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-            "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-        }
+        "campaign_details": ${globalCampaignDetailsJSON}
     }
 
     Do not include any promo codes
@@ -129,28 +153,7 @@ export async function sendChat(
         Modify the existing campaign based on this update:
         - Current campaign: ${JSON.stringify(campaignDetails)}
         - User request: ${prompt}
-
-            You will **ONLY** return JSON data with this schema:
-        {
-            "your_conversation_response": "Chat-friendly response",
-            "campaign_details": {
-                "campaign_title": "Updated campaign title",
-                "slogan": "Updated slogan",
-                "discount": "Updated discount",
-                "campaign_detail": "Updated campaign description",
-                "campaign_period": {
-                    "start_date": "YYYY-MM-DD",
-                    "end_date": "YYYY-MM-DD"
-                },
-                "call_to_action": "Updated CTA",
-                "theme": "Updated theme",
-                "caption": "Updated social media caption",
-                "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
-                "colorTheme": ["#updatedHex1", "#updatedHex2"]
-            }
-        }
-
-        Do NOT generate new campaigns. Only return ONE modified version of the existing campaign in JSON format.
+        ${globalFinalPromptInstructions}   
         `;
   }
 
@@ -252,97 +255,12 @@ export function createDateBasedCampaignChat(business_config) {
   {
       "your_conversation_response": "Introduction to campaign options",
       "campaign_options": [
-          {
-              "campaign_title": 3-5 word title for the campaign,
-              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-              "discount": "50% off" (if in social media mode, make this only a percentage),
-              "campaign_detail": small length text describing the campaign,
-              "campaign_period": {
-              "start_date": Date object,
-              "end_date": Date object
-              },
-              "call_to_action": a great, creative, and catchy call to action,
-              "theme": "a theme for the campaign",
-              "caption": caption for a social media post (only for social media mode),
-              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-          },
-          {
-              "campaign_title": 3-5 word title for the campaign,
-              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-              "discount": "50% off" (if in social media mode, make this only a percentage),
-              "campaign_detail": small length text describing the campaign,
-              "campaign_period": {
-              "start_date": Date object,
-              "end_date": Date object
-              },
-              "call_to_action": a great, creative, and catchy call to action,
-              "theme": "a theme for the campaign",
-              "caption": caption for a social media post (only for social media mode),
-              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-          },
-          {
-              "campaign_title": 3-5 word title for the campaign,
-              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-              "discount": "50% off" (if in social media mode, make this only a percentage),
-              "campaign_detail": small length text describing the campaign,
-              "campaign_period": {
-              "start_date": Date object,
-              "end_date": Date object
-              },
-              "call_to_action": a great, creative, and catchy call to action,
-              "theme": "a theme for the campaign",
-              "caption": caption for a social media post (only for social media mode),
-              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-          },
-          {
-              "campaign_title": 3-5 word title for the campaign,
-              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-              "discount": "50% off" (if in social media mode, make this only a percentage),
-              "campaign_detail": small length text describing the campaign,
-              "campaign_period": {
-              "start_date": Date object,
-              "end_date": Date object
-              },
-              "call_to_action": a great, creative, and catchy call to action,
-              "theme": "a theme for the campaign",
-              "caption": caption for a social media post (only for social media mode),
-              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-          },
-          {
-            "campaign_title": 3-5 word title for the campaign,
-              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-              "discount": "50% off" (if in social media mode, make this only a percentage),
-              "campaign_detail": small length text describing the campaign,
-              "campaign_period": {
-              "start_date": Date object,
-              "end_date": Date object
-              },
-              "call_to_action": a great, creative, and catchy call to action,
-              "theme": "a theme for the campaign",
-              "caption": caption for a social media post (only for social media mode),
-              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-          },
-          {
-              "campaign_title": 3-5 word title for the campaign,
-              "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-              "discount": "50% off" (if in social media mode, make this only a percentage),
-              "campaign_detail": small length text describing the campaign,
-              "campaign_period": {
-              "start_date": Date object,
-              "end_date": Date object
-              },
-              "call_to_action": a great, creative, and catchy call to action,
-              "theme": "a theme for the campaign",
-              "caption": caption for a social media post (only for social media mode),
-              "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
-              "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-          },
-          
+          ${globalCampaignDetailsJSON}
+          ${globalCampaignDetailsJSON}
+          ${globalCampaignDetailsJSON}
+          ${globalCampaignDetailsJSON}
+          ${globalCampaignDetailsJSON}
+          ${globalCampaignDetailsJSON} 
       ]
   }
 
@@ -383,28 +301,7 @@ export async function sendChatOptions(
       Modify the existing campaign based on this update:
       - Current campaign: ${JSON.stringify(campaignDetails)}
       - User request: ${prompt}
-
-          You will **ONLY** return JSON data with this schema:
-      {
-          "your_conversation_response": "Chat-friendly response",
-          "campaign_details": {
-              "campaign_title": "Updated campaign title",
-              "slogan": "Updated slogan",
-              "discount": "Updated discount",
-              "campaign_detail": "Updated campaign description",
-              "campaign_period": {
-                  "start_date": "YYYY-MM-DD",
-                  "end_date": "YYYY-MM-DD"
-              },
-              "call_to_action": "Updated CTA",
-              "theme": "Updated theme",
-              "caption": "Updated social media caption",
-              "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
-              "colorTheme": ["#updatedHex1", "#updatedHex2"]
-          }
-      }
-
-      Do NOT generate new campaigns. Only return ONE modified version of the existing campaign in JSON format.
+      ${globalFinalPromptInstructions}
       `;
   }
 
