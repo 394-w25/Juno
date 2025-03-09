@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
-  createNewChat,
+
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
@@ -77,7 +77,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
 
     setChatLog((prevChat) => [...prevChat, { sender: "User", text: trimmedMsg }]);
 
-    let session = chatSession === null ? isOptions ? createDateBasedCampaignChat(businessConfig) : createNewChat(businessConfig) : chatSession;
+    let session = chatSession === null ? createDateBasedCampaignChat(businessConfig) : chatSession;
 
     setChatSession(session);
     setIsLoading(true);
@@ -199,7 +199,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
             {campaignOptions.map((option, index) => (
               <button
                 key={index}
-                className="flex-shrink-0 border border-gray-300 shadow-md rounded-lg transition hover:scale-[1.05] hover:shadow-lg focus:outline-none"
+                className="w-[420px] h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px] flex-col"
                 onClick={() => handleSelectCampaign(option)}
               >
                 <div className="w-[150px] scale-[0.2] origin-top-left transform ">

@@ -36,11 +36,11 @@ export default function Template1({ callToAction, isMobile, switchToVertical, ca
     return (
         <div 
             ref={templateRef}
-            className="absolute w-[816px] h-[1056px]"
-            style={isMobile ? { transform: "scale(0.55)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.75)", transformOrigin: "top left"} : {}}
+            className="relative w-[816px] h-[1056px]"
+            style={isMobile ? { transform: "scale(0.55)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.75)", transformOrigin: "top left"} : {transform: "scale(0.85)", transformOrigin: "top"}}
         >
             
-            <img src={background} className="absolute object-cover w-full h-full"></img>
+            <img src={background} className="absolute object-cover w-full h-full object-cover"></img>
 
             {/* COMPONENT: product image */}
             {/*outline outline-left outline-4 outline-brown outline-offset-4*/}
