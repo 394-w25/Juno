@@ -88,18 +88,23 @@ const AIAssistant = ({
 
       console.log("response", response);
       // updates chat log with Gemini's response
-      tmpChatLog.push({ sender: "AI", text: response.conversation_response });
+      if (response) {
+        tmpChatLog.push({ sender: "AI", text: response.conversation_response });
 
-      setStatus("DEFAULT");
+        setStatus("DEFAULT");
 
-      if (response.campaign_details) {
-        // Gemini gave us details for the flyer
-        setCampaignDetails(response.campaign_details);
+        if (response.campaign_details) {
+          // Gemini gave us details for the flyer
+          setCampaignDetails(response.campaign_details);
+        }
+
+        setChatLog(tmpChatLog);
+        setChat(tmpChat); // update the actual chat with tmpChat
       }
-
-      console.log("tmpLog", tmpChatLog);
+    } else {
+      setCampaignDetails("Oops! Something went wrong. Please try again.");
       setChatLog(tmpChatLog);
-      setChat(tmpChat); // update the actual chat with tmpChat
+      setChat(tmpChat);
     }
   };
 
