@@ -4,8 +4,29 @@ import { auth } from "./FirebaseConfig";
 import { BusinessConfig, getBusinessConfig } from "./FirestoreFunctions";
 import { useNavigate } from "react-router-dom";
 
+export function updateIsGuest(isGuest) {
+  localStorage.setItem("isGuest", JSON.stringify(isGuest))
+}
+
+export function getLocalBusinessConfig() {
+  const jsonObject = JSON.parse(localStorage.getItem("business_config"))
+
+  if (jsonObject === null) {
+    return null;
+  }
+
+  return new BusinessConfig(
+    jsonObject.name,
+    jsonObject.address,
+    jsonObject.business_type,
+    jsonObject.phone,
+    jsonObject.industry,
+    jsonObject.web_url
+  )
+}
+
 export const useAuth = () => {
-  /** @type {[User | null, React.Dispatch<React.SetStateAction<User | null>>]} */
+  /** @type {[import("firebase/auth").User | null, React.Dispatch<React.SetStateAction<import("firebase/auth").User | null>>]} */
   const [user, setUser] = useState(null);
 
   /** @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]} */
@@ -14,7 +35,13 @@ export const useAuth = () => {
   /** @type {[BusinessConfig | null, React.Dispatch<React.SetStateAction<BusinessConfig | null>>]} */
   const [businessConfig, setBusinessConfig] = useState(null);
 
+  /** @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]} */
+  const [isGuest, setIsGuest] = useState(() => {
+    return JSON.parse(localStorage.getItem("isGuest")) || false
+  })
+
   const navigate = useNavigate();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
@@ -28,7 +55,13 @@ export const useAuth = () => {
       } else {
         // user isn't logged in or has signed out
         setUser(null);
-        setBusinessConfig(null);
+
+        if (isGuest) {
+          setBusinessConfig(getLocalBusinessConfig())
+        }
+        else {
+          setBusinessConfig(null);
+        }
       }
 
       setAuthLoading(false);
@@ -37,7 +70,7 @@ export const useAuth = () => {
     return () => unsubscribe();
   }, []);
 
-  return { user, authLoading, businessConfig, setBusinessConfig };
+  return { user, authLoading, businessConfig, setBusinessConfig, isGuest, setIsGuest };
 };
 
 export const logOut = async () => {

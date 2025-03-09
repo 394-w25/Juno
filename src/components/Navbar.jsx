@@ -102,7 +102,7 @@ const Navbar = () => {
                         </MenuItem>
 
                         <MenuItem
-                            key="creator"
+                            key="operator"
                             onClick={handleMenuClose}
                         >
                             <button 
