@@ -31,6 +31,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
   // const [fadeOut, setFadeOut] = useState(false);
   const [firstMessageSent, setFirstMessageSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false); //loading button
+  const autoFetchRecs = useRef(false);
 
   /** @type {[[CampaignDetail], React.Dispatch<React.SetStateAction<[CampaignDetail]>>]} */
   const [campaignOptions, setCampaignOptions] = useState([]);
@@ -46,12 +47,21 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
 
   const chatContainerRef = useRef(null);
 
+  //auto-scroll
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
   }, [chatLog]);
+
+  //auto-fetch recs
+  useEffect(() => {
+    if (!autoFetchRecs.current) {
+      autoFetchRecs.current = true;
+      handleGetDateBasedCampaign();
+    }
+  }, []);
 
   useEffect(() => {
     console.log("showPrompt changed", showPrompt);
