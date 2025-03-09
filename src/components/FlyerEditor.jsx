@@ -1,11 +1,10 @@
-import {useEffect, useRef} from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import { useEffect, useRef } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
 import backgroundImg from "../assets/template_bg_img.png";
+import backgroundImg3 from "../assets/template-background-4.png"
+import Template3 from "./templates/Template3";
 import backgroundImg2 from "../assets/temp.png";
 import logoImg from "../assets/template_logo.png";
 import productImg from "../assets/ProductImageTest.png";
@@ -41,28 +40,36 @@ const FlyerEditor = ({
   }, [campaignDetails]);
 
   const handleMediaChange = (event, newAlignment) => {
+    console.log("New media mode selected:", newAlignment);
     setMediaMode(newAlignment);
   };
 
   const templateRef = useRef(null);
 
-  const { businessConfig } = useAuthContext()
+  const { businessConfig } = useAuthContext();
 
   const downloadImage = async () => {
-      if (!templateRef.current) { // flyer hasn't been created so return
-        return
-      } 
-      
-      toPng(templateRef.current, { height: 1150 })
-        .then((dataUrl) => {
-          const link = document.createElement("a")
-          link.download = mediaMode == "FLYER" ? "flyer.png" : "social-post.png"
-          link.href = dataUrl
-          link.click()
-        })
-        .catch((err) => {
-          console.error("Failed to generate image:", err)
-        })
+    if (!templateRef.current) {
+      // flyer hasn't been created so return
+      return;
+    }
+
+    toPng(templateRef.current, { height: 1150 })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        if (mediaMode === "FLYER") {
+          link.download = "flyer.png";
+        } else if (mediaMode === "FLYER2") {
+          link.download = "flyer2.png";
+        } else {
+          link.download = "social-post.png";
+        }
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.error("Failed to generate image:", err);
+      });
   };
 
   return (
@@ -82,9 +89,9 @@ const FlyerEditor = ({
         <DownloadIcon /> {/* ✅ Small download icon */}
       </button>
 
-      <div 
+      <div
         className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white"
-        style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle 
+        style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle
       >
         <ToggleButtonGroup
           color="primary"
@@ -105,7 +112,7 @@ const FlyerEditor = ({
       <div className="flex-grow relative flex justify-center">
         {status === "LOADING" && (
           <CircularProgress
-            className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white" 
+            className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white"
             size={32}
             thickness={5}
           />
@@ -116,58 +123,81 @@ const FlyerEditor = ({
         className="flex-grow absolute flex justify-center ml-20"
         style={{ left: "50%", transform: "translateX(-50%)" }}
       >
-        {status === "DEFAULT" &&
-          campaignDetails !== null && ( // show flyer if not loading and campaignDetails are ready
-            <>
-              {mediaMode === "FLYER" ? (
-                <Template1
-                  templateRef={templateRef}
-                  isMobile={isMobile}
-                  callToAction={campaignDetails.call_to_action}
-                  switchToVertical={switchToVertical}
-                  campaignTitle={campaignDetails.campaign_title}
-                  background={backgroundImg}
-                  logo={logoImg}
-                  discount={campaignDetails.discount}
-                  campaignDetail={campaignDetails.campaign_detail}
-                  campaignPeriod={{
-                    start_date: campaignDetails.start_date,
-                    end_date: campaignDetails.end_date
-                  }}
-                  productImage={productImg}
-                  website={businessConfig.web_url}
-                  phoneNumber={businessConfig.phone}
-                  address={businessConfig.address}
-                  fontStyleProp=""
-                  className=""
-                />
-              ) : (
-                <Template2
-                  templateRef={templateRef}
-                  isMobile={isMobile}
-                  callToAction={campaignDetails.call_to_action}
-                  switchToVertical={switchToVertical}
-                  campaignTitle={campaignDetails.campaign_title}
-                  background={backgroundImg2}
-                  logo={logoImg}
-                  discount={campaignDetails.discount}
-                  campaignDetail={campaignDetails.campaign_detail}
-                  campaignPeriod={{
-                    start_date: campaignDetails.start_date,
-                    end_date: campaignDetails.end_date
-                  }}
-                  productImage={productImg}
-                  website={businessConfig.web_url}
-                  phoneNumber={businessConfig.phone}
-                  address={businessConfig.address}
-                  fontStyleProp=""
-                />
-              )}
-            </>
-        )}
-        </div>
-      </div>
+      {status === "DEFAULT" && campaignDetails && (
+        <>
+          {mediaMode === "FLYER" && (
+            <Template1
+              templateRef={templateRef}
+              isMobile={isMobile}
+              callToAction={campaignDetails.call_to_action}
+              switchToVertical={switchToVertical}
+              campaignTitle={campaignDetails.campaign_title}
+              background={backgroundImg}
+              logo={logoImg}
+              discount={campaignDetails.discount}
+              campaignDetail={campaignDetails.campaign_detail}
+              campaignPeriod={{
+                start_date: campaignDetails.start_date,
+                end_date: campaignDetails.end_date,
+              }}
+              productImage={productImg}
+              website={businessConfig.web_url}
+              phoneNumber={businessConfig.phone}
+              address={businessConfig.address}
+              fontStyleProp=""
+            />
+          )}
 
+          {mediaMode === "FLYER2" && (
+            <Template3
+              templateRef={templateRef}
+              isMobile={isMobile}
+              callToAction={campaignDetails.call_to_action}
+              switchToVertical={switchToVertical}
+              campaignTitle={campaignDetails.campaign_title}
+              background={backgroundImg3}
+              logo={logoImg}
+              discount={campaignDetails.discount}
+              campaignDetail={campaignDetails.campaign_detail}
+              campaignPeriod={{
+                start_date: campaignDetails.start_date,
+                end_date: campaignDetails.end_date,
+              }}
+              productImage={productImg}
+              website={businessConfig.web_url}
+              phoneNumber={businessConfig.phone}
+              address={businessConfig.address}
+              fontStyleProp=""
+                  className=""
+            />
+          )}
+
+          {mediaMode === "SOCIAL POSTS" && (
+            <Template2
+              templateRef={templateRef}
+              isMobile={isMobile}
+              callToAction={campaignDetails.call_to_action}
+              switchToVertical={switchToVertical}
+              campaignTitle={campaignDetails.campaign_title}
+              background={backgroundImg2}
+              logo={logoImg}
+              discount={campaignDetails.discount}
+              campaignDetail={campaignDetails.campaign_detail}
+              campaignPeriod={{
+                start_date: campaignDetails.start_date,
+                end_date: campaignDetails.end_date,
+              }}
+              productImage={productImg}
+              website={businessConfig.web_url}
+              phoneNumber={businessConfig.phone}
+              address={businessConfig.address}
+              fontStyleProp=""
+            />
+          )}
+        </>
+      )}
+        </div>
+    </div>
   );
 };
 
