@@ -28,7 +28,7 @@ function Template2({ templateRef, callToAction, isMobile, switchToVertical, camp
     return (
         <div
           ref={templateRef}
-          className="relative w-[1080px] h-[1080px]"
+          className="relative w-[1056px] h-[1056px]"
           style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.6)", transformOrigin: "top left"} : {transform: "scale(0.75)", transformOrigin: "top left"}}
         >
           <img src={background} className="absolute w-full h-full object-cover"/>

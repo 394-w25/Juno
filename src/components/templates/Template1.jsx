@@ -55,13 +55,13 @@ export default function Template1({
   return (
     <div
       ref={templateRef}
-      className={`${inOperator == false ? "absolute w-[816px] h-[1056px] mt-40 ml-40" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
+      className={`${inOperator == false ? "absolute w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
       style={
         isMobile && !inOperator
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
           : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
-          : {}
+          : !inOperator ? { transform: "scale(0.80)", transformOrigin: "top left" } : {}
       }
     >
       <img

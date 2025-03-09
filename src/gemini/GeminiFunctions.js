@@ -160,41 +160,67 @@ export async function sendChat(
         ${globalFinalPromptInstructions}   
         `;
   }
+  
+    const result = await chat.sendMessage(finalPrompt); // prompts Gemini
+    const textResponse = result.response.text(); // get the response in string format
 
-  const result = await chat.sendMessage(finalPrompt); // prompts Gemini
-  const textResponse = result.response.text(); // get the response in string format
+    console.log("textRes", textResponse);
 
-  if (textResponse.startsWith("```json")) {
-    // Remove ```json and ``` from the string
-    const cleanedString = textResponse.slice(7, -3);
+    try{
+      if (textResponse.startsWith("```json")) {
+        // Remove ```json and ``` from the string
+        const cleanedString = textResponse.slice(7, -3);
 
-    // Turn JSON string into an object
-    const responseObj = JSON.parse(cleanedString);
-    const campaign_details = new CampaignDetail(
-      responseObj.campaign_details.campaign_title,
-      responseObj.campaign_details.slogan,
-      responseObj.campaign_details.discount,
-      responseObj.campaign_details.campaign_detail,
-      responseObj.campaign_details.campaign_period.start_date,
-      responseObj.campaign_details.campaign_period.end_date,
-      responseObj.campaign_details.call_to_action,
-      responseObj.campaign_details.theme,
-      responseObj.campaign_details.caption,
-      responseObj.campaign_details.hashtags,
-      responseObj.campaign_details.color_theme,
-      responseObj.campaign_details.insights //adding insights field
-    );
+        // Turn JSON string into an object
+        let responseObj = JSON.parse(cleanedString);
+        console.log(responseObj);
 
-    const res = {
-      conversation_response: responseObj.your_conversation_response,
-      campaign_details: campaign_details,
-    };
+        let originalRes = responseObj;
 
-    console.log("res:", res);
+        if (responseObj.campaign_options) {
+          responseObj = responseObj.campaign_options[0];
+        }
+        else{
+          responseObj = responseObj.campaign_details;
+        }
 
-    return res;
-  }
-}
+
+        const campaign_details = new CampaignDetail(
+          responseObj.campaign_title,
+          responseObj.slogan,
+          responseObj.discount,
+          responseObj.campaign_detail,
+          responseObj.campaign_period.start_date,
+          responseObj.campaign_period.end_date,
+          responseObj.call_to_action,
+          responseObj.theme,
+          responseObj.caption,
+          responseObj.hashtags,
+          responseObj.color_theme,
+          responseObj.insights //adding insights field
+        )
+
+        if (responseObj){
+          const res = {
+            "conversation_response": originalRes.your_conversation_response,
+            "campaign_details": campaign_details
+          }
+
+          return res;
+        }
+      }
+     } 
+     catch (error) {
+        const res = {
+          "conversation_response": "Oops! Something went wrong while processing your request.",
+          "campaign_details": null
+        }
+        console.error("Error parsing JSON response:", error);
+        return res;
+    }
+    
+    }
+
 
 /**
  * Sends a chat message for campaign options handling.
@@ -252,9 +278,9 @@ export function createDateBasedCampaignChat(business_config) {
   You are an AI marketing agent for small business owners. Your job is to create marketing campaigns based on upcoming holidays or seasonal trends in the next month (${nextMonthNumber}/${year}).
   Identify major shopping events, holidays, or seasonal trends relevant to the user's business. If no major event is found, suggest a seasonal promotion.
   
-  This business config represents the user's business details: ${JSON.stringify(
-    business_config
-  )}. Use it to tailor the campaign recommendations.
+
+  This business config represents the user's business details: ${JSON.stringify(business_config)}. Use it to tailor the campaign recommendations. Never ask for more information unless given by the user. Infer the information from the business config.
+
 
   You will return JSON data in this format:
   {
@@ -321,6 +347,15 @@ export async function sendChatOptions(
     const responseObj = JSON.parse(cleanedString);
 
     console.log("response options", responseObj);
+
+    if (responseObj.campaign_details) {
+      const res = {
+        "conversation_response": responseObj.your_conversation_response,
+        "campaign_options": [responseObj.campaign_details]
+      }
+
+      return res;
+    }
 
     if (responseObj.campaign_options === undefined) {
       const res = {

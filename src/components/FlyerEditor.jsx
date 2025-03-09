@@ -113,7 +113,7 @@ const FlyerEditor = ({
       </div>
 
       <div 
-        className="flex-grow absolute flex justify-center"
+        className="flex-grow absolute flex justify-center ml-20"
         style={{ left: "50%", transform: "translateX(-50%)" }}
       >
         {status === "DEFAULT" &&
@@ -148,7 +148,7 @@ const FlyerEditor = ({
                   callToAction={campaignDetails.call_to_action}
                   switchToVertical={switchToVertical}
                   campaignTitle={campaignDetails.campaign_title}
-                  background={backgroundImg}
+                  background={backgroundImg2}
                   logo={logoImg}
                   discount={campaignDetails.discount}
                   campaignDetail={campaignDetails.campaign_detail}
