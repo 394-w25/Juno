@@ -66,10 +66,6 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("showPrompt changed", showPrompt);
-  }, [showPrompt]);
-
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
 
@@ -236,8 +232,8 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                     className=" rounded-[20px] transition hover:scale-[1.05] hover:shadow-lg focus:outline-none mx-[30px] my-[25px] flex-wrap items-center justify-content"
                     onClick={() => handleSelectCampaign(option)}
                   >
-                    <div className="w-[470px] h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px] ">
-                      <div className="w-[150px] scale-[0.2] origin-top-left transform h-[210px]">
+                    <div className="w-[470px] flex h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px] ">
+                      <div className="w-1/2 h-full relative transform">
                         <Template1
                           callToAction={option.call_to_action}
                           campaignTitle={option.campaign_title}
@@ -253,9 +249,10 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                           website={businessConfig.web_url}
                           phoneNumber={businessConfig.phone}
                           address={businessConfig.address}
+                          inOperator={true}
                         />
                       </div>
-                      <div className="origin-top-left ml-[198px] px-1 mt-[-157px] relative justify-center text-white text-[22px] font-bold font-[\'Plus Jakarta Sans\']">
+                      <div className="w-1/2 pr-5 py-5 text-left text-white text-[18px] font-bold font-[\'Plus Jakarta Sans\']">
                         <p>{option.campaign_title}</p>
                       </div>
                     </div>
