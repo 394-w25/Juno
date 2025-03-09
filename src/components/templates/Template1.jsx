@@ -61,7 +61,7 @@ export default function Template1({
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
           : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
-          : { transform: "scale(0.80)", transformOrigin: "top left" }
+          : !inOperator ? { transform: "scale(0.80)", transformOrigin: "top left" } : {}
       }
     >
       <img
