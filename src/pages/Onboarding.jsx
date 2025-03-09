@@ -150,7 +150,7 @@ export default function Onboarding() {
 
     setBusinessConfig(businessConfig);
     setStatus("DEFAULT");
-    navigate("/operator");
+    navigate("/operator?onboarding=true");
   };
 
   return (
