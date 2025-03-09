@@ -87,38 +87,47 @@ export default function Template3({
           </p>
 
           {/* COMPONENT: campaignTitle */}
-          <h1 className="text-8xl text-left font-[Barrio] uppercase text-[#42311C] w-4/5">
+          <h1 className="text-8xl text-left font-[Barrio] uppercase text-[#708395] w-4/5">
             {campaignTitle}
           </h1>
         </div>
 
-        <div className="flex gap-5 flex-col justify-center items-center">
-          {/* COMPONENT: discount */}
-          <p className="relative max-w-[700px] text-[#A6937C] font-[Playfair-Display]  font-semibold text-7xl text-center">
-            {discount ? discount.toUpperCase() : ""}
-          </p>
 
-          {/* COMPONENT: campaign details */}
-          <p className="relative max-w-[600px] text-[#665E58] text-xl font-[Playfair-Display] ">
-            {campaignDetail}
-          </p>
+        <div className="flex flex-row">
+            <div className="flex gap-5 justify-center items-center">
+            {/* COMPONENT: discount */}
+            {/*<p className="relative max-w-[700px] text-[#f7cd6f] font-[Playfair-Display]  font-semibold text-7xl text-center">
+                {discount ? discount.toUpperCase() : ""}
+            </p>*/}
+
+                <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
+                        <img src={brownRibbon} className="object-cover absolute" /> 
+
+                        
+                        <p className="relative max-w-[200px] text-[#708395] font-[Barrio] text-7xl text-clip text-center">{discount}</p>
+                </div>
+
+
+            {/* COMPONENT: campaign details */}
+            <p className="pl-5 relative max-w-[250px] text-[#665E58] text-xl font-[Barrio]">
+                {campaignDetail}
+            </p>
+            </div>
         </div>
-
-        {/* COMPONENT: call to actiion */}
-        <p className="rounded-lg p-4 bg-[#8C5C35] text-white text-2xl font-[Playfair-Display] px-10 tracking-wider">
-          {callToAction}
-        </p>
-
+            {/* COMPONENT: call to actiion */}
+            <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Barrio] px-10 tracking-wider">
+            {callToAction}
+            </p>
         {/* CONTACT INFO */}
         <div className="flex flex-col items-center text-[#42311C]">
           {phoneNumber !== "" && (
-            <div className="flex gap-3 font-[Playfair-Display] items-center">
+            <div className="flex gap-3 font-[Knewave] items-center">
               <LocalPhoneIcon className="!text-3xl" />
               <p className="text-xl">{phoneNumber}</p>
             </div>
           )}
           {address !== "" && (
-            <div className="flex gap-3 font-[Playfair-Display] items-center">
+            <div className="flex gap-3 font-[Knewave] font-light items-center">
               <PlaceIcon className="!text-4xl" />
               <div className="text-xl">
                 <a
