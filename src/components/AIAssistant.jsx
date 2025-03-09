@@ -1,19 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@mui/material";
-
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
-import {
-  CampaignDetail,
-  createNewChat,
-  sendChat,
-} from "../gemini/GeminiFunctions";
+import { CampaignDetail, createNewChat, sendChat } from "../gemini/GeminiFunctions";
 import ReactMarkdown from "react-markdown";
 import { useAuthContext } from "./AuthContext";
 import { ChatSession } from "@google/generative-ai";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { BusinessConfig } from "../firebase/FirestoreFunctions";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 /**
  * @typedef {Object} AIAssistantProps
@@ -36,22 +28,19 @@ const AIAssistant = ({
   switchToVertical,
   chatSession,
   chatLog,
-  setChatLog,
+  setChatLog
 }) => {
+  
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState(null); // ongoing chat with gemini
 
-  const [uploadedImageURL, setUploadedImageURL] = useState(null);
-  const fileInputRef = useRef(null);
-  const storage = getStorage();
-
-  const { businessConfig } = useAuthContext();
+  const { businessConfig } = useAuthContext()
 
   const chatContainerRef = useRef(null);
 
   // Auto-scroll to bottom when chat updates
   useEffect(() => {
-    console.log("log", chatLog);
+    console.log("log", chatLog)
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
@@ -59,18 +48,19 @@ const AIAssistant = ({
   }, [chatLog]);
 
   const handleSend = async (prompt) => {
-    let trimmedMsg = "";
+    let trimmedMsg = ""
 
     if (prompt === undefined) {
       trimmedMsg = message.trim();
-    } else {
-      trimmedMsg = prompt;
+    }
+    else {
+      trimmedMsg = prompt
     }
 
     if (trimmedMsg.length > 0) {
-      let tmpChatLog = chatLog;
+      let tmpChatLog = chatLog
       setMessage("");
-      tmpChatLog.push({ sender: "User", text: trimmedMsg });
+      tmpChatLog.push({ sender: "User", text: trimmedMsg })
       setStatus("LOADING");
 
       let tmpChat = chatSession || chat;
@@ -79,17 +69,12 @@ const AIAssistant = ({
         tmpChat = createNewChat(businessConfig);
       }
 
-      const response = await sendChat(
-        tmpChat,
-        trimmedMsg,
-        mediaMode,
-        campaignDetails
-      ); // sends prompt to Gemini
+      const response = await sendChat(tmpChat, trimmedMsg, mediaMode, campaignDetails); // sends prompt to Gemini
 
-      console.log("response", response);
+      console.log("response", response)
       // updates chat log with Gemini's response
-      if (response) {
-        tmpChatLog.push({ sender: "AI", text: response.conversation_response });
+      if (response){
+        tmpChatLog.push({ sender: "AI", text: response.conversation_response })
 
         setStatus("DEFAULT");
 
@@ -98,10 +83,11 @@ const AIAssistant = ({
           setCampaignDetails(response.campaign_details);
         }
 
-        setChatLog(tmpChatLog);
+        setChatLog(tmpChatLog)
         setChat(tmpChat); // update the actual chat with tmpChat
       }
-    } else {
+    }
+    else{
       setCampaignDetails("Oops! Something went wrong. Please try again.");
       setChatLog(tmpChatLog);
       setChat(tmpChat);
@@ -109,7 +95,7 @@ const AIAssistant = ({
   };
 
   const handleMakeMeAMarketingCampaign = async () => {
-    await handleSend("Make me a marketing campaign");
+    await handleSend("Make me a new marketing campaign")
   };
 
   const handleKeyDown = (e) => {
@@ -117,24 +103,6 @@ const AIAssistant = ({
       e.preventDefault();
 
       handleSend();
-    }
-  };
-
-  const localHandleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const storageRef = ref(storage, `images/${file.name}_${Date.now()}`);
-    try {
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      setUploadedImageURL(downloadURL);
-      // Add an image message to the chat log:
-      setChatLog((prev) => [
-        ...prev,
-        { sender: "User", image: downloadURL, text: "Uploaded an image:" },
-      ]);
-    } catch (error) {
-      console.error("Error uploading image:", error);
     }
   };
 
@@ -176,15 +144,14 @@ const AIAssistant = ({
                 }}
               >
                 <ReactMarkdown>{msg.text}</ReactMarkdown>
-                {msg.image && <img src={msg.image}></img>}
               </div>
             </div>
           ))}
       </div>
       <div className="flex justify-center items-center w-full">
-        <button
-          className="px-4 py-0.5 border border-[#3F8CFF] rounded-full text-[#3F8CFF] font-medium text-sm flex justify-center items-center hover:bg-[#3F8CFF] hover:text-white transition"
-          onClick={handleMakeMeAMarketingCampaign}
+        <button 
+                className="px-4 py-0.5 border border-[#3F8CFF] rounded-full text-[#3F8CFF] font-medium text-sm flex justify-center items-center hover:bg-[#3F8CFF] hover:text-white transition"
+                onClick={handleMakeMeAMarketingCampaign}
         >
           Make Marketing Campaign
         </button>
@@ -195,7 +162,6 @@ const AIAssistant = ({
           boxShadow: "0 0 4px rgba(0, 0, 0, 0.5)", // shadows aren't working in tailwind for some reason
         }}
       >
-        {/* Text input */}
         <input
           type="text"
           placeholder="What can Juno do for you?"
@@ -204,27 +170,12 @@ const AIAssistant = ({
           onKeyDown={handleKeyDown}
           className="w-full text-base outline-none bg-transparent"
         />
-        {/* Hidden file input for image upload */}
-        <input
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          ref={fileInputRef}
-          onChange={localHandleImageUpload}
-        />
-        {/* Send Button */}
+
         <button
           className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center hover:opacity-65"
           onClick={handleSend}
         >
           <ArrowUpward fontSize="small" />
-        </button>
-        {/* Camera Button */}
-        <button
-          className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center items-center hover:opacity-75"
-          onClick={() => fileInputRef.current && fileInputRef.current.click()}
-        >
-          <PhotoCamera fontSize="small" />
         </button>
       </div>
     </div>
