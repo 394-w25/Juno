@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
-  createNewChat,
+
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
@@ -64,7 +64,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       autoFetchRecs.current = true;
       handleGetDateBasedCampaign();
     }
-  }, []);
+  }, [fromOnboarding, chatSession]);
 
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
@@ -252,11 +252,19 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                           inOperator={true}
                         />
                       </div>
-                      <div className="w-1/2 pr-5 py-5 text-left text-white text-[18px] font-bold font-[\'Plus Jakarta Sans\']">
-                        <p>{option.campaign_title}</p>
+                      <div className="w-1/2 h-full flex flex-col justify-center p-4">
+                      <p className="text-[22px] font-bold font-[\'Plus Jakarta Sans\'] text-white">
+                        {option.campaign_title}
+                      </p>
+                      <div
+                        className="text-[16px] text-white overflow-auto break-words mt-2"
+                        style={{ maxHeight: "calc(100% - 40px)" }}
+                      >
+                        {option.insights}
                       </div>
                     </div>
-                  </button>
+                  </div>
+                </button>
                 ))}
               </div>
             </>

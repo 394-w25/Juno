@@ -13,7 +13,8 @@ export class CampaignDetail {
     theme,
     caption,
     hashtags,
-    color_theme
+    color_theme,
+    insights //adding insights to template
   ) {
     this.campaign_title = campaign_title;
     this.slogan = slogan;
@@ -26,6 +27,7 @@ export class CampaignDetail {
     this.caption = caption;
     this.hashtags = hashtags;
     this.color_theme = color_theme;
+    this.insights = insights;
   }
 }
 
@@ -43,6 +45,7 @@ const globalCampaignDetailsJSON = `{
   "caption": caption for a social media post (only for social media mode),
   "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
   "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
+  "insights: "Brief insight explaining why this campaign is good"
 },`;
 
 const globalFinalPromptInstructions = `You will **ONLY** return JSON data with this schema:
@@ -61,7 +64,8 @@ const globalFinalPromptInstructions = `You will **ONLY** return JSON data with t
         "theme": "Updated theme",
         "caption": "Updated social media caption",
         "hashtags": ["#updatedHashtag1", "#updatedHashtag2"],
-        "colorTheme": ["#updatedHex1", "#updatedHex2"]
+        "colorTheme": ["#updatedHex1", "#updatedHex2"],
+        "insights": "Updated insights about why this campaign is effetive"
     }
 }
 
@@ -177,7 +181,8 @@ export async function sendChat(
       responseObj.campaign_details.theme,
       responseObj.campaign_details.caption,
       responseObj.campaign_details.hashtags,
-      responseObj.campaign_details.color_theme
+      responseObj.campaign_details.color_theme,
+      responseObj.campaign_details.insights //adding insights field
     );
 
     const res = {
@@ -341,7 +346,8 @@ export async function sendChatOptions(
         details.theme,
         details.caption,
         details.hashtags,
-        details.color_theme
+        details.color_theme,
+        details.insights //added insights
       );
       options.push(campaign_details);
     }
