@@ -43,6 +43,7 @@ export default function Onboarding() {
 
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [status, setStatus] = useState("DEFAULT");
+  const { isGuest } = useAuthContext()
   const navigate = useNavigate();
 
   const businessTypes = [
@@ -139,7 +140,14 @@ export default function Onboarding() {
       industry,
       webUrl
     );
-    await saveBusinessConfig(user.uid, businessConfig);
+
+    if (isGuest) {
+      localStorage.setItem("business_config", JSON.stringify(businessConfig))
+    }
+    else {
+      await saveBusinessConfig(user.uid, businessConfig);
+    }
+
     setBusinessConfig(businessConfig);
     setStatus("DEFAULT");
     navigate("/operator");

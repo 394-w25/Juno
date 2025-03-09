@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 import {
   getBusinessConfig,
 } from "../firebase/FirestoreFunctions";
+import { useAuthContext } from "./AuthContext";
+import { updateIsGuest } from "../firebase/AuthFunctions";
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { setIsGuest } = useAuthContext()
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -36,6 +39,13 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  const handleContinueAsGuest = () => {
+    setIsGuest(true) // update state variable
+    updateIsGuest(true) // update local storage
+    navigate("/onboarding")
+  }
+
   return (
     <div className="relative flex h-screen w-full">
       <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
@@ -57,6 +67,13 @@ const Login = () => {
             className=" bg-logo-blue hover:opacity-50 text-white font-semibold text-xl font-[\'Plus Jakarta Sans\'] tracking-widest font-xl h-12 w-60 m-3 rounded-xl opacity-100"
           >
             Login
+          </button>
+
+          <button 
+            onClick={handleContinueAsGuest}
+            className="text-gray-400 font-normal hover:opacity-50" 
+          >
+            <i>Continue as guest</i>
           </button>
         </div>
       </div>
