@@ -14,6 +14,7 @@ import { useAuthContext } from "../components/AuthContext";
 import { ChatSession } from "@google/generative-ai";
 import { CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import LoadingScreen from "../components/Loading";
 
 /**
  * @typedef {Object} OperatorProps
@@ -154,6 +155,12 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
     navigate("/creator");
   };
 
+  if (fromOnboarding && isLoading) {
+    return (
+      <LoadingScreen text={"Generating some recs for you..."} />
+    )
+  }
+  
   return (
     <div>
       <Navbar />
