@@ -121,7 +121,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
 
   const handleGetDateBasedCampaign = async () => {
     await handleSend(
-      "Generate five marketing campaign options for an event in the next month.",
+      "Generate six marketing campaign options for an event in the next month.",
       true
     );
   };
@@ -210,17 +210,14 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
         >
           {campaignOptions.length > 0 && (
             <>
-              <div className="flex-wrap space-x-6 mb-54">
+              <div className="flex flex-wrap justify-center items-center space-x-6 mb-54 mx-auto">
                 {campaignOptions.map((option, index) => (
                   <button
                     key={index}
-                    className="flex-shrink-0 rounded-[20px] transition hover:scale-[1.05] hover:shadow-lg focus:outline-none"
+                    className=" rounded-[20px] transition hover:scale-[1.05] hover:shadow-lg focus:outline-none mx-[30px] my-[25px] flex-wrap items-center justify-content"
                     onClick={() => handleSelectCampaign(option)}
                   >
-                    <div className="w-[420px] h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px]">
-                      <div className="pl-[198px] pt-[57px] relative justify-center text-white text-[22px] font-bold font-['Plus_Jakarta_Sans']">
-                        St. Patrick’s day sale{" "}
-                      </div>
+                    <div className="w-[470px] h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px] ">
                       <div className="w-[150px] scale-[0.2] origin-top-left transform h-[210px]">
                         <Template1
                           callToAction={option.call_to_action}
@@ -238,6 +235,9 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                           phoneNumber={businessConfig.phone}
                           address={businessConfig.address}
                         />
+                      </div>
+                      <div className="origin-top-left ml-[198px] px-1 mt-[-157px] relative justify-center text-white text-[22px] font-bold font-[\'Plus Jakarta Sans\']">
+                        <p>{option.campaign_title}</p>
                       </div>
                     </div>
                   </button>
