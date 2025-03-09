@@ -45,10 +45,6 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
    * @property {string} sender
    * @property {string} text
    */
-   * @typedef {Object} ChatLogItem
-   * @property {string} sender
-   * @property {string} text
-   */
 
   /** @type {[[ChatLogItem], React.Dispatch<React.SetStateAction<[ChatLogItem]>>]} */
   const [chatLog, setChatLog] = useState([]);
@@ -73,19 +69,15 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
 
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
-    let trimmedMsg = "";
 
     if (prompt === undefined) {
       trimmedMsg = message.trim();
     } else {
       trimmedMsg = prompt;
-    } else {
-      trimmedMsg = prompt;
-    }
+    } 
 
     if (trimmedMsg.length < 1) return;
 
-    setShowPrompt(false);
     setShowPrompt(false);
 
     const userMessage = message;
@@ -95,17 +87,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       ...prevChat,
       { sender: "User", text: trimmedMsg },
     ]);
-    setChatLog((prevChat) => [
-      ...prevChat,
-      { sender: "User", text: trimmedMsg },
-    ]);
-
-    let session =
-      chatSession === null
-        ? isOptions
-          ? createDateBasedCampaignChat(businessConfig)
-          : createNewChat(businessConfig)
-        : chatSession;
+    
     let session =
       chatSession === null
         ? isOptions
@@ -245,7 +227,8 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
             </div>
           </div>
         )}
-
+      </div>
+      
       <div className="h-[calc(100vh-70px)] bg-gradient-to-b from-blue-500/10 to-blue-500/30 rounded-[20px] backdrop-blur-md justify-center flex flex-col overflow-hidden relative py-10">
         {showPrompt && (
           <div
