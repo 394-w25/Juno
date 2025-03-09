@@ -16,12 +16,7 @@ import { BusinessConfig } from "../firebase/FirestoreFunctions";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const { user, authLoading, businessConfig, setBusinessConfig } = useAuth();
-
-  /** @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]} */
-  const [isGuest, setIsGuest] = useState(() => {
-    return JSON.parse(localStorage.getItem("isGuest")) || false
-  })
+  const { user, authLoading, businessConfig, setBusinessConfig, isGuest, setIsGuest } = useAuth();
 
   return (
     <AuthContext.Provider
