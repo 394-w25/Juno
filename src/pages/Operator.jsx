@@ -252,16 +252,19 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                           inOperator={true}
                         />
                       </div>
-                      <div className="origin-top-left ml-[198px] px-1 mt-[-157px] relative flex flex-col justify-center text-white">
-                      <p className="text-[22px] font-bold font-[\'Plus Jakarta Sans\']">
-                        {option.campaign_title}
-                      </p>
-                      <div className="text-[16px] line-clamp-5">
-                        {option.insights}
-                      </div>
-                      </div>
-                    </div>
-                  </button>
+                      <div className="w-1/2 h-full flex flex-col justify-center p-4">
+      <p className="text-[22px] font-bold font-[\'Plus Jakarta Sans\'] text-white">
+        {option.campaign_title}
+      </p>
+      <div
+        className="text-[16px] text-white overflow-auto break-words mt-2"
+        style={{ maxHeight: "calc(100% - 40px)" }}
+      >
+        {option.insights}
+      </div>
+    </div>
+  </div>
+</button>
                 ))}
               </div>
             </>
