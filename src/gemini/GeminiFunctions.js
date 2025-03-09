@@ -391,13 +391,22 @@ export async function sendChatOptions(chat, prompt, mediaMode, campaignDetails =
 
     console.log("response options", responseObj)
 
+    if (responseObj.campaign_details) {
+      const res = {
+        "conversation_response": responseObj.your_conversation_response,
+        "campaign_options": [responseObj.campaign_details]
+      }
+
+      return res;
+    }
+
     if (responseObj.campaign_options === undefined) {
       const res = {
         "conversation_response": responseObj.your_conversation_response,
         "campaign_options": []
       }
 
-      return res
+      return res;
     }
 
     let options = []
