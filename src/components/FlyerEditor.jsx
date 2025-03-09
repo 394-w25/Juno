@@ -111,6 +111,11 @@ const FlyerEditor = ({
           />
         )}
       </div>
+
+      <div 
+        className="flex-grow absolute flex justify-center"
+        style={{ left: "50%", transform: "translateX(-50%)" }}
+      >
         {status === "DEFAULT" &&
           campaignDetails !== null && ( // show flyer if not loading and campaignDetails are ready
             <>
@@ -134,6 +139,7 @@ const FlyerEditor = ({
                   phoneNumber={businessConfig.phone}
                   address={businessConfig.address}
                   fontStyleProp=""
+                  className=""
                 />
               ) : (
                 <Template2
@@ -159,6 +165,7 @@ const FlyerEditor = ({
               )}
             </>
         )}
+        </div>
       </div>
 
   );

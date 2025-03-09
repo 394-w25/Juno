@@ -34,7 +34,7 @@ export default function Template1({
     if (timePeriod === null) {
       return "";
     }
-
+    
     if (timePeriod.start_date === null || timePeriod.end_date === null) {
       return "";
     }
@@ -51,7 +51,7 @@ export default function Template1({
 
     return `${formatDate(start_date)} - ${formatDate(end_date)}`;
   };
-
+  
   return (
     <div
       ref={templateRef}

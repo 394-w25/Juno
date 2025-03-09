@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
-  createNewChat,
+
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
