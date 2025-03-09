@@ -142,7 +142,7 @@ export default function Onboarding() {
     await saveBusinessConfig(user.uid, businessConfig);
     setBusinessConfig(businessConfig);
     setStatus("DEFAULT");
-    navigate("/operator");
+    navigate("/operator?onboarding=true");
   };
 
   return (

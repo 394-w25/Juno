@@ -13,7 +13,7 @@ import productImg from "../assets/ProductImageTest.png";
 import { useAuthContext } from "../components/AuthContext";
 import { ChatSession } from "@google/generative-ai";
 import { CircularProgress } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /**
  * @typedef {Object} OperatorProps
@@ -24,12 +24,14 @@ import { useNavigate } from "react-router-dom";
 
 /** @param {OperatorProps} props */
 const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
+
+  const queryParams = new URLSearchParams(useLocation().search)
+  const fromOnboarding = queryParams.get("onboarding") === "true"
+
   const { businessConfig } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [showPrompt, setShowPrompt] = useState(true);
-  // const [fadeOut, setFadeOut] = useState(false);
-  const [firstMessageSent, setFirstMessageSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false); //loading button
   const autoFetchRecs = useRef(false);
 
@@ -57,7 +59,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
 
   //auto-fetch recs
   useEffect(() => {
-    if (!autoFetchRecs.current) {
+    if (fromOnboarding && !autoFetchRecs.current) {
       autoFetchRecs.current = true;
       handleGetDateBasedCampaign();
     }
@@ -220,7 +222,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
         >
           {campaignOptions.length > 0 && (
             <>
-              <div className="flex flex-wrap justify-center items-center space-x-6 mb-54 mx-auto">
+              <div className="flex flex-wrap justify-center items-center space-x-6 mx-auto">
                 {campaignOptions.map((option, index) => (
                   <button
                     key={index}
