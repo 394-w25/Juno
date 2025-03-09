@@ -64,7 +64,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       autoFetchRecs.current = true;
       handleGetDateBasedCampaign();
     }
-  }, []);
+  }, [fromOnboarding, chatSession]);
 
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
@@ -252,8 +252,13 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                           inOperator={true}
                         />
                       </div>
-                      <div className="w-1/2 pr-5 py-5 text-left text-white text-[18px] font-bold font-[\'Plus Jakarta Sans\']">
-                        <p>{option.campaign_title}</p>
+                      <div className="origin-top-left ml-[198px] px-1 mt-[-157px] relative flex flex-col justify-center text-white">
+                      <p className="text-[22px] font-bold font-[\'Plus Jakarta Sans\']">
+                        {option.campaign_title}
+                      </p>
+                      <div className="text-[16px] line-clamp-5">
+                        {option.insights}
+                      </div>
                       </div>
                     </div>
                   </button>
