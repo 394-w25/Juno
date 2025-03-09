@@ -40,6 +40,7 @@ const AIAssistant = ({
   const { businessConfig } = useAuthContext();
 
   const chatContainerRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   // Auto-scroll to bottom when chat updates
   useEffect(() => {
@@ -194,7 +195,7 @@ const AIAssistant = ({
           type="file"
           accept="image/*"
           style={{ display: "none" }}
-          // ref={fileInputRef}
+          ref={fileInputRef}
           onChange={localHandleImageUpload}
         />
         {/* Camera Button */}
