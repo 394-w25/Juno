@@ -82,52 +82,49 @@ export default function Template3({
           {/* <img src={logo}></img> */}
 
           {/* COMPONENT: campaignPeriod */}
-          <p className="text-xl font-[Playfair-Display] text-[#42311C]">
+          <p className="text-xl font-[Chewy] text-[#42311C]">
             {formatPeriod(campaignPeriod)}
           </p>
 
           {/* COMPONENT: campaignTitle */}
-          <h1 className="text-8xl text-left font-[Barrio] uppercase text-[#708395] w-4/5">
-            {campaignTitle}
+          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] w-4/5">
+            {campaignTitle} 
           </h1>
         </div>
 
 
         <div className="flex flex-row">
             <div className="flex gap-5 justify-center items-center">
-            {/* COMPONENT: discount */}
-            {/*<p className="relative max-w-[700px] text-[#f7cd6f] font-[Playfair-Display]  font-semibold text-7xl text-center">
-                {discount ? discount.toUpperCase() : ""}
-            </p>*/}
-
                 <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
-                        <img src={brownRibbon} className="object-cover absolute" /> 
-
-                        
-                        <p className="relative max-w-[200px] text-[#708395] font-[Barrio] text-7xl text-clip text-center">{discount}</p>
-                </div>
+    <img src={brownRibbon} className="object-cover absolute" />
+    <p 
+        className={`relative max-w-[200px] text-[#708395] font-[Chewy] text-center text-clip ${discount.split(' ').length > 3 ? 'text-4xl' : 'text-7xl'}`}
+    >
+        {discount}
+    </p>
+</div>
 
 
             {/* COMPONENT: campaign details */}
-            <p className="pl-5 relative max-w-[250px] text-[#665E58] text-xl font-[Barrio]">
+            <p className="pl-5 relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy]">
                 {campaignDetail}
             </p>
             </div>
         </div>
             {/* COMPONENT: call to actiion */}
-            <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Barrio] px-10 tracking-wider">
+            <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider">
             {callToAction}
             </p>
         {/* CONTACT INFO */}
         <div className="flex flex-col items-center text-[#42311C]">
           {phoneNumber !== "" && (
-            <div className="flex gap-3 font-[Knewave] items-center">
+            <div className="flex gap-3 font-[Chewy] items-center">
               <LocalPhoneIcon className="!text-3xl" />
               <p className="text-xl">{phoneNumber}</p>
             </div>
           )}
           {address !== "" && (
-            <div className="flex gap-3 font-[Knewave] font-light items-center">
+            <div className="flex gap-3 font-[Chewy] font-light items-center">
               <PlaceIcon className="!text-4xl" />
               <div className="text-xl">
                 <a
