@@ -19,6 +19,7 @@ export default function Template1({
   address,
   fontStyleProp,
   templateRef,
+  inOperator = false
 }) {
   const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     address
@@ -54,11 +55,11 @@ export default function Template1({
   return (
     <div
       ref={templateRef}
-      className="absolute w-[816px] h-[1056px] mt-40 ml-40"
+      className={`${inOperator == false ? "absolute w-[816px] h-[1056px] mt-40 ml-40" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
       style={
-        isMobile
+        isMobile && !inOperator
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
-          : switchToVertical
+          : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
           : {}
       }
