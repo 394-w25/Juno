@@ -10,6 +10,9 @@ import {
 import ReactMarkdown from "react-markdown";
 import { useAuthContext } from "./AuthContext";
 import { ChatSession } from "@google/generative-ai";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase/FirebaseConfig";
 
 /**
  * @typedef {Object} AIAssistantProps
@@ -37,10 +40,13 @@ const AIAssistant = ({
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState(null); // ongoing chat with gemini
 
-  const { businessConfig } = useAuthContext();
+  const { user, businessConfig } = useAuthContext();
+
+  const [uploadedImageURL, setUploadedImageURL] = useState(null);
 
   const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
+  const storage = getStorage();
 
   // Auto-scroll to bottom when chat updates
   useEffect(() => {
@@ -112,9 +118,12 @@ const AIAssistant = ({
   const localHandleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const storageRef = ref(storage, `images/${file.name}_${Date.now()}`);
+    const storageRef = ref(storage, `users/${user}/${file.name}_${Date.now()}`);
+
+    console.log("user:", user);
     try {
       await uploadBytes(storageRef, file);
+
       const downloadURL = await getDownloadURL(storageRef);
       setUploadedImageURL(downloadURL);
       // Add an image message to the chat log:
@@ -122,6 +131,12 @@ const AIAssistant = ({
         ...prev,
         { sender: "User", image: downloadURL, text: "Uploaded an image:" },
       ]);
+      // Save image metadata in Firestore
+      await await addDoc(collection(db, "users", user), {
+        imageUrl: downloadURL,
+        createdAt: new Date(),
+        fileName: file.name,
+      });
     } catch (error) {
       console.error("Error uploading image:", error);
     }
