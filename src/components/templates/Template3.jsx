@@ -2,6 +2,7 @@ import brownRibbon from "../../assets/brown-ribbon.png";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceIcon from "@mui/icons-material/Place";
 import image from "../../assets/ProductImageTest.png";
+import backgroundImg3 from "../../assets/template-background-4.png"
 
 // FLYER TEMPLATE #2
 export default function Template3({
@@ -60,7 +61,7 @@ export default function Template3({
   return (
     <div
       ref={templateRef}
-      className={`${inOperator == false ? "absolute w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
+      className={`${inOperator == false ? "relative w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
       style={
         isMobile && !inOperator
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
@@ -70,7 +71,7 @@ export default function Template3({
       }
     >
       <img
-        src={background}
+        src={backgroundImg3}
         className="absolute object-cover w-full h-full"
       ></img>
 
@@ -96,23 +97,22 @@ export default function Template3({
 
 
         <div className="flex flex-row z-10">
-            <div className="flex gap-5 justify-center items-center">
-                <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
-    <img src={brownRibbon} className="object-cover absolute" />
-    <p 
-        className={`relative max-w-[200px] text-[#708395] font-[Chewy] text-center text-clip ${discount.split(' ').length > 3 ? 'text-4xl' : 'text-7xl'}`}
-    >
-        {discount}
+  <div className="flex gap-5 justify-center items-center">
+    {/* COMPONENT: campaign details should be first */}
+    <p className=" relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy] mr-10">
+      {campaignDetail}
     </p>
+
+    <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
+      <img src={brownRibbon} className="object-cover absolute mb-50" />
+      <p 
+          className={`relative max-w-[200px] text-[#708395] font-[Chewy] text-center text-clip mb-50 ${discount.split(' ').length > 3 ? 'text-4xl' : 'text-7xl'}`}
+      >
+          {discount}
+      </p>
+    </div>
+  </div>
 </div>
-
-
-            {/* COMPONENT: campaign details */}
-            <p className="pl-5 relative max-w-[250px] text-[#1F1F1F] text-3xl font-[Chewy]">
-                {campaignDetail}
-            </p>
-            </div>
-        </div>
             {/* COMPONENT: call to actiion */}
             <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider z-10">
             {callToAction}
@@ -140,10 +140,10 @@ export default function Template3({
             </div>
           )}
         </div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[700px] overflow-hidden z-0 opacity-60">
+        <div className="absolute bottom-0 right-0 w-[500px] h-[700px] overflow-hidden z-0 opacity-80">
           <div className="relative w-full h-full">
             <img
-              src={image}
+              src={productImage}
               className="object-cover w-full h-full"
               style={{
                 clipPath: "path('M843.5661,587.1768c-4.2149-12.42-9.8699-27.8048-22.5371-32.7155c-0.6557-4.6918-0.9312-9.6286-2.8051-14.0629c18.9047-36.692,30.8483-84.1292,12.4396-123.2863c-6.2498-10.4922-14.6782-16.4003-25.2859-17.7249c-24.155,0.6358-48.3099,1.2715-72.4648,1.9071c22.8494-31.1424,37.9383-70.3003,38.3142-109.498c19.9748-73.5565,3.0109-137.4036-83.9756-136.1713c3.0488-28.9504-16.2932-70.0318-50.2829-58.055c-58.6433,13.6334-117.2877,27.2671-175.9319,40.9007c-91.3762,21.2431-182.7523,42.4863-274.1284,63.7294c-26.6419,9.3111-45.839,33.9311-58.6677,58.8443c-18.2313,9.8583-38.8575,14.1825-54.1462,29.1289c-39.3873,32.942-63.7713,99.885-53.8991,150.7601c4.6616,16.0171,14.2048,34.276,32.035,35.389c26.6593-1.2455,53.3178-2.5552,79.9743-3.917c-14.542,34.0073-29.2396,115.4331,20.39,125.6476c10.455,0.7775,20.9117,1.5156,31.3698,2.22c-6.5599,24.4846-5.7462,50.7122,5.1597,73.7324c9.3534,17.5956,26.3326,17.9656,43.0143,20.8163c-3.0047,26.3862,2.0536,69.1763,33.8084,73.7412c160.8733-4.4858,321.746-8.9707,482.6188-13.4557c25.021-50.3775-19.2893-133.7431-32.8057-187.5504z')",

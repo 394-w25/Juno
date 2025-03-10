@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
-
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
@@ -243,23 +242,43 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                   >
                     <div className="w-[470px] flex h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px] ">
                       <div className="w-1/2 h-full relative transform">
-                        <Template1
-                          callToAction={option.call_to_action}
-                          campaignTitle={option.campaign_title}
-                          background={backgroundImg}
-                          logo={logoImg}
-                          discount={option.discount}
-                          campaignDetail={option.campaign_detail}
-                          campaignPeriod={{
-                            start_date: option.start_date,
-                            end_date: option.end_date,
-                          }}
-                          productImage={productImg}
-                          website={businessConfig.web_url}
-                          phoneNumber={businessConfig.phone}
-                          address={businessConfig.address}
-                          inOperator={true}
-                        />
+                        {index % 2 === 0 ? (
+                          <Template1
+                            callToAction={option.call_to_action}
+                            campaignTitle={option.campaign_title}
+                            background={backgroundImg}
+                            logo={logoImg}
+                            discount={option.discount}
+                            campaignDetail={option.campaign_detail}
+                            campaignPeriod={{
+                              start_date: option.start_date,
+                              end_date: option.end_date,
+                            }}
+                            productImage={productImg}
+                            website={businessConfig.web_url}
+                            phoneNumber={businessConfig.phone}
+                            address={businessConfig.address}
+                            inOperator={true}
+                          />
+                        ) : (
+                          <Template3
+                            callToAction={option.call_to_action}
+                            campaignTitle={option.campaign_title}
+                            background={backgroundImg}
+                            logo={logoImg}
+                            discount={option.discount}
+                            campaignDetail={option.campaign_detail}
+                            campaignPeriod={{
+                              start_date: option.start_date,
+                              end_date: option.end_date,
+                            }}
+                            productImage={productImg}
+                            website={businessConfig.web_url}
+                            phoneNumber={businessConfig.phone}
+                            address={businessConfig.address}
+                            inOperator={true}
+                          />
+                        )}
                       </div>
                       <div className="w-1/2 h-full flex flex-col gap-2 py-5 pr-5">
                         <p className="text-[22px] text-left font-bold font-[\'Plus Jakarta Sans\'] text-white">

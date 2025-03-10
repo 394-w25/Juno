@@ -1,7 +1,7 @@
 import brownRibbon from "../../assets/brown-ribbon.png";
-import image from "../../assets/ProductImageTest.png";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceIcon from "@mui/icons-material/Place";
+import backgroundImg from "../../assets/template_bg_img.png";
 
 // FLYER TEMPLATE
 export default function Template1({
@@ -55,8 +55,7 @@ export default function Template1({
   
   return (
     <div
-      ref={templateRef}
-      className={`${inOperator == false ? "absolute w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
+      className={`${inOperator == false ? "relative w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
       style={
         isMobile && !inOperator
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
@@ -64,9 +63,11 @@ export default function Template1({
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
           : !inOperator ? { transform: "scale(0.80)", transformOrigin: "top left" } : {}
       }
+      ref={templateRef}
     >
+      <>
       <img
-        src={background}
+        src={backgroundImg}
         className="absolute object-cover w-full h-full"
       ></img>
 
@@ -139,11 +140,12 @@ export default function Template1({
 
         <div class="absolute bottom-0 right-0 w-[400px] h-[700px] z-0 rounded-t-full overflow-hidden opacity-35">
           <img
-            src={image}
+            src={productImage}
             class="w-full h-full object-cover"
           />
         </div>
       </div>
+      </>
     </div>
   );
 }

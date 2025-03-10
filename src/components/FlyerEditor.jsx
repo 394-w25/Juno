@@ -168,7 +168,6 @@ const FlyerEditor = ({
               phoneNumber={businessConfig.phone}
               address={businessConfig.address}
               fontStyleProp=""
-                  className=""
             />
           )}
 
