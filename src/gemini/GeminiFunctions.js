@@ -161,12 +161,12 @@ export async function sendChat(
         `;
   }
   
+    const result = await chat.sendMessage(finalPrompt); // prompts Gemini
+    const textResponse = result.response.text(); // get the response in string format
 
+    console.log("textRes", textResponse);
 
     try{
-      const result = await chat.sendMessage(finalPrompt); // prompts Gemini
-      const textResponse = result.response.text(); // get the response in string format
-  
       if (textResponse.startsWith("```json")) {
         // Remove ```json and ``` from the string
         const cleanedString = textResponse.slice(7, -3);
@@ -336,12 +336,10 @@ export async function sendChatOptions(
       `;
   }
 
-
+  const result = await chat.sendMessage(finalPrompt); // prompts Gemini
+  const textResponse = result.response.text(); // get the response in string format
 
   try {
-    const result = await chat.sendMessage(finalPrompt); // prompts Gemini
-    const textResponse = result.response.text(); // get the response in string format
-
     if (textResponse.startsWith("```json")) {
       // Remove ```json and ``` from the string
       const cleanedString = textResponse.slice(7, -3);
