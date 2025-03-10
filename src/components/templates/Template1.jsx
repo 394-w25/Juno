@@ -1,4 +1,5 @@
 import brownRibbon from "../../assets/brown-ribbon.png";
+import image from "../../assets/ProductImageTest.png";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceIcon from "@mui/icons-material/Place";
 
@@ -89,9 +90,9 @@ export default function Template1({
           </p>
         </div>
 
-        <div className="flex gap-5 flex-col justify-center items-center">
+        <div className="flex gap-5 flex-col justify-center items-center z-10">
           {/* COMPONENT: discount */}
-          <p className="relative max-w-[700px] text-[#A6937C] font-serif font-semibold text-7xl text-center">
+          <p className="relative max-w-[700px] text-[#8c7c68] font-serif font-bold text-7xl text-center">
             {discount ? discount.toUpperCase() : ""}
           </p>
           {/* <div 
@@ -102,18 +103,18 @@ export default function Template1({
           {/* </div> */}
 
           {/* COMPONENT: campaign details */}
-          <p className="relative max-w-[600px] text-[#665E58] text-xl font-serif ">
+          <p className="relative max-w-[600px] text-[#1F1F1F] text-xl font-serif">
             {campaignDetail}
           </p>
         </div>
 
         {/* COMPONENT: call to actiion */}
-        <p className="rounded-lg p-4 bg-[#8C5C35] text-white text-2xl font-serif px-10 tracking-wider">
+        <p className="rounded-lg p-4 bg-[#8C5C35] text-white text-2xl font-serif px-10 tracking-wider z-10">
           {callToAction}
         </p>
 
         {/* CONTACT INFO */}
-        <div className="flex flex-col items-center text-[#42311C]">
+        <div className="flex flex-col items-center text-[#42311C] z-10">
           {phoneNumber !== "" && (
             <div className="flex gap-3 items-center">
               <LocalPhoneIcon className="!text-3xl" />
@@ -134,6 +135,13 @@ export default function Template1({
               </div>
             </div>
           )}
+        </div>
+
+        <div class="absolute bottom-0 right-0 w-[400px] h-[700px] z-0 rounded-t-full overflow-hidden opacity-35">
+          <img
+            src={image}
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
     </div>
