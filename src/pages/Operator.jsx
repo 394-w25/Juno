@@ -107,12 +107,20 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
         ...prevChat,
         { sender: "AI", text: response.conversation_response },
       ]);
+      setChatLog((prevChat) => [
+        ...prevChat,
+        { sender: "AI", text: response.conversation_response },
+      ]);
 
       if (response.campaign_options && response.campaign_options.length > 0) {
         setCampaignOptions(response.campaign_options);
       }
     } catch (error) {
       console.error("Error handling AI response:", error);
+      setChatLog((prevChat) => [
+        ...prevChat,
+        { sender: "AI", text: "Oops! Something went wrong." },
+      ]);
       setChatLog((prevChat) => [
         ...prevChat,
         { sender: "AI", text: "Oops! Something went wrong." },
