@@ -2,8 +2,8 @@ import brownRibbon from "../../assets/brown-ribbon.png";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceIcon from "@mui/icons-material/Place";
 
-// FLYER TEMPLATE
-export default function Template1({
+// FLYER TEMPLATE #2
+export default function Template3({
   callToAction,
   isMobile,
   switchToVertical,
@@ -19,7 +19,6 @@ export default function Template1({
   address,
   fontStyleProp,
   templateRef,
-  inOperator = false
 }) {
   const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     address
@@ -31,10 +30,11 @@ export default function Template1({
    * @returns {string}
    */
   const formatPeriod = (timePeriod) => {
+    console.log("time period: ", timePeriod);
     if (timePeriod === null) {
       return "";
     }
-    
+
     if (timePeriod.start_date === null || timePeriod.end_date === null) {
       return "";
     }
@@ -48,20 +48,23 @@ export default function Template1({
       const year = date.getUTCFullYear();
       return `${month}/${day}/${year}`;
     };
-
+    const formattedPeriod = `${formatDate(start_date)} - ${formatDate(
+      end_date
+    )}`;
+    console.log("Final formatted period:", formattedPeriod); // Log the final period
     return `${formatDate(start_date)} - ${formatDate(end_date)}`;
   };
-  
+
   return (
     <div
       ref={templateRef}
-      className={`${inOperator == false ? "absolute w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
+      className="absolute w-[816px] h-[1056px]"
       style={
-        isMobile && !inOperator
+        isMobile
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
-          : switchToVertical && !inOperator
+          : switchToVertical
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
-          : !inOperator ? { transform: "scale(0.80)", transformOrigin: "top left" } : {}
+          : {}
       }
     >
       <img
@@ -78,50 +81,50 @@ export default function Template1({
           {/* COMPONENT: companyLogo */}
           {/* <img src={logo}></img> */}
 
-          {/* COMPONENT: campaignTitle */}
-          <h1 className="text-7xl font-serif font-light uppercase text-[#42311C] w-4/5">
-            {campaignTitle}
-          </h1>
-
           {/* COMPONENT: campaignPeriod */}
-          <p className="text-xl font-black font-serif text-[#42311C]">
+          <p className="text-xl font-[Chewy] text-[#42311C]">
             {formatPeriod(campaignPeriod)}
           </p>
+
+          {/* COMPONENT: campaignTitle */}
+          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] w-4/5">
+            {campaignTitle} 
+          </h1>
         </div>
 
-        <div className="flex gap-5 flex-col justify-center items-center">
-          {/* COMPONENT: discount */}
-          <p className="relative max-w-[700px] text-[#A6937C] font-serif font-semibold text-7xl text-center">
-            {discount ? discount.toUpperCase() : ""}
-          </p>
-          {/* <div 
-                        className={`relative w-[400px] rounded-full bg-red-400 flex flex-col justify-center`}
-                    > */}
-          {/* <img src={brownRibbon} className="object-cover absolute" /> */}
 
-          {/* </div> */}
+        <div className="flex flex-row">
+            <div className="flex gap-5 justify-center items-center">
+                <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
+    <img src={brownRibbon} className="object-cover absolute" />
+    <p 
+        className={`relative max-w-[200px] text-[#708395] font-[Chewy] text-center text-clip ${discount.split(' ').length > 3 ? 'text-4xl' : 'text-7xl'}`}
+    >
+        {discount}
+    </p>
+</div>
 
-          {/* COMPONENT: campaign details */}
-          <p className="relative max-w-[600px] text-[#665E58] text-xl font-serif ">
-            {campaignDetail}
-          </p>
+
+            {/* COMPONENT: campaign details */}
+            <p className="pl-5 relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy]">
+                {campaignDetail}
+            </p>
+            </div>
         </div>
-
-        {/* COMPONENT: call to actiion */}
-        <p className="rounded-lg p-4 bg-[#8C5C35] text-white text-2xl font-serif px-10 tracking-wider">
-          {callToAction}
-        </p>
-
+            {/* COMPONENT: call to actiion */}
+            <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider">
+            {callToAction}
+            </p>
         {/* CONTACT INFO */}
         <div className="flex flex-col items-center text-[#42311C]">
           {phoneNumber !== "" && (
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 font-[Chewy] items-center">
               <LocalPhoneIcon className="!text-3xl" />
               <p className="text-xl">{phoneNumber}</p>
             </div>
           )}
           {address !== "" && (
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 font-[Chewy] font-light items-center">
               <PlaceIcon className="!text-4xl" />
               <div className="text-xl">
                 <a

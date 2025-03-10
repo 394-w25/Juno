@@ -24,13 +24,13 @@ const App = () => {
   const [chatSession, setChatSession] = useState(null);
 
   const PrivateRoute = ({ children }) => {
-    const { user, authLoading } = useAuthContext();
+    const { user, authLoading, isGuest } = useAuthContext();
 
     if (authLoading) {
       return <LoadingScreen text={"Loading..."} />;
     }
 
-    if (!user) {
+    if (!user && !isGuest) {
       return <Navigate to="/login" replace />;
     }
 
