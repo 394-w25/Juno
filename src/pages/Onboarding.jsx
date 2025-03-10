@@ -16,6 +16,7 @@ import { useAuthContext } from "../components/AuthContext";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { setLocalBusinessConfig } from "../firebase/AuthFunctions";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const GOOGLE_MAPS_LIBRARIES = ["places"];
@@ -142,7 +143,7 @@ export default function Onboarding() {
     );
 
     if (isGuest) {
-      localStorage.setItem("business_config", JSON.stringify(businessConfig))
+      setLocalBusinessConfig(businessConfig)
     }
     else {
       await saveBusinessConfig(user.uid, businessConfig);
