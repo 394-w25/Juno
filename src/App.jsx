@@ -23,6 +23,20 @@ const App = () => {
   /** @type {[ChatSession | null, React.Dispatch<React.SetStateAction<ChatSession | null>>]} */
   const [chatSession, setChatSession] = useState(null);
 
+  const PrivateRoute = ({ children }) => {
+    const { user, authLoading, isGuest } = useAuthContext();
+
+    if (authLoading) {
+      return <LoadingScreen text={"Loading..."} />;
+    }
+
+    if (!user && !isGuest) {
+      return <Navigate to="/login" replace />;
+    }
+
+    return children;
+  };
+
   return (
     <Router>
       <AuthProvider>
