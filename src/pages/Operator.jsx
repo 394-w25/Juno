@@ -7,6 +7,7 @@ import {
   CampaignDetail,
 } from "../gemini/GeminiFunctions";
 import Template1 from "../components/templates/Template1";
+import Template3 from "../components/templates/Template3";
 import backgroundImg from "../assets/template_bg_img.png";
 import logoImg from "../assets/template_logo.png";
 import productImg from "../assets/ProductImageTest.png";
@@ -73,7 +74,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       trimmedMsg = message.trim();
     } else {
       trimmedMsg = prompt;
-    }
+    } 
 
     if (trimmedMsg.length < 1) return;
 
@@ -86,7 +87,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       ...prevChat,
       { sender: "User", text: trimmedMsg },
     ]);
-
+    
     let session =
       chatSession === null
         ? isOptions
