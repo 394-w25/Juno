@@ -36,7 +36,7 @@ const AIAssistant = ({
   
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState(null); // ongoing chat with gemini
-  const [stagedImage, setStagedImage] = useState(null);
+  const [localImage, setLocalImage] = useState(uploadedImage);
 
   const { businessConfig } = useAuthContext()
 
@@ -53,6 +53,8 @@ const AIAssistant = ({
 
   const handleSend = async (prompt) => {
     let trimmedMsg = ""
+
+    setUploadedImage(localImage)
 
     if (prompt === undefined) {
       trimmedMsg = message.trim();
@@ -114,7 +116,7 @@ const AIAssistant = ({
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
       const imageUrl = URL.createObjectURL(file);
-      setStagedImage(imageUrl);
+      setLocalImage(imageUrl);
     } else {
       alert("Please upload a valid image file.");
     }
@@ -198,15 +200,15 @@ const AIAssistant = ({
               <AddPhotoAlternateIcon />
               <input type="file" accept="image/*" hidden onChange={handleImageChange}/>
             </IconButton>
-            {stagedImage && (
+            {localImage && (
               <div className="absolute bottom-1 left-10 w-14 h-14 border border-gray-300 rounded-md">
                 <img
-                  src={stagedImage}
+                  src={localImage}
                   alt="Uploaded Preview"
                   className="w-full h-full object-cover"
                 />
                 <button
-                    onClick={() => setStagedImage(null)}
+                    onClick={() => setLocalImage(null)}
                     className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full hover:bg-red-600"
                   >
                     ✖

@@ -18,7 +18,7 @@ import { useAuthContext } from "../components/AuthContext";
  */
 
 /** @param {CreatorProps} props */
-const Creator = ({ campaignDetails,, uploadedImage, setUploadedImage }) => {
+const Creator = ({ campaignDetails }) => {
   /**
    * @typedef {Object} ChatLogItem
    * @property {string} sender
@@ -28,7 +28,7 @@ const Creator = ({ campaignDetails,, uploadedImage, setUploadedImage }) => {
   /** @type {[[ChatLogItem], React.Dispatch<React.SetStateAction<[ChatLogItem]>>]} */
   const [chatLog, setChatLog] = useState([]); // chat log for AI Assistant component
 
-  const { chatSession } = useAuthContext()
+  const { chatSession, setUploadedImage, uploadedImage } = useAuthContext()
 
   const [localCampaignDetails, setLocalCampaignDetails] = useState(campaignDetails);
 

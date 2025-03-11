@@ -23,17 +23,18 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
  */
 
 /** @param {OperatorProps} props */
-const Operator = ({ setCampaignDetails,, uploadedImage, setUploadedImage}) => {
+const Operator = ({ setCampaignDetails }) => {
 
   const queryParams = new URLSearchParams(useLocation().search)
   const fromOnboarding = queryParams.get("onboarding") === "true"
 
-  const { businessConfig, chatSession, setChatSession } = useAuthContext(); // get business config from auth context
+  const { businessConfig, chatSession, setChatSession, uploadedImage, setUploadedImage } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [showPrompt, setShowPrompt] = useState(true);
   const [isLoading, setIsLoading] = useState(false); //loading button
   const autoFetchRecs = useRef(false);
+  const [localImage, setLocalImage] = useState(false);
 
   /** @type {[[CampaignDetail], React.Dispatch<React.SetStateAction<[CampaignDetail]>>]} */
   const [campaignOptions, setCampaignOptions] = useState([]);
@@ -99,6 +100,8 @@ const Operator = ({ setCampaignDetails,, uploadedImage, setUploadedImage}) => {
     try {
       const response = await sendChatOptions(session, userMessage);
 
+      setUploadedImage(localImage)
+
       console.log("AI Response:", response);
       setChatLog((prevChat) => [
         ...prevChat,
@@ -163,7 +166,7 @@ const Operator = ({ setCampaignDetails,, uploadedImage, setUploadedImage}) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
       const imageUrl = URL.createObjectURL(file);
-      setUploadedImage(imageUrl);
+      setLocalImage(imageUrl);
     } else {
       alert("Please upload a valid image file.");
     }
@@ -354,15 +357,15 @@ const Operator = ({ setCampaignDetails,, uploadedImage, setUploadedImage}) => {
                 <AddPhotoAlternateIcon />
                 <input type="file" accept="image/*" hidden onChange={handleImageChange} />
               </IconButton>
-              {uploadedImage && (
+              {localImage && (
               <div className="absolute bottom-1 left-10 w-14 h-14 border border-gray-300 rounded-md">
                 <img
-                  src={uploadedImage}
+                  src={localImage}
                   alt="Uploaded Preview"
                   className="w-full h-full object-cover"
                 />
                 <button
-                    onClick={() => setUploadedImage(null)}
+                    onClick={() => setLocalImage(null)}
                     className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full hover:bg-red-600"
                   >
                     ✖

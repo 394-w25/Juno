@@ -20,8 +20,6 @@ const App = () => {
   /** @type {[CampaignDetail | null, React.Dispatch<React.SetStateAction<CampaignDetail | null>>]} */
   const [campaignDetails, setCampaignDetails] = useState(null);
 
-  const [uploadedImage, setUploadedImage] = useState(null);
-
   const PrivateRoute = ({ children }) => {
     const { user, authLoading, isGuest } = useAuthContext();
 
@@ -68,8 +66,6 @@ const App = () => {
               <PrivateRoute>
                 <Creator
                   campaignDetails={campaignDetails}
-                  uploadedImage={uploadedImage}
-                  setUploadedImage={setUploadedImage}
                 />
               </PrivateRoute>
             }
@@ -80,8 +76,6 @@ const App = () => {
               <PrivateRoute>
                 <Operator
                   setCampaignDetails={setCampaignDetails}
-                  uploadedImage={uploadedImage}
-                  setUploadedImage={setUploadedImage}
                 />
               </PrivateRoute>
             }
