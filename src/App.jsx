@@ -23,6 +23,8 @@ const App = () => {
   /** @type {[ChatSession | null, React.Dispatch<React.SetStateAction<ChatSession | null>>]} */
   const [chatSession, setChatSession] = useState(null);
 
+  const [uploadedImage, setUploadedImage] = useState(null);
+
   const PrivateRoute = ({ children }) => {
     const { user, authLoading, isGuest } = useAuthContext();
 
@@ -70,6 +72,8 @@ const App = () => {
                 <Creator
                   campaignDetails={campaignDetails}
                   chatSession={chatSession}
+                  uploadedImage={uploadedImage}
+                  setUploadedImage={setUploadedImage}
                 />
               </PrivateRoute>
             }
@@ -82,6 +86,8 @@ const App = () => {
                   setCampaignDetails={setCampaignDetails}
                   setChatSession={setChatSession}
                   chatSession={chatSession}
+                  uploadedImage={uploadedImage}
+                  setUploadedImage={setUploadedImage}
                 />
               </PrivateRoute>
             }

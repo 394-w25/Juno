@@ -18,7 +18,7 @@ import { CampaignDetail } from "../gemini/GeminiFunctions";
  */
 
 /** @param {CreatorProps} props */
-const Creator = ({ campaignDetails, chatSession }) => {
+const Creator = ({ campaignDetails, chatSession, uploadedImage, setUploadedImage }) => {
   /**
    * @typedef {Object} ChatLogItem
    * @property {string} sender
@@ -54,6 +54,7 @@ const Creator = ({ campaignDetails, chatSession }) => {
           campaignDetails={localCampaignDetails}
           switchToVertical={switchToVertical}
           isMobile={isMobile}
+          uploadedImage={uploadedImage}
         />
         <AIAssistant
           chatLog={chatLog}
@@ -64,6 +65,8 @@ const Creator = ({ campaignDetails, chatSession }) => {
           campaignDetails={localCampaignDetails}
           switchToVertical={switchToVertical}
           chatSession={chatSession}
+          uploadedImage={uploadedImage}
+          setUploadedImage={setUploadedImage}
         />
       </div>
     </div>

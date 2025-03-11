@@ -24,13 +24,15 @@ const formatPeriod = (timePeriod) => {
 
     return `${formatDate(start_date)} - ${formatDate(end_date)}`;
 }
+
 function Template2({ templateRef, callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
     return (
         <div
           ref={templateRef}
           className="relative w-[1056px] h-[1056px]"
-          style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.6)", transformOrigin: "top left"} : {transform: "scale(0.75)", transformOrigin: "top left"}}
+          style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.6)", transformOrigin: "top left"} : {}}
         >
+        
           <img src={background} className="absolute w-full h-full object-cover"/>
           
           <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center">

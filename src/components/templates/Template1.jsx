@@ -61,11 +61,10 @@ export default function Template1({
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
           : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
-          : !inOperator ? { transform: "scale(0.80)", transformOrigin: "top left" } : {}
+          : {}
       }
       ref={templateRef}
     >
-      <>
       <img
         src={backgroundImg}
         className="absolute object-cover w-full h-full"
@@ -137,15 +136,14 @@ export default function Template1({
             </div>
           )}
         </div>
-
+        {productImage &&
         <div class="absolute bottom-0 right-0 w-[400px] h-[700px] z-0 rounded-t-full overflow-hidden opacity-35">
           <img
             src={productImage}
             class="w-full h-full object-cover"
           />
-        </div>
+        </div>}
       </div>
-      </>
     </div>
   );
 }

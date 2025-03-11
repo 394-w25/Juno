@@ -67,7 +67,7 @@ export default function Template3({
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
           : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
-          : !inOperator ? { transform: "scale(0.80)", transformOrigin: "top left" } : {}
+          : {}
       }
     >
       <img
@@ -140,6 +140,7 @@ export default function Template3({
             </div>
           )}
         </div>
+        {productImage &&
         <div className="absolute bottom-0 right-0 w-[500px] h-[700px] overflow-hidden z-0 opacity-80">
           <div className="relative w-full h-full">
             <img
@@ -152,7 +153,7 @@ export default function Template3({
               alt="Product"
             />
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

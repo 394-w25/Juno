@@ -34,8 +34,8 @@ export class CampaignDetail {
 const globalCampaignDetailsJSON = `{
   "campaign_title": 3-5 word title for the campaign,
   "slogan": a catchy slogan like "Biggest Discounts of the Season!,
-  "discount": "50% off" (if in social media mode, make this only a percentage),
-  "campaign_detail": small length text describing the campaign,
+  "discount": "50% off" (make this only a percentage),
+  "campaign_detail": small length text describing the campaign (try and also keep this very short),
   "campaign_period": {
   "start_date": Date object,
   "end_date": Date object

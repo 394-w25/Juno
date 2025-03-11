@@ -9,12 +9,12 @@ import Template1 from "../components/templates/Template1";
 import Template3 from "../components/templates/Template3";
 import backgroundImg from "../assets/template_bg_img.png";
 import logoImg from "../assets/template_logo.png";
-import productImg from "../assets/ProductImageTest.png";
 import { useAuthContext } from "../components/AuthContext";
 import { ChatSession } from "@google/generative-ai";
-import { CircularProgress } from "@mui/material";
+import { IconButton, CircularProgress} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/Loading";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 /**
  * @typedef {Object} OperatorProps
@@ -24,7 +24,7 @@ import LoadingScreen from "../components/Loading";
  */
 
 /** @param {OperatorProps} props */
-const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
+const Operator = ({ setCampaignDetails, chatSession, setChatSession, uploadedImage, setUploadedImage}) => {
 
   const queryParams = new URLSearchParams(useLocation().search)
   const fromOnboarding = queryParams.get("onboarding") === "true"
@@ -164,6 +164,16 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       <LoadingScreen text={"Generating some recs for you..."} />
     )
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = URL.createObjectURL(file);
+      setUploadedImage(imageUrl);
+    } else {
+      alert("Please upload a valid image file.");
+    }
+  };
   
   return (
     <div>
@@ -254,7 +264,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                               start_date: option.start_date,
                               end_date: option.end_date,
                             }}
-                            productImage={productImg}
+                            productImage={uploadedImage}
                             website={businessConfig.web_url}
                             phoneNumber={businessConfig.phone}
                             address={businessConfig.address}
@@ -272,7 +282,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
                               start_date: option.start_date,
                               end_date: option.end_date,
                             }}
-                            productImage={productImg}
+                            productImage={uploadedImage}
                             website={businessConfig.web_url}
                             phoneNumber={businessConfig.phone}
                             address={businessConfig.address}
@@ -333,7 +343,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
         </div>
 
         <div className="relative flex flex-col items-center z-10">
-          <div className="w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 overflow-y-auto">
+          <div className="relative w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 overflow-y-auto">
             <textarea
               placeholder="Type a message..."
               value={message}
@@ -341,6 +351,32 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
               onKeyDown={handleKeyDown}
               className="w-full h-full text-lg bg-transparent outline-none resize-none"
             />
+            <div className="absolute bottom-3 left-3 cursor-pointer">
+              <IconButton
+                color="primary"
+                component="label"
+                size="medium"
+              >
+                <AddPhotoAlternateIcon />
+                <input type="file" accept="image/*" hidden onChange={handleImageChange} />
+              </IconButton>
+              {uploadedImage && (
+              <div className="absolute bottom-1 left-10 w-14 h-14 border border-gray-300 rounded-md">
+                <img
+                  src={uploadedImage}
+                  alt="Uploaded Preview"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                    onClick={() => setUploadedImage(null)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full hover:bg-red-600"
+                  >
+                    ✖
+                </button>
+              </div>
+            )}
+            </div>
+
           </div>
         </div>
       </div>
