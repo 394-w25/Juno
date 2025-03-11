@@ -5,6 +5,7 @@ import {
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
+  createNewChat
 } from "../gemini/GeminiFunctions";
 import Template1 from "../components/templates/Template1";
 import Template3 from "../components/templates/Template3";
