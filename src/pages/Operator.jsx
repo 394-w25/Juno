@@ -11,11 +11,11 @@ import Template3 from "../components/templates/Template3";
 import backgroundImg from "../assets/template_bg_img.png";
 import logoImg from "../assets/template_logo.png";
 import { useAuthContext } from "../components/AuthContext";
-import { ChatSession } from "@google/generative-ai";
 import { IconButton, CircularProgress} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/Loading";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { ArrowUpward } from "@mui/icons-material";
 
 /**
  * @typedef {Object} OperatorProps
@@ -340,7 +340,7 @@ const Operator = ({ setCampaignDetails }) => {
         </div>
 
         <div className="relative flex flex-col items-center z-10">
-          <div className="relative w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 overflow-y-auto">
+          <div className="relative w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 pb-12 pr-12">
             <textarea
               placeholder="Type a message..."
               value={message}
@@ -348,6 +348,14 @@ const Operator = ({ setCampaignDetails }) => {
               onKeyDown={handleKeyDown}
               className="w-full h-full text-lg bg-transparent outline-none resize-none"
             />
+            <div className="absolute right-4 top-4">
+              <button
+                className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center hover:opacity-75"
+                onClick={() => handleSend()}
+              >
+                <ArrowUpward fontSize="small" />
+              </button>
+            </div>
             <div className="absolute bottom-3 left-3 cursor-pointer">
               <IconButton
                 color="primary"

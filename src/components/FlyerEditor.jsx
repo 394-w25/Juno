@@ -85,7 +85,7 @@ const FlyerEditor = ({
     >
       <button
         onClick={downloadImage}
-        className="fixed top-20  bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
+        className="fixed top-21 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
       >
         <DownloadIcon /> {/* ✅ Small download icon */}
       </button>
