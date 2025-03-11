@@ -5,6 +5,7 @@ import {
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
+  createNewChat
 } from "../gemini/GeminiFunctions";
 import Template1 from "../components/templates/Template1";
 import Template3 from "../components/templates/Template3";
@@ -100,11 +101,6 @@ const Operator = ({ setCampaignDetails, }) => {
       const response = await sendChatOptions(session, userMessage);
 
       console.log("AI Response:", response);
-
-      setChatLog((prevChat) => [
-        ...prevChat,
-        { sender: "AI", text: response.conversation_response },
-      ]);
       setChatLog((prevChat) => [
         ...prevChat,
         { sender: "AI", text: response.conversation_response },
