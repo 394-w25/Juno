@@ -44,7 +44,7 @@ export default function Onboarding() {
 
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const [status, setStatus] = useState("DEFAULT");
-  const { isGuest } = useAuthContext()
+  const { isGuest } = useAuthContext();
   const navigate = useNavigate();
 
   const businessTypes = [
@@ -65,7 +65,7 @@ export default function Onboarding() {
     "Liquor Store",
     "Pet Store",
     "Shoe Store",
-    "Sporting Goods Store"
+    "Sporting Goods Store",
   ];
 
   const phoneRegex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
@@ -143,9 +143,8 @@ export default function Onboarding() {
     );
 
     if (isGuest) {
-      setLocalBusinessConfig(businessConfig)
-    }
-    else {
+      setLocalBusinessConfig(businessConfig);
+    } else {
       await saveBusinessConfig(user.uid, businessConfig);
     }
 
@@ -155,126 +154,130 @@ export default function Onboarding() {
   };
 
   return (
-    <LoadScript
-      googleMapsApiKey={GOOGLE_MAPS_API_KEY}
-      libraries={GOOGLE_MAPS_LIBRARIES}
-    >
-      <div className="relative flex flex-col justify-center items-center gap-10 h-svh">
-        <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
+    <>
+      <LoadScript
+        googleMapsApiKey={GOOGLE_MAPS_API_KEY}
+        libraries={GOOGLE_MAPS_LIBRARIES}
+      >
+        <div className="relative flex flex-col justify-center items-center gap-10 h-svh">
+          <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
 
-        <img
-          src={logo}
-          alt="Logo"
-          className="h-12 absolute top-10 left-10 bg-white"
-        />
-
-        <h1 className="font-bold text-sm py-2 px-4 bg-white text-[#3F8CFF] border-[1px] border-[#3F8CFF] rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
-          BASIC BUSINESS INFO
-        </h1>
-
-        <form
-          onSubmit={handleFormSubmit}
-          className="p-10 flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]"
-        >
-          <OnboardingTextField
-            required={true}
-            errorMsg={errorMsgs.businessName}
-            label="Business Name"
-            setValue={setBusinessName}
+          <img
+            src={logo}
+            alt="Logo"
+            className="h-12 absolute top-10 left-10 bg-white"
           />
 
-          <Autocomplete
-            onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
-            onPlaceChanged={() => {
-              if (autocompleteRef.current) {
-                const place = autocompleteRef.current.getPlace();
-                if (place.formatted_address) {
-                  setAddress(place.formatted_address);
-                }
-              }
-            }}
+          <h1 className="font-bold text-sm py-2 px-4 bg-white text-[#3F8CFF] border-[1px] border-[#3F8CFF] rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
+            BASIC BUSINESS INFO
+          </h1>
+
+          <form
+            onSubmit={handleFormSubmit}
+            className="p-10 flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]"
           >
-            <TextField
-              fullWidth
-              value={address}
-              label="Address"
-              onChange={(e) => setAddress(e.target.value)}
-              size="small"
+            <OnboardingTextField
+              required={true}
+              errorMsg={errorMsgs.businessName}
+              label="Business Name"
+              setValue={setBusinessName}
             />
-          </Autocomplete>
 
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={getCurrentLocation}
-            fullWidth
-            disabled={isFetchingLocation}
-          >
-            {isFetchingLocation ? "Fetching location..." : "Use My Location"}
-          </Button>
-
-          <div className={`flex ${isMobile ? "flex-col" : ""} gap-5`}>
-            <div className="w-full">
+            <Autocomplete
+              onLoad={(autocomplete) =>
+                (autocompleteRef.current = autocomplete)
+              }
+              onPlaceChanged={() => {
+                if (autocompleteRef.current) {
+                  const place = autocompleteRef.current.getPlace();
+                  if (place.formatted_address) {
+                    setAddress(place.formatted_address);
+                  }
+                }
+              }}
+            >
               <TextField
                 fullWidth
-                select
-                value={businessType}
-                label="Business type"
-                onChange={handleBusinessTypeChange}
-                required
+                value={address}
+                label="Address"
+                onChange={(e) => setAddress(e.target.value)}
                 size="small"
-              >
-                {businessTypes.map((type) => (
-                  <MenuItem key={type} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            <div className="w-full">
-              <OnboardingTextField
-                required={false}
-                errorMsg={errorMsgs.phone}
-                label="Phone"
-                setValue={setPhone}
               />
+            </Autocomplete>
+
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={getCurrentLocation}
+              fullWidth
+              disabled={isFetchingLocation}
+            >
+              {isFetchingLocation ? "Fetching location..." : "Use My Location"}
+            </Button>
+
+            <div className={`flex ${isMobile ? "flex-col" : ""} gap-5`}>
+              <div className="w-full">
+                <TextField
+                  fullWidth
+                  select
+                  value={businessType}
+                  label="Business type"
+                  onChange={handleBusinessTypeChange}
+                  required
+                  size="small"
+                >
+                  {businessTypes.map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </div>
+              <div className="w-full">
+                <OnboardingTextField
+                  required={false}
+                  errorMsg={errorMsgs.phone}
+                  label="Phone"
+                  setValue={setPhone}
+                />
+              </div>
             </div>
-          </div>
 
-          <OnboardingTextField
-            required={false}
-            errorMsg={errorMsgs.industry}
-            label="Industry"
-            setValue={setIndustry}
-          />
+            <OnboardingTextField
+              required={false}
+              errorMsg={errorMsgs.industry}
+              label="Industry"
+              setValue={setIndustry}
+            />
 
-          <OnboardingTextField
-            required={false}
-            errorMsg={errorMsgs.webUrl}
-            label="Web URL"
-            setValue={setWebUrl}
-          />
+            <OnboardingTextField
+              required={false}
+              errorMsg={errorMsgs.webUrl}
+              label="Web URL"
+              setValue={setWebUrl}
+            />
 
-          <button
-            disabled={status === "LOADING"}
-            type="submit"
-            className={`py-3 text-sm font-bold bg-[#3F8CFF] text-white rounded-md ${
-              status === "DEFAULT" ? "hover:opacity-50" : ""
-            }`}
-          >
-            {status === "LOADING" ? (
-              <CircularProgress
-                className="mt-1"
-                color="white"
-                size={16}
-                thickness={5}
-              />
-            ) : (
-              "CONTINUE"
-            )}
-          </button>
-        </form>
-      </div>
-    </LoadScript>
+            <button
+              disabled={status === "LOADING"}
+              type="submit"
+              className={`py-3 text-sm font-bold bg-[#3F8CFF] text-white rounded-md ${
+                status === "DEFAULT" ? "hover:opacity-50" : ""
+              }`}
+            >
+              {status === "LOADING" ? (
+                <CircularProgress
+                  className="mt-1"
+                  color="white"
+                  size={16}
+                  thickness={5}
+                />
+              ) : (
+                "CONTINUE"
+              )}
+            </button>
+          </form>
+        </div>
+      </LoadScript>
+    </>
   );
 }
