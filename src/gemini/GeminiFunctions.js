@@ -295,7 +295,7 @@ export function createDateBasedCampaignChat(business_config) {
       ]
   }
 
-  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. Do not make duplicate recommendations that you've already made before.
+  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. DO NOT make duplicate recommendations and insights that you've already made before.
   `;
 
   const textModel = genAI.getGenerativeModel({

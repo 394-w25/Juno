@@ -133,7 +133,7 @@ const Operator = ({ setCampaignDetails, }) => {
 
   const handleGetDateBasedCampaign = async () => {
     await handleSend(
-      "Generate six marketing campaign options for an event in the next month.",
+      "Generate six marketing campaign options for an event in the next few months.",
       true
     );
   };
