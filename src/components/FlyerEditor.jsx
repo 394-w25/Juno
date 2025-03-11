@@ -90,10 +90,13 @@ const FlyerEditor = ({
         <DownloadIcon /> {/* ✅ Small download icon */}
       </button>
 
-      <div
-        className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white  "
-        style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle
+      <div 
+        className="relative flex flex-col items-center w-full" // Ensure enough space for the toggle
       >
+        {/* TOGGLE BUTTON (Centered) */}
+        <div 
+          className="fixed top-20 w-1/2 flex items-center justify-center z-50 bg-white"
+        >
         <BottomNavigation
           value={mediaMode}
           onChange={handleMediaChange}
@@ -211,7 +214,7 @@ const FlyerEditor = ({
       )}
         </div>
         </div>
-    </div>
+        </div>
   );
 };
 

@@ -22,7 +22,6 @@ export default function Template3({
   fontStyleProp,
   templateRef,
   inOperator = false
-  inOperator = false,
 }) {
   const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     address
@@ -65,13 +64,9 @@ export default function Template3({
       className={`${inOperator == false ? "relative w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
       style={
         isMobile && !inOperator
-        isMobile && !inOperator
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
           : switchToVertical && !inOperator
-          : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
-          : !inOperator
-          ? { transform: "scale(0.80)", transformOrigin: "top left" }
           : {}
       }
     >
@@ -84,8 +79,8 @@ export default function Template3({
       {/*outline outline-left outline-4 outline-brown outline-offset-4*/}
       {/* <img src={productImage} className="absolute right-0 bottom-0 object-cover w-1/2 h-3/4 [clip-path:ellipse(90%_90%_at_50%_100%)]"></img> */}
 
-      <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center">
-        <div className="flex flex-col items-center gap-3 ">
+      <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center mb-40">
+        <div className="flex flex-col items-center gap-3 "> 
           {/* COMPONENT: companyLogo */}
           {/* <img src={logo}></img> */}
 
@@ -95,37 +90,39 @@ export default function Template3({
           </p>
 
           {/* COMPONENT: campaignTitle */}
-          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] max-w-[500px] break-words mt-8 mr-30">
+          <h1 className="text-7xl text-left font-[Chewy] uppercase text-[#708395] max-w-[500px] break-words mr-30">
             {campaignTitle}
           </h1>
         </div>
 
-        <div className="flex flex-row">
+
+        <div className="flex flex-row z-10">
           <div className="flex gap-5 justify-center items-center">
+            {/* COMPONENT: campaign details should be first */}
+            <p className=" relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy] mr-10 mb-30">
+              {campaignDetail}
+            </p>
+
             <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
-              <div className="relative w-100 h-100 flex items-center justify-center">
+              <div className="relative w-100 h-100 flex items-center justify-center mb-40">
                 <img
                   src={brownRibbon}
-                  className="object-cover absolute w-100 h-100"
+                  className="object-cover absolute w-80 h-80"
                 />
                 <p
                   className={`absolute text-[#708395] max-w-[300px] font-[Chewy] text-center ${
-                    discount.split(" ").length > 3 ? "text-5xl" : "text-7xl"
+                    discount.split(" ").length > 3 ? "text-3xl" : "text-6xl"
                   }`}
                 >
                   {discount}
                 </p>
               </div>
             </div>
-
-            {/* COMPONENT: campaign details */}
-            <p className="pl-5 relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy]">
-              {campaignDetail}
-            </p>
           </div>
         </div>
+
         {/* COMPONENT: call to actiion */}
-        <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider">
+        <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider z-10">
           {callToAction}
         </p>
         {/* CONTACT INFO */}
@@ -137,7 +134,7 @@ export default function Template3({
             </div>
           )}
           {address !== "" && (
-            <div className="flex gap-3 font-[Chewy] font-light items-center">
+            <div className="flex gap-3 font-[Chewy] font-light items-centerz -10">
               <PlaceIcon className="!text-4xl" />
               <div className="text-xl">
                 <a
