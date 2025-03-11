@@ -19,18 +19,16 @@ import LoadingScreen from "../components/Loading";
 
 /**
  * @typedef {Object} OperatorProps
- * @property {ChatSession | null} chatSession
- * @property {React.Dispatch<React.SetStateAction<ChatSession | null>>} setChatSession
  * @property {React.Dispatch<React.SetStateAction<any>>} setCampaignDetails
  */
 
 /** @param {OperatorProps} props */
-const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
+const Operator = ({ setCampaignDetails, }) => {
 
   const queryParams = new URLSearchParams(useLocation().search)
   const fromOnboarding = queryParams.get("onboarding") === "true"
 
-  const { businessConfig } = useAuthContext(); // get business config from auth context
+  const { businessConfig, chatSession, setChatSession } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [showPrompt, setShowPrompt] = useState(true);
@@ -65,7 +63,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession }) => {
       autoFetchRecs.current = true;
       handleGetDateBasedCampaign();
     }
-  }, [fromOnboarding, chatSession]);
+  }, [fromOnboarding]);
 
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
