@@ -94,7 +94,7 @@ export default function Template3({
           </p>
 
           {/* COMPONENT: campaignTitle */}
-          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] w-4/5">
+          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] max-w-[500px] break-words mt-8 mr-30">
             {campaignTitle}
           </h1>
         </div>
