@@ -102,17 +102,19 @@ export default function Template3({
         <div className="flex flex-row">
           <div className="flex gap-5 justify-center items-center">
             <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
-              <img
-                src={brownRibbon}
-                className="object-cover absolute w-100 h-100"
-              />
-              <p
-                className={`relative max-w-[200px] text-[#708395] font-[Chewy] text-center text-clip ${
-                  discount.split(" ").length > 3 ? "text-4xl" : "text-7xl"
-                }`}
-              >
-                {discount}
-              </p>
+              <div className="relative w-100 h-100 flex items-center justify-center">
+                <img
+                  src={brownRibbon}
+                  className="object-cover absolute w-100 h-100"
+                />
+                <p
+                  className={`absolute text-[#708395] font-[Chewy] text-center ${
+                    discount.split(" ").length > 3 ? "text-4xl" : "text-7xl"
+                  }`}
+                >
+                  {discount}
+                </p>
+              </div>
             </div>
 
             {/* COMPONENT: campaign details */}
