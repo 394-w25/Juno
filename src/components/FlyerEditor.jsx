@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
 import backgroundImg from "../assets/template_bg_img.png";
-import backgroundImg3 from "../assets/template-background-4.png"
+import backgroundImg3 from "../assets/template-background-4.png";
 import Template3 from "./templates/Template3";
 import backgroundImg2 from "../assets/temp.png";
 import logoImg from "../assets/template_logo.png";
@@ -90,23 +90,33 @@ const FlyerEditor = ({
       </button>
 
       <div
-        className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white"
+        className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white  "
         style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle
       >
-        <ToggleButtonGroup
-          color="primary"
+        <BottomNavigation
           value={mediaMode}
-          exclusive
           onChange={handleMediaChange}
-          fullWidth
-          className="pointer-events-auto"
+          showLabels
+          className="absolute top-0 w-1/2 flex items-center justify-center z-50 bg-white pointer-events-auto"
+          style={{ left: "50%", transform: "translateX(-50%)" }}
         >
           {mediaModes.map((mode) => (
-            <ToggleButton key={mode} value={mode}>
+            <BottomNavigationAction
+              key={mode}
+              label={mode}
+              value={mode}
+              style={{
+                height: "50px",
+                minWidth: "80px",
+                fontSize: 100,
+                marginRight: "-2px",
+                border: "1px solid lightgray",
+              }}
+            >
               {mode}
-            </ToggleButton>
+            </BottomNavigationAction>
           ))}
-        </ToggleButtonGroup>
+        </BottomNavigation>
       </div>
 
       <div className="flex-grow relative flex justify-center">
@@ -119,84 +129,84 @@ const FlyerEditor = ({
         )}
       </div>
 
-      <div 
+      <div
         className="flex-grow absolute flex justify-center ml-20"
         style={{ left: "50%", transform: "translateX(-50%)" }}
       >
-      {status === "DEFAULT" && campaignDetails && (
-        <>
-          {mediaMode === "FLYER" && (
-            <Template1
-              templateRef={templateRef}
-              isMobile={isMobile}
-              callToAction={campaignDetails.call_to_action}
-              switchToVertical={switchToVertical}
-              campaignTitle={campaignDetails.campaign_title}
-              background={backgroundImg}
-              logo={logoImg}
-              discount={campaignDetails.discount}
-              campaignDetail={campaignDetails.campaign_detail}
-              campaignPeriod={{
-                start_date: campaignDetails.start_date,
-                end_date: campaignDetails.end_date,
-              }}
-              productImage={productImg}
-              website={businessConfig.web_url}
-              phoneNumber={businessConfig.phone}
-              address={businessConfig.address}
-              fontStyleProp=""
-            />
-          )}
+        {status === "DEFAULT" && campaignDetails && (
+          <>
+            {mediaMode === "FLYER" && (
+              <Template1
+                templateRef={templateRef}
+                isMobile={isMobile}
+                callToAction={campaignDetails.call_to_action}
+                switchToVertical={switchToVertical}
+                campaignTitle={campaignDetails.campaign_title}
+                background={backgroundImg}
+                logo={logoImg}
+                discount={campaignDetails.discount}
+                campaignDetail={campaignDetails.campaign_detail}
+                campaignPeriod={{
+                  start_date: campaignDetails.start_date,
+                  end_date: campaignDetails.end_date,
+                }}
+                productImage={productImg}
+                website={businessConfig.web_url}
+                phoneNumber={businessConfig.phone}
+                address={businessConfig.address}
+                fontStyleProp=""
+              />
+            )}
 
-          {mediaMode === "FLYER2" && (
-            <Template3
-              templateRef={templateRef}
-              isMobile={isMobile}
-              callToAction={campaignDetails.call_to_action}
-              switchToVertical={switchToVertical}
-              campaignTitle={campaignDetails.campaign_title}
-              background={backgroundImg3}
-              logo={logoImg}
-              discount={campaignDetails.discount}
-              campaignDetail={campaignDetails.campaign_detail}
-              campaignPeriod={{
-                start_date: campaignDetails.start_date,
-                end_date: campaignDetails.end_date,
-              }}
-              productImage={productImg}
-              website={businessConfig.web_url}
-              phoneNumber={businessConfig.phone}
-              address={businessConfig.address}
-              fontStyleProp=""
-                  className=""
-            />
-          )}
+            {mediaMode === "FLYER2" && (
+              <Template3
+                templateRef={templateRef}
+                isMobile={isMobile}
+                callToAction={campaignDetails.call_to_action}
+                switchToVertical={switchToVertical}
+                campaignTitle={campaignDetails.campaign_title}
+                background={backgroundImg3}
+                logo={logoImg}
+                discount={campaignDetails.discount}
+                campaignDetail={campaignDetails.campaign_detail}
+                campaignPeriod={{
+                  start_date: campaignDetails.start_date,
+                  end_date: campaignDetails.end_date,
+                }}
+                productImage={productImg}
+                website={businessConfig.web_url}
+                phoneNumber={businessConfig.phone}
+                address={businessConfig.address}
+                fontStyleProp=""
+                className=""
+              />
+            )}
 
-          {mediaMode === "SOCIAL POSTS" && (
-            <Template2
-              templateRef={templateRef}
-              isMobile={isMobile}
-              callToAction={campaignDetails.call_to_action}
-              switchToVertical={switchToVertical}
-              campaignTitle={campaignDetails.campaign_title}
-              background={backgroundImg2}
-              logo={logoImg}
-              discount={campaignDetails.discount}
-              campaignDetail={campaignDetails.campaign_detail}
-              campaignPeriod={{
-                start_date: campaignDetails.start_date,
-                end_date: campaignDetails.end_date,
-              }}
-              productImage={productImg}
-              website={businessConfig.web_url}
-              phoneNumber={businessConfig.phone}
-              address={businessConfig.address}
-              fontStyleProp=""
-            />
-          )}
-        </>
-      )}
-        </div>
+            {mediaMode === "SOCIAL POSTS" && (
+              <Template2
+                templateRef={templateRef}
+                isMobile={isMobile}
+                callToAction={campaignDetails.call_to_action}
+                switchToVertical={switchToVertical}
+                campaignTitle={campaignDetails.campaign_title}
+                background={backgroundImg2}
+                logo={logoImg}
+                discount={campaignDetails.discount}
+                campaignDetail={campaignDetails.campaign_detail}
+                campaignPeriod={{
+                  start_date: campaignDetails.start_date,
+                  end_date: campaignDetails.end_date,
+                }}
+                productImage={productImg}
+                website={businessConfig.web_url}
+                phoneNumber={businessConfig.phone}
+                address={businessConfig.address}
+                fontStyleProp=""
+              />
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
