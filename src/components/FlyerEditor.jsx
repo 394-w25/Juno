@@ -34,6 +34,7 @@ const FlyerEditor = ({
   campaignDetails,
   isMobile,
   switchToVertical,
+  uploadedImage
 }) => {
   useEffect(() => {
     console.log("Updated campaign details in FlyerEditor:", campaignDetails);
@@ -84,15 +85,18 @@ const FlyerEditor = ({
     >
       <button
         onClick={downloadImage}
-        className="absolute top-1 right-0 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
+        className="fixed top-21 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
       >
         <DownloadIcon /> {/* ✅ Small download icon */}
       </button>
 
-      <div
-        className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white  "
-        style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle
+      <div 
+        className="relative flex flex-col items-center w-full" // Ensure enough space for the toggle
       >
+        {/* TOGGLE BUTTON (Centered) */}
+        <div 
+          className="fixed top-20 w-1/2 flex items-center justify-center z-50 bg-white"
+        >
         <BottomNavigation
           value={mediaMode}
           onChange={handleMediaChange}
@@ -119,95 +123,98 @@ const FlyerEditor = ({
         </BottomNavigation>
       </div>
 
-      <div className="flex-grow relative flex justify-center">
-        {status === "LOADING" && (
-          <CircularProgress
-            className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white"
-            size={32}
-            thickness={5}
-          />
-        )}
-      </div>
+        <div className="flex-grow relative flex justify-center">
+          {status === "LOADING" && (
+            <CircularProgress
+              className="absolute top-16 left-1/2 transform -translate-x-1/2 bg-white"
+              size={32}
+              thickness={5}
+            />
+          )}
+        </div>
 
-      <div
-        className="flex-grow absolute flex justify-center ml-20"
-        style={{ left: "50%", transform: "translateX(-50%)" }}
-      >
-        {status === "DEFAULT" && campaignDetails && (
-          <>
-            {mediaMode === "FLYER" && (
-              <Template1
-                templateRef={templateRef}
-                isMobile={isMobile}
-                callToAction={campaignDetails.call_to_action}
-                switchToVertical={switchToVertical}
-                campaignTitle={campaignDetails.campaign_title}
-                background={backgroundImg}
-                logo={logoImg}
-                discount={campaignDetails.discount}
-                campaignDetail={campaignDetails.campaign_detail}
-                campaignPeriod={{
-                  start_date: campaignDetails.start_date,
-                  end_date: campaignDetails.end_date,
-                }}
-                productImage={productImg}
-                website={businessConfig.web_url}
-                phoneNumber={businessConfig.phone}
-                address={businessConfig.address}
-                fontStyleProp=""
-              />
-            )}
+        <div 
+          className="absolute top-[7rem] flex justify-center items-center 
+                    w-[90vw] md:w-[60vw] h-auto max-h-[80vh] 
+                    scale-[0.8] md:scale-[0.8] 
+                    transition-transform duration-300"
+          style={{ transformOrigin: "top center" }}
+        >
+      {status === "DEFAULT" && campaignDetails && (
+        <>
+          {mediaMode === "FLYER" && (
+            <Template1
+              templateRef={templateRef}
+              isMobile={isMobile}
+              callToAction={campaignDetails.call_to_action}
+              switchToVertical={switchToVertical}
+              campaignTitle={campaignDetails.campaign_title}
+              background={backgroundImg}
+              logo={logoImg}
+              discount={campaignDetails.discount}
+              campaignDetail={campaignDetails.campaign_detail}
+              campaignPeriod={{
+                start_date: campaignDetails.start_date,
+                end_date: campaignDetails.end_date,
+              }}
+              productImage={uploadedImage}
+              website={businessConfig.web_url}
+              phoneNumber={businessConfig.phone}
+              address={businessConfig.address}
+              fontStyleProp=""
+            />
+          )}
 
-            {mediaMode === "FLYER2" && (
-              <Template3
-                templateRef={templateRef}
-                isMobile={isMobile}
-                callToAction={campaignDetails.call_to_action}
-                switchToVertical={switchToVertical}
-                campaignTitle={campaignDetails.campaign_title}
-                background={backgroundImg3}
-                logo={logoImg}
-                discount={campaignDetails.discount}
-                campaignDetail={campaignDetails.campaign_detail}
-                campaignPeriod={{
-                  start_date: campaignDetails.start_date,
-                  end_date: campaignDetails.end_date,
-                }}
-                productImage={productImg}
-                website={businessConfig.web_url}
-                phoneNumber={businessConfig.phone}
-                address={businessConfig.address}
-                fontStyleProp=""
-                className=""
-              />
-            )}
+          {mediaMode === "FLYER2" && (
+            <Template3
+              templateRef={templateRef}
+              isMobile={isMobile}
+              callToAction={campaignDetails.call_to_action}
+              switchToVertical={switchToVertical}
+              campaignTitle={campaignDetails.campaign_title}
+              background={backgroundImg3}
+              logo={logoImg}
+              discount={campaignDetails.discount}
+              campaignDetail={campaignDetails.campaign_detail}
+              campaignPeriod={{
+                start_date: campaignDetails.start_date,
+                end_date: campaignDetails.end_date,
+              }}
+              productImage={uploadedImage}
+              website={businessConfig.web_url}
+              phoneNumber={businessConfig.phone}
+              address={businessConfig.address}
+              fontStyleProp=""
+            />
+          )}
 
-            {mediaMode === "SOCIAL POSTS" && (
-              <Template2
-                templateRef={templateRef}
-                isMobile={isMobile}
-                callToAction={campaignDetails.call_to_action}
-                switchToVertical={switchToVertical}
-                campaignTitle={campaignDetails.campaign_title}
-                background={backgroundImg2}
-                logo={logoImg}
-                discount={campaignDetails.discount}
-                campaignDetail={campaignDetails.campaign_detail}
-                campaignPeriod={{
-                  start_date: campaignDetails.start_date,
-                  end_date: campaignDetails.end_date,
-                }}
-                productImage={productImg}
-                website={businessConfig.web_url}
-                phoneNumber={businessConfig.phone}
-                address={businessConfig.address}
-                fontStyleProp=""
-              />
-            )}
-          </>
-        )}
-      </div>
-    </div>
+          {mediaMode === "SOCIAL POSTS" && (
+            <Template2
+              templateRef={templateRef}
+              isMobile={isMobile}
+              callToAction={campaignDetails.call_to_action}
+              switchToVertical={switchToVertical}
+              campaignTitle={campaignDetails.campaign_title}
+              background={backgroundImg2}
+              logo={logoImg}
+              discount={campaignDetails.discount}
+              campaignDetail={campaignDetails.campaign_detail}
+              campaignPeriod={{
+                start_date: campaignDetails.start_date,
+                end_date: campaignDetails.end_date,
+              }}
+              productImage={uploadedImage}
+              website={businessConfig.web_url}
+              phoneNumber={businessConfig.phone}
+              address={businessConfig.address}
+              fontStyleProp=""
+            />
+          )}
+        </>
+      )}
+        </div>
+        </div>
+        </div>
   );
 };
 

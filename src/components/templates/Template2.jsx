@@ -22,49 +22,23 @@ const formatPeriod = (timePeriod) => {
     return `${month}/${day}/${year}`;
   };
 
-  return `${formatDate(start_date)} - ${formatDate(end_date)}`;
-};
-function Template2({
-  templateRef,
-  callToAction,
-  isMobile,
-  switchToVertical,
-  campaignTitle,
-  background,
-  logo,
-  discount,
-  campaignDetail,
-  campaignPeriod,
-  productImage,
-  website,
-  phoneNumber,
-  address,
-  fontStyleProp,
-}) {
-  return (
-    <div
-      ref={templateRef}
-      className="relative w-[1056px] h-[1056px]"
-      style={
-        isMobile
-          ? { transform: "scale(0.55)", transformOrigin: "top left" }
-          : switchToVertical
-          ? {
-              transform: "scale(0.60) translateX(-120px)",
-              transformOrigin: "top center",
-            }
-          : {
-              transform: "scale(0.60) translateX(-120px)",
-              transformOrigin: "top center",
-            }
-      }
-    >
-      <img src={background} className="absolute w-full h-full object-cover" />
+    return `${formatDate(start_date)} - ${formatDate(end_date)}`;
+}
 
-      <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center">
-        <div className="flex flex-col items-center gap-8 ">
-          {/* COMPONENT: companyLogo */}
-          {/* <img src={logo}/> */}
+function Template2({ templateRef, callToAction, isMobile, switchToVertical, campaignTitle, background, logo, discount, campaignDetail, campaignPeriod, productImage, website, phoneNumber, address, fontStyleProp }) {
+    return (
+        <div
+          ref={templateRef}
+          className="relative w-[1056px] h-[1056px]"
+          style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top left" } : switchToVertical ? {transform: "scale(0.6)", transformOrigin: "top left"} : {}}
+        >
+        
+          <img src={background} className="absolute w-full h-full object-cover"/>
+          
+          <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center">
+                <div className="flex flex-col items-center gap-8 ">
+                    {/* COMPONENT: companyLogo */}
+                    {/* <img src={logo}/> */}
 
           {/* COMPONENT: campaignTitle */}
           <h1 className="text-7xl font-serif font-light uppercase text-[#42311C] w-4/5">
