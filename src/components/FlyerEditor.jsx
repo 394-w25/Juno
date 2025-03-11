@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
 import backgroundImg from "../assets/template_bg_img.png";
-import backgroundImg3 from "../assets/template-background-4.png"
+import backgroundImg3 from "../assets/template-background-4.png";
 import Template3 from "./templates/Template3";
 import backgroundImg2 from "../assets/temp.png";
 import logoImg from "../assets/template_logo.png";
@@ -90,28 +90,35 @@ const FlyerEditor = ({
         <DownloadIcon /> {/* ✅ Small download icon */}
       </button>
 
-      <div 
-        className="relative flex flex-col items-center w-full" // Ensure enough space for the toggle
+      <div
+        className="absolute top-0 w-1/2 flex items-center justify-center z-50 pointer-events-none bg-white  "
+        style={{ left: "50%", transform: "translateX(-50%)" }} // centers the toggle
       >
-        {/* TOGGLE BUTTON (Centered) */}
-        <div 
-          className="fixed top-20 w-1/2 flex items-center justify-center z-50 bg-white"
+        <BottomNavigation
+          value={mediaMode}
+          onChange={handleMediaChange}
+          showLabels
+          className="absolute top-0 w-1/2 flex items-center justify-center z-50 bg-white pointer-events-auto"
+          style={{ left: "50%", transform: "translateX(-50%)" }}
         >
-          <ToggleButtonGroup
-            color="primary"
-            value={mediaMode}
-            exclusive
-            onChange={handleMediaChange}
-            fullWidth
-            className="pointer-events-auto"
-          >
-            {mediaModes.map((mode) => (
-              <ToggleButton key={mode} value={mode}>
-                {mode}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </div>
+          {mediaModes.map((mode) => (
+            <BottomNavigationAction
+              key={mode}
+              label={mode}
+              value={mode}
+              style={{
+                height: "50px",
+                minWidth: "80px",
+                fontSize: 100,
+                marginRight: "-2px",
+                border: "1px solid lightgray",
+              }}
+            >
+              {mode}
+            </BottomNavigationAction>
+          ))}
+        </BottomNavigation>
+      </div>
 
         <div className="flex-grow relative flex justify-center">
           {status === "LOADING" && (

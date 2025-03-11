@@ -22,6 +22,7 @@ export default function Template3({
   fontStyleProp,
   templateRef,
   inOperator = false
+  inOperator = false,
 }) {
   const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     address
@@ -64,9 +65,13 @@ export default function Template3({
       className={`${inOperator == false ? "relative w-[816px] h-[1056px]" : "absolute w-[816px] mt-9 ml-[34px] h-[1056px] scale-[0.2] origin-top-left"}`}
       style={
         isMobile && !inOperator
+        isMobile && !inOperator
           ? { transform: "scale(0.55)", transformOrigin: "top left" }
           : switchToVertical && !inOperator
+          : switchToVertical && !inOperator
           ? { transform: "scale(0.75)", transformOrigin: "top left" }
+          : !inOperator
+          ? { transform: "scale(0.80)", transformOrigin: "top left" }
           : {}
       }
     >
@@ -90,33 +95,39 @@ export default function Template3({
           </p>
 
           {/* COMPONENT: campaignTitle */}
-          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] w-4/5">
-            {campaignTitle} 
+          <h1 className="text-8xl text-left font-[Chewy] uppercase text-[#708395] max-w-[500px] break-words mt-8 mr-30">
+            {campaignTitle}
           </h1>
         </div>
 
+        <div className="flex flex-row">
+          <div className="flex gap-5 justify-center items-center">
+            <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
+              <div className="relative w-100 h-100 flex items-center justify-center">
+                <img
+                  src={brownRibbon}
+                  className="object-cover absolute w-100 h-100"
+                />
+                <p
+                  className={`absolute text-[#708395] max-w-[300px] font-[Chewy] text-center ${
+                    discount.split(" ").length > 3 ? "text-5xl" : "text-7xl"
+                  }`}
+                >
+                  {discount}
+                </p>
+              </div>
+            </div>
 
-        <div className="flex flex-row z-10">
-  <div className="flex gap-5 justify-center items-center">
-    {/* COMPONENT: campaign details should be first */}
-    <p className=" relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy] mr-10">
-      {campaignDetail}
-    </p>
-
-    <div className="relative w-[337px] h-[450px] flex flex-col justify-center items-center">
-      <img src={brownRibbon} className="object-cover absolute mb-50" />
-      <p 
-          className={`relative max-w-[200px] text-[#708395] font-[Chewy] text-center text-clip mb-50 ${discount.split(' ').length > 3 ? 'text-4xl' : 'text-7xl'}`}
-      >
-          {discount}
-      </p>
-    </div>
-  </div>
-</div>
-            {/* COMPONENT: call to actiion */}
-            <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider z-10">
-            {callToAction}
+            {/* COMPONENT: campaign details */}
+            <p className="pl-5 relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy]">
+              {campaignDetail}
             </p>
+          </div>
+        </div>
+        {/* COMPONENT: call to actiion */}
+        <p className="rounded-lg p-4 bg-[#f7cd6f] font-bold text-[#708395] text-2xl font-[Chewy] px-10 tracking-wider">
+          {callToAction}
+        </p>
         {/* CONTACT INFO */}
         <div className="flex flex-col items-center text-[#42311C] z-10">
           {phoneNumber !== "" && (
