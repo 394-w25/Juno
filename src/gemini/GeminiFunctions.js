@@ -45,7 +45,7 @@ const globalCampaignDetailsJSON = `{
   "caption": caption for a social media post (only for social media mode),
   "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
   "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-  "insights: "3-5 sentence insight explaining why this campaign is relevant"
+  "insights: "concise 2 sentence insight on why this campaign is relevant. keep it short"
 },`;
 
 const globalFinalPromptInstructions = `You will **ONLY** return JSON data with this schema:
