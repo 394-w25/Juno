@@ -101,11 +101,6 @@ const Operator = ({ setCampaignDetails, }) => {
       const response = await sendChatOptions(session, userMessage);
 
       console.log("AI Response:", response);
-
-      setChatLog((prevChat) => [
-        ...prevChat,
-        { sender: "AI", text: response.conversation_response },
-      ]);
       setChatLog((prevChat) => [
         ...prevChat,
         { sender: "AI", text: response.conversation_response },
