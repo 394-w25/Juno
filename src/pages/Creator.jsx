@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chip,
   ToggleButton,
@@ -18,7 +18,7 @@ import { useAuthContext } from "../components/AuthContext";
  */
 
 /** @param {CreatorProps} props */
-const Creator = ({ campaignDetails, }) => {
+const Creator = ({ campaignDetails }) => {
   /**
    * @typedef {Object} ChatLogItem
    * @property {string} sender

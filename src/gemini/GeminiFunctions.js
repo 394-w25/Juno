@@ -45,7 +45,7 @@ const globalCampaignDetailsJSON = `{
   "caption": caption for a social media post (only for social media mode),
   "hashtags": [hashtag, hashtag, hashtag] // hashtags for a social media post (only for social media mode)
   "colorTheme": [hex string, hex string, hex string] // try to do minimalistic colors with a max of 3
-  "insights: "Brief insight explaining why this campaign is good"
+  "insights: "concise 2 sentence insight on why this campaign is relevant. keep it short"
 },`;
 
 const globalFinalPromptInstructions = `You will **ONLY** return JSON data with this schema:
@@ -222,46 +222,46 @@ export async function sendChat(
     }
 
 
-/**
- * Sends a chat message for campaign options handling.
- * @param {ChatSession} chatSession - The current chat session.
- * @param {string} prompt - The user input to send.
- * @param {boolean} isCampaignRequest - Flag to indicate if the chat is related to campaign options.
- * @param {CampaignDetail | null} campaignDetails - Current campaign details, if available.
- * @returns {Promise<ChatResponse>} - Response containing conversation text and campaign options.
- */
-export async function sendCampaignChat(chatSession, prompt) {
-  let finalPrompt = prompt;
+// /**
+//  * Sends a chat message for campaign options handling.
+//  * @param {ChatSession} chatSession - The current chat session.
+//  * @param {string} prompt - The user input to send.
+//  * @param {boolean} isCampaignRequest - Flag to indicate if the chat is related to campaign options.
+//  * @param {CampaignDetail | null} campaignDetails - Current campaign details, if available.
+//  * @returns {Promise<ChatResponse>} - Response containing conversation text and campaign options.
+//  */
+// export async function sendCampaignChat(chatSession, prompt) {
+//   let finalPrompt = prompt;
 
-  try {
-    const result = await chatSession.sendMessage(finalPrompt);
-    const textResponse = result.response.text();
+//   try {
+//     const result = await chatSession.sendMessage(finalPrompt);
+//     const textResponse = result.response.text();
 
-    if (textResponse.startsWith("```json")) {
-      const cleanedString = textResponse.slice(7, -3);
-      const responseObj = JSON.parse(cleanedString);
+//     if (textResponse.startsWith("```json")) {
+//       const cleanedString = textResponse.slice(7, -3);
+//       const responseObj = JSON.parse(cleanedString);
 
-      const campaignOptions = responseObj.campaign_options || [];
+//       const campaignOptions = responseObj.campaign_options || [];
 
-      return {
-        your_conversation_response: responseObj.your_conversation_response,
-        campaign_options: campaignOptions,
-      };
-    }
+//       return {
+//         your_conversation_response: responseObj.your_conversation_response,
+//         campaign_options: campaignOptions,
+//       };
+//     }
 
-    return {
-      your_conversation_response: "Oops! Something went wrong.",
-      campaign_options: [],
-    };
-  } catch (error) {
-    console.error("Error sending chat:", error);
-    return {
-      your_conversation_response:
-        "Oops! Something went wrong while processing your request.",
-      campaign_options: [],
-    };
-  }
-}
+//     return {
+//       your_conversation_response: "Oops! Something went wrong.",
+//       campaign_options: [],
+//     };
+//   } catch (error) {
+//     console.error("Error sending chat:", error);
+//     return {
+//       your_conversation_response:
+//         "Oops! Something went wrong while processing your request.",
+//       campaign_options: [],
+//     };
+//   }
+// }
 
 /**
  * Creates a new chat for generating marketing campaign recommendations based on upcoming events in the next month.
@@ -295,7 +295,7 @@ export function createDateBasedCampaignChat(business_config) {
       ]
   }
 
-  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. 
+  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. DO NOT make duplicate recommendations and insights that you've already made before.
   `;
 
   const textModel = genAI.getGenerativeModel({

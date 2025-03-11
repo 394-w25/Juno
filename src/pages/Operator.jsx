@@ -133,7 +133,7 @@ const Operator = ({ setCampaignDetails, }) => {
 
   const handleGetDateBasedCampaign = async () => {
     await handleSend(
-      "Generate six marketing campaign options for an event in the next month.",
+      "Generate six marketing campaign options for an event in the next few months.",
       true
     );
   };
@@ -255,7 +255,7 @@ const Operator = ({ setCampaignDetails, }) => {
                           inOperator={true}
                         />
                       </div>
-                      <div className="w-1/2 h-full flex flex-col gap-2 py-5 pr-5">
+                      <div className="w-1/2 h-full flex flex-col gap-2 py-5 pr-5 overflow-hidden">
                         <p className="text-[22px] text-left font-bold font-[\'Plus Jakarta Sans\'] text-white">
                           {option.campaign_title}
                         </p>
