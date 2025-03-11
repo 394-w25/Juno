@@ -10,15 +10,15 @@ import FlyerEditor from "../components/FlyerEditor";
 import AIAssistant from "../components/AIAssistant";
 import { ChatSession } from "@google/generative-ai";
 import { CampaignDetail } from "../gemini/GeminiFunctions";
+import { useAuthContext } from "../components/AuthContext";
 
 /**
  * @typedef {Object} CreatorProps
- * @property {ChatSession | null} chatSession
  * @property {CampaignDetail | null} campaignDetails
  */
 
 /** @param {CreatorProps} props */
-const Creator = ({ campaignDetails, chatSession }) => {
+const Creator = ({ campaignDetails, }) => {
   /**
    * @typedef {Object} ChatLogItem
    * @property {string} sender
@@ -28,8 +28,9 @@ const Creator = ({ campaignDetails, chatSession }) => {
   /** @type {[[ChatLogItem], React.Dispatch<React.SetStateAction<[ChatLogItem]>>]} */
   const [chatLog, setChatLog] = useState([]); // chat log for AI Assistant component
 
-  const [localCampaignDetails, setLocalCampaignDetails] =
-    useState(campaignDetails);
+  const { chatSession } = useAuthContext()
+
+  const [localCampaignDetails, setLocalCampaignDetails] = useState(campaignDetails);
 
   const [status, setStatus] = useState("DEFAULT"); // switch between "DEFAULT" and "LOADING"
   const switchToVertical = useMediaQuery("(max-width: 1100px)");

@@ -25,6 +25,10 @@ export function getLocalBusinessConfig() {
   )
 }
 
+export function setLocalBusinessConfig(businessConfig) {
+  localStorage.setItem("business_config", JSON.stringify(businessConfig))
+}
+
 export const useAuth = () => {
   /** @type {[import("firebase/auth").User | null, React.Dispatch<React.SetStateAction<import("firebase/auth").User | null>>]} */
   const [user, setUser] = useState(null);
