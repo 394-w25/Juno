@@ -108,8 +108,8 @@ export default function Template3({
                   className="object-cover absolute w-100 h-100"
                 />
                 <p
-                  className={`absolute text-[#708395] font-[Chewy] text-center ${
-                    discount.split(" ").length > 3 ? "text-4xl" : "text-7xl"
+                  className={`absolute text-[#708395] max-w-[300px] font-[Chewy] text-center ${
+                    discount.split(" ").length > 3 ? "text-5xl" : "text-7xl"
                   }`}
                 >
                   {discount}
