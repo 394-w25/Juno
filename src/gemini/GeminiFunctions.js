@@ -295,7 +295,7 @@ export function createDateBasedCampaignChat(business_config) {
       ]
   }
 
-  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. if it is a 
+  Always ensure the campaigns are future-dated within ${year}. Provide engaging and customized recommendations based on the business details provided. Make sure to keep the text pretty short, such as the title and discount. 
   `;
 
   const textModel = genAI.getGenerativeModel({
@@ -339,59 +339,68 @@ export async function sendChatOptions(
   const result = await chat.sendMessage(finalPrompt); // prompts Gemini
   const textResponse = result.response.text(); // get the response in string format
 
-  if (textResponse.startsWith("```json")) {
-    // Remove ```json and ``` from the string
-    const cleanedString = textResponse.slice(7, -3);
+  try {
+    if (textResponse.startsWith("```json")) {
+      // Remove ```json and ``` from the string
+      const cleanedString = textResponse.slice(7, -3);
 
-    // Turn JSON string into an object
-    const responseObj = JSON.parse(cleanedString);
+      // Turn JSON string into an object
+      const responseObj = JSON.parse(cleanedString);
 
-    console.log("response options", responseObj);
+      console.log("response options", responseObj);
 
-    if (responseObj.campaign_details) {
-      const res = {
-        "conversation_response": responseObj.your_conversation_response,
-        "campaign_options": [responseObj.campaign_details]
+      if (responseObj.campaign_details) {
+        const res = {
+          "conversation_response": responseObj.your_conversation_response,
+          "campaign_options": [responseObj.campaign_details]
+        }
+
+        return res;
       }
 
-      return res;
-    }
+      if (responseObj.campaign_options === undefined) {
+        const res = {
+          conversation_response: responseObj.your_conversation_response,
+          campaign_options: [],
+        };
 
-    if (responseObj.campaign_options === undefined) {
+        return res;
+      }
+
+      let options = [];
+
+      for (let i = 0; i < responseObj.campaign_options.length; i++) {
+        const details = responseObj.campaign_options[i];
+        const campaign_details = new CampaignDetail(
+          details.campaign_title,
+          details.slogan,
+          details.discount,
+          details.campaign_detail,
+          details.campaign_period.start_date,
+          details.campaign_period.end_date,
+          details.call_to_action,
+          details.theme,
+          details.caption,
+          details.hashtags,
+          details.color_theme,
+          details.insights //added insights
+        );
+        options.push(campaign_details);
+      }
+
       const res = {
         conversation_response: responseObj.your_conversation_response,
-        campaign_options: [],
+        campaign_options: options,
       };
 
       return res;
     }
-
-    let options = [];
-
-    for (let i = 0; i < responseObj.campaign_options.length; i++) {
-      const details = responseObj.campaign_options[i];
-      const campaign_details = new CampaignDetail(
-        details.campaign_title,
-        details.slogan,
-        details.discount,
-        details.campaign_detail,
-        details.campaign_period.start_date,
-        details.campaign_period.end_date,
-        details.call_to_action,
-        details.theme,
-        details.caption,
-        details.hashtags,
-        details.color_theme,
-        details.insights //added insights
-      );
-      options.push(campaign_details);
-    }
-
-    const res = {
-      conversation_response: responseObj.your_conversation_response,
-      campaign_options: options,
+  } catch (error) {
+    console.error("Error getting options:", error);
+    return {
+      your_conversation_response:
+        "Oops! Something went wrong while processing your request. Please try again.",
+      campaign_options: [],
     };
-
-    return res;
   }
 }

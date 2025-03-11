@@ -4,6 +4,7 @@ import {
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
+  createNewChat
 } from "../gemini/GeminiFunctions";
 import Template1 from "../components/templates/Template1";
 import Template3 from "../components/templates/Template3";
@@ -18,18 +19,16 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 /**
  * @typedef {Object} OperatorProps
- * @property {ChatSession | null} chatSession
- * @property {React.Dispatch<React.SetStateAction<ChatSession | null>>} setChatSession
  * @property {React.Dispatch<React.SetStateAction<any>>} setCampaignDetails
  */
 
 /** @param {OperatorProps} props */
-const Operator = ({ setCampaignDetails, chatSession, setChatSession, uploadedImage, setUploadedImage}) => {
+const Operator = ({ setCampaignDetails,, uploadedImage, setUploadedImage}) => {
 
   const queryParams = new URLSearchParams(useLocation().search)
   const fromOnboarding = queryParams.get("onboarding") === "true"
 
-  const { businessConfig } = useAuthContext(); // get business config from auth context
+  const { businessConfig, chatSession, setChatSession } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [showPrompt, setShowPrompt] = useState(true);
@@ -64,7 +63,7 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession, uploadedIma
       autoFetchRecs.current = true;
       handleGetDateBasedCampaign();
     }
-  }, [fromOnboarding, chatSession]);
+  }, [fromOnboarding]);
 
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
@@ -101,11 +100,6 @@ const Operator = ({ setCampaignDetails, chatSession, setChatSession, uploadedIma
       const response = await sendChatOptions(session, userMessage);
 
       console.log("AI Response:", response);
-
-      setChatLog((prevChat) => [
-        ...prevChat,
-        { sender: "AI", text: response.conversation_response },
-      ]);
       setChatLog((prevChat) => [
         ...prevChat,
         { sender: "AI", text: response.conversation_response },
