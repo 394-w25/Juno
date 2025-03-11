@@ -53,7 +53,7 @@ export const useAuth = () => {
         const config = await getBusinessConfig(currentUser.uid);
         setBusinessConfig(config);
         setUser(currentUser);
-        if (!config) {
+        if (config !== null) {
           navigate("/operator");
         }
       } else {
@@ -73,6 +73,15 @@ export const useAuth = () => {
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (isGuest) {
+      setBusinessConfig(getLocalBusinessConfig())
+    }
+    else {
+      setBusinessConfig(null)
+    }
+  }, [isGuest])
 
   return { user, authLoading, businessConfig, setBusinessConfig, isGuest, setIsGuest };
 };

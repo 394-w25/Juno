@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "../firebase/AuthFunctions";
 import { BusinessConfig } from "../firebase/FirestoreFunctions";
 import { ChatSession } from "@google/generative-ai";
@@ -24,6 +24,11 @@ const AuthProvider = ({ children }) => {
   /** @type {[ChatSession | null, React.Dispatch<React.SetStateAction<ChatSession | null>>]} */
   const [chatSession, setChatSession] = useState(null);
 
+  useEffect(() => {
+    if (!isGuest && user === null) { // clears the chatSession if signed out
+      setChatSession(null)
+    }
+  }, [isGuest, user])
 
   return (
     <AuthContext.Provider
