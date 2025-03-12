@@ -71,20 +71,6 @@ const Navbar = () => {
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem
-                            key="dashboard"
-                            onClick={handleMenuClose}
-                        >
-                            <button 
-                                onClick={() => navigate("/")} 
-                                className={`group flex items-center text-md transition ${
-                                    location.pathname === "/" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
-                                }`}
-                            >
-                                <DashboardIcon className={`w-7 h-7 ${location.pathname === "/" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
-                                <span className="ml-3">DASHBOARD</span>
-                            </button>
-                        </MenuItem>
                         
                         <MenuItem
                             key="creator"
@@ -121,16 +107,7 @@ const Navbar = () => {
             :   // normal navbar for desktop
                 <>
                     {/* Navigation Items (More Spread Out) */}
-                    <div className="flex flex-1 justify-between">
-                        <button 
-                            onClick={() => navigate("/")} 
-                            className={`group flex items-center text-md transition ${
-                                location.pathname === "/" ? "text-blue-500" : "text-gray-400 hover:text-blue-300"
-                            }`}
-                        >
-                            <DashboardIcon className={`w-7 h-7 ${location.pathname === "/" ? "text-blue-500" : "group-hover:text-blue-300 text-gray-400"}`} />
-                            <span className="ml-3">DASHBOARD</span>
-                        </button>
+                    <div className="flex flex-1 justify-center gap-x-100">
 
                         <button 
                             onClick={() => navigate("/creator")} 

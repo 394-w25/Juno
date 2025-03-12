@@ -99,7 +99,7 @@ export default function Template3({
         <div className="flex flex-row z-10">
           <div className="flex gap-5 justify-center items-center">
             {/* COMPONENT: campaign details should be first */}
-            <p className=" relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy] mr-10 mb-30">
+            <p className=" relative max-w-[250px] text-[#665E58] text-3xl font-[Chewy] mr-10">
               {campaignDetail}
             </p>
 

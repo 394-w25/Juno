@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import Template1 from "./templates/Template1";
 import Template2 from "./templates/Template2";
@@ -45,9 +45,25 @@ const FlyerEditor = ({
     setMediaMode(newAlignment);
   };
 
+  const [scale, setScale] = useState(1);
   const templateRef = useRef(null);
-
   const { businessConfig } = useAuthContext();
+
+  useEffect(() => {
+    const updateScale = () => {
+      const baseHeight = 1400;
+      const newScale = Math.min(1, window.innerHeight / baseHeight);
+      setScale(newScale);
+    };
+
+    updateScale();
+
+    window.addEventListener("resize", updateScale);
+
+    return () => {
+      window.removeEventListener("resize", updateScale);
+    };
+  }, []);
 
   const downloadImage = async () => {
     if (!templateRef.current) {
@@ -87,13 +103,12 @@ const FlyerEditor = ({
         onClick={downloadImage}
         className="fixed top-21 bg-blue-600 text-white p-2 rounded-full shadow-md hover:bg-blue-700"
       >
-        <DownloadIcon /> {/* ✅ Small download icon */}
+        <DownloadIcon />
       </button>
 
       <div 
-        className="relative flex flex-col items-center w-full" // Ensure enough space for the toggle
+        className="relative flex flex-col items-center w-full" 
       >
-        {/* TOGGLE BUTTON (Centered) */}
         <div 
           className="fixed top-20 w-1/2 flex items-center justify-center z-50 bg-white"
         >
@@ -110,7 +125,7 @@ const FlyerEditor = ({
               label={mode}
               value={mode}
               style={{
-                height: "50px",
+                height: "40px",
                 minWidth: "80px",
                 fontSize: 100,
                 marginRight: "-2px",
@@ -136,9 +151,8 @@ const FlyerEditor = ({
         <div 
           className="absolute top-[7rem] flex justify-center items-center 
                     w-[90vw] md:w-[60vw] h-auto max-h-[80vh] 
-                    scale-[0.8] md:scale-[0.8] 
-                    transition-transform duration-300"
-          style={{ transformOrigin: "top center" }}
+                    transition-transform duration-60"
+          style={{ transformOrigin: "top center", transform: `scale(${scale})` }}
         >
       {status === "DEFAULT" && campaignDetails && (
         <>
