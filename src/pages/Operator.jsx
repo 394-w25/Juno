@@ -26,7 +26,8 @@ import { ArrowUpward } from "@mui/icons-material";
 const Operator = ({ setCampaignDetails }) => {
 
   const queryParams = new URLSearchParams(useLocation().search)
-  const fromOnboarding = queryParams.get("onboarding") === "true"
+  const [fromOnboarding, setFromOnboarding] = useState(queryParams.get("onboarding") === "true")
+  const [loadedFromOnboarding, setLoadedFromOnboarding] = useState(false)
 
   const { businessConfig, chatSession, setChatSession, uploadedImage, setUploadedImage } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
@@ -65,6 +66,8 @@ const Operator = ({ setCampaignDetails }) => {
       handleGetDateBasedCampaign();
     }
   }, [fromOnboarding]);
+
+  
 
   const handleSend = async (prompt, isOptions = false) => {
     let trimmedMsg = "";
@@ -138,6 +141,10 @@ const Operator = ({ setCampaignDetails }) => {
       "Generate six marketing campaign options for an event in the next few months.",
       true
     );
+
+    if (fromOnboarding) {
+      setFromOnboarding(false)
+    }
   };
 
   const handleSelectCampaign = (selectedCampaign) => {
@@ -156,7 +163,7 @@ const Operator = ({ setCampaignDetails }) => {
     navigate("/creator");
   };
 
-  if (fromOnboarding && isLoading) {
+  if (fromOnboarding && isLoading && loadedFromOnboarding == false) {
     return (
       <LoadingScreen text={"Generating some recs for you..."} />
     )
