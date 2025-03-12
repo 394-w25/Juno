@@ -71,7 +71,7 @@ const FlyerEditor = ({
       return;
     }
 
-    toPng(templateRef.current, { height: 1150 })
+    toPng(templateRef.current, { height: 1056 })
       .then((dataUrl) => {
         const link = document.createElement("a");
         if (mediaMode === "FLYER") {
