@@ -63,6 +63,11 @@ const AIAssistant = ({
       trimmedMsg = prompt
     }
 
+    console.log(trimmedMsg.length < 1)
+    console.log(trimmedMsg)
+
+    if (trimmedMsg.length < 1) return;
+
     if (trimmedMsg.length > 0) {
       let tmpChatLog = chatLog
       setMessage("");
@@ -186,7 +191,7 @@ const AIAssistant = ({
           <div className="absolute right-4 top-4">
             <button
               className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center hover:opacity-75"
-              onClick={handleSend}
+              onClick={() => handleSend()}
             >
               <ArrowUpward fontSize="small" />
             </button>
