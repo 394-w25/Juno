@@ -159,22 +159,28 @@ export default function Onboarding() {
       googleMapsApiKey={GOOGLE_MAPS_API_KEY}
       libraries={GOOGLE_MAPS_LIBRARIES}
     >
-      <div className="relative flex flex-col justify-center items-center gap-10 h-svh">
-        <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
-
+      <div className="relative flex flex-col bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] justify-center items-center gap-10 h-svh">
         <img
           src={logo}
           alt="Logo"
           className="h-12 absolute top-10 left-10 bg-white"
         />
 
-        <h1 className="font-bold text-sm py-2 px-4 bg-white text-[#3F8CFF] border-[1px] border-[#3F8CFF] rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]">
+        <h1 
+          className="font-bold text-sm py-2 px-4 bg-white text-[#3F8CFF] border-[1px] border-[#3F8CFF] rounded-[20px] backdrop-blur-[4px]"
+          style={{
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          }}
+        >
           BASIC BUSINESS INFO
         </h1>
 
         <form
           onSubmit={handleFormSubmit}
-          className="p-10 flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px] bg-gradient-to-b from-[rgba(240,240,240,0.10)] to-[rgba(242,242,242,0.40)] shadow-[0px_10px_20px_0px_rgba(63,140,255,0.15)] backdrop-blur-[4px]"
+          className="p-10 bg-white flex flex-col gap-5 w-4/5 md:w-3/5 lg:w-2/5 rounded-[20px]"
+          style={{
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          }}
         >
           <OnboardingTextField
             required={true}

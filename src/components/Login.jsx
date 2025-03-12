@@ -47,18 +47,23 @@ const Login = () => {
   }
 
   return (
-    <div className="relative flex h-screen w-full">
-      <div className="absolute inset-0 bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px] opacity-75"></div>
+    <div className="relative flex h-screen w-full bg-[radial-gradient(circle,_gray_3%,_transparent_5%)] bg-[length:50px_50px]">
 
       <div className="relative w-1/2 flex items-center justify-center">
         <img src={logo1} alt="Login logo" className="w-48 h-auto" />
       </div>
 
-      <div className="relative w-1/2 backdrop-blur-[4px] flex items-center justify-center shadow-xl bg-rgba(255, 255, 255, 1)">
+      <div 
+        className="relative w-1/2 flex items-center justify-center shadow-xl "
+        style={{
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "rgba(255, 255, 255, 0.85)", // Adjust transparency
+        }}
+      >
         <div className="flex flex-col">
           <button
             onClick={handleGoogleSignIn}
-            className="text-black hover:opacity-50 font-[\'Plus Jakarta Sans\'] font-semibold text-xl h-12 w-60 tracking-widest border-logo-blue border-1 m-3 rounded-xl opacity-100"
+            className="text-black bg-white hover:opacity-50 font-[\'Plus Jakarta Sans\'] font-semibold text-xl h-12 w-60 tracking-widest border-logo-blue border-1 m-3 rounded-xl opacity-100"
           >
             Sign Up
           </button>
