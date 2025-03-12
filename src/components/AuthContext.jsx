@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   /** @type {[ChatSession | null, React.Dispatch<React.SetStateAction<ChatSession | null>>]} */
   const [chatSession, setChatSession] = useState(null);
 
+  const [uploadedImage, setUploadedImage] = useState(null);
   useEffect(() => {
     if (!isGuest && user === null) { // clears the chatSession if signed out
       setChatSession(null)
@@ -32,7 +33,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, authLoading, businessConfig, setBusinessConfig, isGuest, setIsGuest, chatSession, setChatSession }}
+      value={{ user, authLoading, businessConfig, setBusinessConfig, isGuest, setIsGuest, chatSession, setChatSession, uploadedImage, setUploadedImage }}
     >
       {children}
     </AuthContext.Provider>

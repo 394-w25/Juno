@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
 import { CampaignDetail, createNewChat, sendChat } from "../gemini/GeminiFunctions";
 import ReactMarkdown from "react-markdown";
 import { useAuthContext } from "./AuthContext";
 import { ChatSession } from "@google/generative-ai";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 /**
  * @typedef {Object} AIAssistantProps
@@ -28,11 +29,14 @@ const AIAssistant = ({
   switchToVertical,
   chatSession,
   chatLog,
-  setChatLog
+  setChatLog,
+  uploadedImage,
+  setUploadedImage
 }) => {
   
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState(null); // ongoing chat with gemini
+  const [localImage, setLocalImage] = useState(uploadedImage);
 
   const { businessConfig } = useAuthContext()
 
@@ -49,6 +53,8 @@ const AIAssistant = ({
 
   const handleSend = async (prompt) => {
     let trimmedMsg = ""
+
+    setUploadedImage(localImage)
 
     if (prompt === undefined) {
       trimmedMsg = message.trim();
@@ -106,6 +112,17 @@ const AIAssistant = ({
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = URL.createObjectURL(file);
+      setLocalImage(imageUrl);
+    } else {
+      alert("Please upload a valid image file.");
+    }
+  };
+
+
   return (
     <div
       className={`p-4 bg-white overflow-hidden flex flex-col gap-4 relative rounded-lg ${
@@ -156,27 +173,50 @@ const AIAssistant = ({
           Make Marketing Campaign
         </button>
       </div>
-      <div
-        className="p-3 bg-white rounded-lg flex items-center gap-3"
-        style={{
-          boxShadow: "0 0 4px rgba(0, 0, 0, 0.5)", // shadows aren't working in tailwind for some reason
-        }}
-      >
-        <input
-          type="text"
-          placeholder="What can Juno do for you?"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="w-full text-base outline-none bg-transparent"
-        />
-
-        <button
-          className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center hover:opacity-65"
-          onClick={handleSend}
-        >
-          <ArrowUpward fontSize="small" />
-        </button>
+      <div className="relative flex flex-col items-center z-10">
+        <div className="relative w-full h-30 bg-white shadow-lg border border-gray-300 rounded-xl p-4 overflow-y-auto">
+          <input
+            type="text"
+            placeholder="What can Juno do for you?"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="w-full text-base outline-none bg-transparent pr-12"
+          />
+          <div className="absolute right-4 top-4">
+            <button
+              className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center hover:opacity-75"
+              onClick={handleSend}
+            >
+              <ArrowUpward fontSize="small" />
+            </button>
+          </div>
+          <div className="absolute bottom-1 left-1 cursor-pointer">
+            <IconButton
+              color="primary"
+              component="label"
+              size="medium"
+            >
+              <AddPhotoAlternateIcon />
+              <input type="file" accept="image/*" hidden onChange={handleImageChange}/>
+            </IconButton>
+            {localImage && (
+              <div className="absolute bottom-1 left-10 w-14 h-14 border border-gray-300 rounded-md">
+                <img
+                  src={localImage}
+                  alt="Uploaded Preview"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                    onClick={() => setLocalImage(null)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full hover:bg-red-600"
+                  >
+                    ✖
+                </button>
+              </div>
+            )}
+          </div>
+          </div>  
       </div>
     </div>
   );

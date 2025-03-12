@@ -28,7 +28,7 @@ const Creator = ({ campaignDetails }) => {
   /** @type {[[ChatLogItem], React.Dispatch<React.SetStateAction<[ChatLogItem]>>]} */
   const [chatLog, setChatLog] = useState([]); // chat log for AI Assistant component
 
-  const { chatSession } = useAuthContext()
+  const { chatSession, setUploadedImage, uploadedImage } = useAuthContext()
 
   const [localCampaignDetails, setLocalCampaignDetails] = useState(campaignDetails);
 
@@ -55,6 +55,7 @@ const Creator = ({ campaignDetails }) => {
           campaignDetails={localCampaignDetails}
           switchToVertical={switchToVertical}
           isMobile={isMobile}
+          uploadedImage={uploadedImage}
         />
         <AIAssistant
           chatLog={chatLog}
@@ -65,6 +66,8 @@ const Creator = ({ campaignDetails }) => {
           campaignDetails={localCampaignDetails}
           switchToVertical={switchToVertical}
           chatSession={chatSession}
+          uploadedImage={uploadedImage}
+          setUploadedImage={setUploadedImage}
         />
       </div>
     </div>

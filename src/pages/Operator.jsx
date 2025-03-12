@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import {
-
   createDateBasedCampaignChat,
   sendChatOptions,
   CampaignDetail,
@@ -11,12 +10,12 @@ import Template1 from "../components/templates/Template1";
 import Template3 from "../components/templates/Template3";
 import backgroundImg from "../assets/template_bg_img.png";
 import logoImg from "../assets/template_logo.png";
-import productImg from "../assets/ProductImageTest.png";
 import { useAuthContext } from "../components/AuthContext";
-import { ChatSession } from "@google/generative-ai";
-import { CircularProgress } from "@mui/material";
+import { IconButton, CircularProgress} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/Loading";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import { ArrowUpward } from "@mui/icons-material";
 
 /**
  * @typedef {Object} OperatorProps
@@ -24,17 +23,18 @@ import LoadingScreen from "../components/Loading";
  */
 
 /** @param {OperatorProps} props */
-const Operator = ({ setCampaignDetails, }) => {
+const Operator = ({ setCampaignDetails }) => {
 
   const queryParams = new URLSearchParams(useLocation().search)
   const fromOnboarding = queryParams.get("onboarding") === "true"
 
-  const { businessConfig, chatSession, setChatSession } = useAuthContext(); // get business config from auth context
+  const { businessConfig, chatSession, setChatSession, uploadedImage, setUploadedImage } = useAuthContext(); // get business config from auth context
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [showPrompt, setShowPrompt] = useState(true);
   const [isLoading, setIsLoading] = useState(false); //loading button
   const autoFetchRecs = useRef(false);
+  const [localImage, setLocalImage] = useState(false);
 
   /** @type {[[CampaignDetail], React.Dispatch<React.SetStateAction<[CampaignDetail]>>]} */
   const [campaignOptions, setCampaignOptions] = useState([]);
@@ -100,6 +100,8 @@ const Operator = ({ setCampaignDetails, }) => {
     try {
       const response = await sendChatOptions(session, userMessage);
 
+      setUploadedImage(localImage)
+
       console.log("AI Response:", response);
       setChatLog((prevChat) => [
         ...prevChat,
@@ -159,6 +161,16 @@ const Operator = ({ setCampaignDetails, }) => {
       <LoadingScreen text={"Generating some recs for you..."} />
     )
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = URL.createObjectURL(file);
+      setLocalImage(imageUrl);
+    } else {
+      alert("Please upload a valid image file.");
+    }
+  };
   
   return (
     <div>
@@ -237,23 +249,43 @@ const Operator = ({ setCampaignDetails, }) => {
                   >
                     <div className="w-[470px] flex h-[282px] relative bg-gradient-to-b from-blue-600/75 to-blue-500/75 rounded-[20px] shadow-[0px_4px_22px_0px_rgba(0,0,0,0.15)] backdrop-blur-[30px] ">
                       <div className="w-1/2 h-full relative transform">
-                        <Template1
-                          callToAction={option.call_to_action}
-                          campaignTitle={option.campaign_title}
-                          background={backgroundImg}
-                          logo={logoImg}
-                          discount={option.discount}
-                          campaignDetail={option.campaign_detail}
-                          campaignPeriod={{
-                            start_date: option.start_date,
-                            end_date: option.end_date,
-                          }}
-                          productImage={productImg}
-                          website={businessConfig.web_url}
-                          phoneNumber={businessConfig.phone}
-                          address={businessConfig.address}
-                          inOperator={true}
-                        />
+                        {index % 2 === 0 ? (
+                          <Template1
+                            callToAction={option.call_to_action}
+                            campaignTitle={option.campaign_title}
+                            background={backgroundImg}
+                            logo={logoImg}
+                            discount={option.discount}
+                            campaignDetail={option.campaign_detail}
+                            campaignPeriod={{
+                              start_date: option.start_date,
+                              end_date: option.end_date,
+                            }}
+                            productImage={uploadedImage}
+                            website={businessConfig.web_url}
+                            phoneNumber={businessConfig.phone}
+                            address={businessConfig.address}
+                            inOperator={true}
+                          />
+                        ) : (
+                          <Template3
+                            callToAction={option.call_to_action}
+                            campaignTitle={option.campaign_title}
+                            background={backgroundImg}
+                            logo={logoImg}
+                            discount={option.discount}
+                            campaignDetail={option.campaign_detail}
+                            campaignPeriod={{
+                              start_date: option.start_date,
+                              end_date: option.end_date,
+                            }}
+                            productImage={uploadedImage}
+                            website={businessConfig.web_url}
+                            phoneNumber={businessConfig.phone}
+                            address={businessConfig.address}
+                            inOperator={true}
+                          />
+                        )}
                       </div>
                       <div className="w-1/2 h-full flex flex-col gap-2 py-5 pr-5 overflow-hidden">
                         <p className="text-[22px] text-left font-bold font-[\'Plus Jakarta Sans\'] text-white">
@@ -308,7 +340,7 @@ const Operator = ({ setCampaignDetails, }) => {
         </div>
 
         <div className="relative flex flex-col items-center z-10">
-          <div className="w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 overflow-y-auto">
+          <div className="relative w-[837px] h-[155px] bg-white shadow-lg border border-gray-300 rounded-xl p-4 pb-12 pr-12">
             <textarea
               placeholder="Type a message..."
               value={message}
@@ -316,6 +348,40 @@ const Operator = ({ setCampaignDetails, }) => {
               onKeyDown={handleKeyDown}
               className="w-full h-full text-lg bg-transparent outline-none resize-none"
             />
+            <div className="absolute right-4 top-4">
+              <button
+                className="p-1 bg-blue-500 text-white rounded-full cursor-pointer flex justify-center hover:opacity-75"
+                onClick={() => handleSend()}
+              >
+                <ArrowUpward fontSize="small" />
+              </button>
+            </div>
+            <div className="absolute bottom-3 left-3 cursor-pointer">
+              <IconButton
+                color="primary"
+                component="label"
+                size="medium"
+              >
+                <AddPhotoAlternateIcon />
+                <input type="file" accept="image/*" hidden onChange={handleImageChange} />
+              </IconButton>
+              {localImage && (
+              <div className="absolute bottom-1 left-10 w-14 h-14 border border-gray-300 rounded-md">
+                <img
+                  src={localImage}
+                  alt="Uploaded Preview"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                    onClick={() => setLocalImage(null)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs rounded-full hover:bg-red-600"
+                  >
+                    ✖
+                </button>
+              </div>
+            )}
+            </div>
+
           </div>
         </div>
       </div>
