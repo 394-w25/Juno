@@ -176,10 +176,10 @@ const Operator = ({ setCampaignDetails }) => {
     <div>
       <Navbar />
 
-      <div className="h-[calc(100vh-70px)] bg-gradient-to-b from-blue-500/10 to-blue-500/30 rounded-[20px] backdrop-blur-md justify-center flex flex-col overflow-hidden relative py-10">
+      <div className={`h-[calc(100vh-70px)] bg-gradient-to-b from-blue-500/10 to-blue-500/30 rounded-[20px] backdrop-blur-md justify-center flex flex-col overflow-hidden relative py-10`}>
         {showPrompt && (
           <div
-            className={`absolute top-2/5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-4 transition-opacity duration-500`}
+            className={`flex mb-[60px] items-center self-center space-x-4 transition-opacity duration-500`}
           >
             <div data-svg-wrapper className="flex items-center justify-center">
               <svg
@@ -236,7 +236,7 @@ const Operator = ({ setCampaignDetails }) => {
 
         <div
           ref={chatContainerRef}
-          className="flex-grow overflow-y-auto px-4 pb-4 flex flex-col-reverse items-center w-full"
+          className={`${campaignOptions.length > 0 ? "flex-grow" : ""} overflow-y-auto px-4 pb-4 flex flex-col-reverse items-center w-full`}
         >
           {campaignOptions.length > 0 && (
             <>
