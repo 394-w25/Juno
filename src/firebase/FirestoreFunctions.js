@@ -114,7 +114,6 @@ export async function getBusinessConfig(uid) {
 
     if (docSnap.exists()) {
         const business_config = docSnap.data()
-        console.log(business_config)
         return business_config
     }
     

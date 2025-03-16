@@ -1,4 +1,4 @@
-import { ChatSession, GenerativeModel } from "@google/generative-ai";
+import { ChatSession, } from "@google/generative-ai";
 import { genAI } from "./GeminiConfig";
 
 export class CampaignDetail {
