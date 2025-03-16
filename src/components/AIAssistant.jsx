@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IconButton } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 import { ArrowUpward } from "@mui/icons-material";
 import { CampaignDetail, createNewChat, sendChat } from "../gemini/GeminiFunctions";
 import ReactMarkdown from "react-markdown";
@@ -44,7 +43,6 @@ const AIAssistant = ({
 
   // Auto-scroll to bottom when chat updates
   useEffect(() => {
-    console.log("log", chatLog)
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
@@ -63,9 +61,6 @@ const AIAssistant = ({
       trimmedMsg = prompt
     }
 
-    console.log(trimmedMsg.length < 1)
-    console.log(trimmedMsg)
-
     if (trimmedMsg.length < 1) return;
 
     if (trimmedMsg.length > 0) {
@@ -82,7 +77,6 @@ const AIAssistant = ({
 
       const response = await sendChat(tmpChat, trimmedMsg, mediaMode, campaignDetails); // sends prompt to Gemini
 
-      console.log("response", response)
       // updates chat log with Gemini's response
       if (response){
         tmpChatLog.push({ sender: "AI", text: response.conversation_response })
@@ -97,12 +91,13 @@ const AIAssistant = ({
         setChatLog(tmpChatLog)
         setChat(tmpChat); // update the actual chat with tmpChat
       }
+      else{
+        setCampaignDetails("Oops! Something went wrong. Please try again.");
+        setChatLog(tmpChatLog);
+        setChat(tmpChat);
+      }
     }
-    else{
-      setCampaignDetails("Oops! Something went wrong. Please try again.");
-      setChatLog(tmpChatLog);
-      setChat(tmpChat);
-    }
+    
   };
 
   const handleMakeMeAMarketingCampaign = async () => {

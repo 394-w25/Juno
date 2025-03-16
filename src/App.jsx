@@ -12,7 +12,6 @@ import Onboarding from "./pages/Onboarding";
 import Login from "./components/Login";
 import LoadingScreen from "./components/Loading";
 import AuthProvider, { useAuthContext } from "./components/AuthContext";
-import { ChatSession } from "@google/generative-ai";
 import { CampaignDetail } from "./gemini/GeminiFunctions";
 
 const App = () => {
