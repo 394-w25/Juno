@@ -9,7 +9,6 @@ import {
 import Template1 from "../components/templates/Template1";
 import Template3 from "../components/templates/Template3";
 import backgroundImg from "../assets/template_bg_img.png";
-import logoImg from "../assets/template_logo.png";
 import { useAuthContext } from "../components/AuthContext";
 import { IconButton, CircularProgress} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -105,7 +104,6 @@ const Operator = ({ setCampaignDetails }) => {
 
       setUploadedImage(localImage)
 
-      console.log("AI Response:", response);
       setChatLog((prevChat) => [
         ...prevChat,
         { sender: "AI", text: response.conversation_response },
@@ -261,7 +259,7 @@ const Operator = ({ setCampaignDetails }) => {
                             callToAction={option.call_to_action}
                             campaignTitle={option.campaign_title}
                             background={backgroundImg}
-                            logo={logoImg}
+                            logo={null}
                             discount={option.discount}
                             campaignDetail={option.campaign_detail}
                             campaignPeriod={{
@@ -279,7 +277,7 @@ const Operator = ({ setCampaignDetails }) => {
                             callToAction={option.call_to_action}
                             campaignTitle={option.campaign_title}
                             background={backgroundImg}
-                            logo={logoImg}
+                            logo={null}
                             discount={option.discount}
                             campaignDetail={option.campaign_detail}
                             campaignPeriod={{

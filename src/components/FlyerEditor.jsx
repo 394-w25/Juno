@@ -6,8 +6,6 @@ import backgroundImg from "../assets/template_bg_img.png";
 import backgroundImg3 from "../assets/template-background-4.png";
 import Template3 from "./templates/Template3";
 import backgroundImg2 from "../assets/temp.png";
-import logoImg from "../assets/template_logo.png";
-import productImg from "../assets/ProductImageTest.png";
 import { CircularProgress } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import { toPng } from "html-to-image";
@@ -36,12 +34,8 @@ const FlyerEditor = ({
   switchToVertical,
   uploadedImage
 }) => {
-  useEffect(() => {
-    console.log("Updated campaign details in FlyerEditor:", campaignDetails);
-  }, [campaignDetails]);
 
   const handleMediaChange = (event, newAlignment) => {
-    console.log("New media mode selected:", newAlignment);
     setMediaMode(newAlignment);
   };
 
@@ -164,7 +158,7 @@ const FlyerEditor = ({
               switchToVertical={switchToVertical}
               campaignTitle={campaignDetails.campaign_title}
               background={backgroundImg}
-              logo={logoImg}
+              logo={null}
               discount={campaignDetails.discount}
               campaignDetail={campaignDetails.campaign_detail}
               campaignPeriod={{
@@ -187,7 +181,7 @@ const FlyerEditor = ({
               switchToVertical={switchToVertical}
               campaignTitle={campaignDetails.campaign_title}
               background={backgroundImg3}
-              logo={logoImg}
+              logo={null}
               discount={campaignDetails.discount}
               campaignDetail={campaignDetails.campaign_detail}
               campaignPeriod={{
@@ -210,7 +204,7 @@ const FlyerEditor = ({
               switchToVertical={switchToVertical}
               campaignTitle={campaignDetails.campaign_title}
               background={backgroundImg2}
-              logo={logoImg}
+              logo={null}
               discount={campaignDetails.discount}
               campaignDetail={campaignDetails.campaign_detail}
               campaignPeriod={{

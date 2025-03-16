@@ -1,7 +1,6 @@
 import brownRibbon from "../../assets/brown-ribbon.png";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceIcon from "@mui/icons-material/Place";
-import image from "../../assets/ProductImageTest.png";
 import backgroundImg3 from "../../assets/template-background-4.png"
 
 // FLYER TEMPLATE #2
@@ -23,9 +22,6 @@ export default function Template3({
   templateRef,
   inOperator = false
 }) {
-  const addressToGoogleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    address
-  )}`;
 
   /**
    * formats the date objects to display on the flyer
@@ -75,14 +71,8 @@ export default function Template3({
         className="absolute object-cover w-full h-full"
       ></img>
 
-      {/* COMPONENT: product image */}
-      {/*outline outline-left outline-4 outline-brown outline-offset-4*/}
-      {/* <img src={productImage} className="absolute right-0 bottom-0 object-cover w-1/2 h-3/4 [clip-path:ellipse(90%_90%_at_50%_100%)]"></img> */}
-
       <div className="relative h-full inset-0 flex flex-col justify-between py-14 items-center text-center mb-40">
         <div className="flex flex-col items-center gap-3 "> 
-          {/* COMPONENT: companyLogo */}
-          {/* <img src={logo}></img> */}
 
           {/* COMPONENT: campaignPeriod */}
           <p className="text-xl font-[Chewy] text-[#42311C]">
@@ -138,7 +128,6 @@ export default function Template3({
               <PlaceIcon className="!text-4xl" />
               <div className="text-xl">
                 <a
-                  href={addressToGoogleMapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

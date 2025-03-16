@@ -1,4 +1,4 @@
-import { ChatSession, GenerativeModel } from "@google/generative-ai";
+import { ChatSession, } from "@google/generative-ai";
 import { genAI } from "./GeminiConfig";
 
 export class CampaignDetail {
@@ -98,7 +98,6 @@ export function createNewChat(business_config) {
   ];
   const monthName = monthNames[monthNumber];
 
-  console.log("config:", business_config);
 
   const system_instructions = `
     You are an AI marketing agent for small business owners. Your job is to help create recommendations for marketing campaigns tailored to the details of their business. This config JSON represents the data for the business you're working with: 
@@ -164,8 +163,6 @@ export async function sendChat(
     const result = await chat.sendMessage(finalPrompt); // prompts Gemini
     const textResponse = result.response.text(); // get the response in string format
 
-    console.log("textRes", textResponse);
-
     try{
       if (textResponse.startsWith("```json")) {
         // Remove ```json and ``` from the string
@@ -173,7 +170,6 @@ export async function sendChat(
 
         // Turn JSON string into an object
         let responseObj = JSON.parse(cleanedString);
-        console.log(responseObj);
 
         let originalRes = responseObj;
 
@@ -220,48 +216,6 @@ export async function sendChat(
     }
     
     }
-
-
-// /**
-//  * Sends a chat message for campaign options handling.
-//  * @param {ChatSession} chatSession - The current chat session.
-//  * @param {string} prompt - The user input to send.
-//  * @param {boolean} isCampaignRequest - Flag to indicate if the chat is related to campaign options.
-//  * @param {CampaignDetail | null} campaignDetails - Current campaign details, if available.
-//  * @returns {Promise<ChatResponse>} - Response containing conversation text and campaign options.
-//  */
-// export async function sendCampaignChat(chatSession, prompt) {
-//   let finalPrompt = prompt;
-
-//   try {
-//     const result = await chatSession.sendMessage(finalPrompt);
-//     const textResponse = result.response.text();
-
-//     if (textResponse.startsWith("```json")) {
-//       const cleanedString = textResponse.slice(7, -3);
-//       const responseObj = JSON.parse(cleanedString);
-
-//       const campaignOptions = responseObj.campaign_options || [];
-
-//       return {
-//         your_conversation_response: responseObj.your_conversation_response,
-//         campaign_options: campaignOptions,
-//       };
-//     }
-
-//     return {
-//       your_conversation_response: "Oops! Something went wrong.",
-//       campaign_options: [],
-//     };
-//   } catch (error) {
-//     console.error("Error sending chat:", error);
-//     return {
-//       your_conversation_response:
-//         "Oops! Something went wrong while processing your request.",
-//       campaign_options: [],
-//     };
-//   }
-// }
 
 /**
  * Creates a new chat for generating marketing campaign recommendations based on upcoming events in the next month.
@@ -347,7 +301,6 @@ export async function sendChatOptions(
       // Turn JSON string into an object
       const responseObj = JSON.parse(cleanedString);
 
-      console.log("response options", responseObj);
 
       if (responseObj.campaign_details) {
         const res = {
